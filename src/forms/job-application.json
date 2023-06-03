@@ -1,0 +1,49 @@
+{
+    "fields": [{
+        "label": "First name *",
+        "type": "text",
+        "className": "six columns",
+        "key": "firstName"
+    },
+    {
+        "label": "Last name",
+        "type": "text",
+        "className": "six columns",
+        "key": "lastName"
+    },
+    {
+        "label": "Email *",
+        "placeholder": "example@domain.xyz",
+        "type": "text",
+        "key": "email"
+    },
+    {
+        "label": "Location",
+        "type": "text",
+        "key": "location"
+    },
+    {
+        "label": "Linkedin",
+        "type": "text",
+        "key": "linkedin"
+    },
+    {
+        "label": "Github",
+        "type": "text",
+        "key": "github"
+    },
+    {
+        "label": "Personal website",
+        "type": "text",
+        "key": "website"
+    },
+    {
+        "label": "Upload your CV *",
+        "type": "file",
+        "key": "cv"
+    }
+],
+"cta": {
+    "buttonText": "Submit"
+}
+}

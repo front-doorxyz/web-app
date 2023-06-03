@@ -1,0 +1,100 @@
+.navbar.mobile {
+    display: block;
+    width: 100%;
+    height: 6.5rem;
+    background: #fff;
+    z-index: 99;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+.navbar.mobile {
+    position: relative;
+    max-height: 75px;
+}
+.navbar.mobile .navbar-list {
+    position: absolute;
+    top: 64px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    width: 100%;
+}
+.navbar.mobile .navbar-list .navbar-item {
+    list-style: none;
+    padding: 8px 0 8px 12px;
+    width: 100%;
+}
+.navbar.mobile .navbar-list .navbar-item + .navbar-item  {
+    border-top: 1px solid #d9d9d9;
+}
+.navbar.mobile .navbar-list .navbar-item a{
+    text-decoration: none;
+    
+}
+.navbar.mobile .logo {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.navbar.mobile .logo::before {
+    content: "front-door";
+    font-size: 14px;
+    padding: 8px 10px;
+}
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    border: 3px solid #000;
+    line-height: 25px;
+    margin-top: 7px;
+}
+.navbar .logo:hover {
+    color:#000;
+}
+.navbar .logo::before {
+    content: "front-door.xyz";
+    font-size: 14px;
+    padding: 8px 10px;
+}
+.navbar.non-mobile {
+    display: none;
+}
+.navbar-item.burger-icon {
+    display: block;
+    width: 45px;
+    float: right;
+    margin: 10px 15px 0 0;
+    cursor: pointer;
+}
+.navbar.container{
+    padding: 0;
+}
+.navbar .logout {
+    width: 20px;
+    height: auto;
+    margin-left: 8px;
+}
+@media (min-width: 550px) {
+    .navbar.non-mobile {
+        display: block;
+    }
+    .burger-icon,
+    .navbar.mobile {
+        display: none;
+    }
+    .navbar .navbar-item.login {
+        float: right;
+        padding: 18px 15px 0 15px;
+    }
+    .navbar .navbar-item.login a {
+        font-size: 18px;
+        text-decoration: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .navbar .navbar-item.login {
+        padding: 18px 0 0 0;
+    }
+}

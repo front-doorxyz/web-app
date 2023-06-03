@@ -1,0 +1,10 @@
+{
+  "title": "Login with Metamask or Magiclinks",
+  "metamask": {
+    "buttonText": "Login with Metamask",
+    "buttonTextLoggedIn": "Logout with Metamask"
+  },
+  "magiclinks": {
+    "buttonText": "Login with Magiclinks"
+  }
+}

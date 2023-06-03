@@ -1,0 +1,8 @@
+.job.container .row {
+    padding: 0 15px;
+}   
+@media (min-width: 550px) {
+    .job.container .row {
+        padding: 0;
+    }   
+}

@@ -1,0 +1,27 @@
+.content-body .row {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.content-body > div > div > div > div > div > div{
+    margin-top: 10px;
+}
+
+.content-body .list-item-1 {
+    text-indent: 5px;
+}
+
+.content-body .list-item-2 {
+    text-indent: 10px;
+}
+
+.content-body .list-item-3 {
+    text-indent: 15px;
+}
+
+@media (min-width: 550px) {
+    .content-body .row {
+        padding-left: 0px;
+        padding-right: 0px;
+    }   
+}
