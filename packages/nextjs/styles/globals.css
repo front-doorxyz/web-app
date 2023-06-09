@@ -1,0 +1,47 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@font-face{
+	font-family: "Bigmom";
+	src:  url(../fonts/Bigmom.ttf)  format("truetype"), /* Safari, Android, iOS */
+        url(../fonts/Bigmom.woff) format("woff");
+}
+
+@font-face{
+	font-family: "vga";
+	src:  url(../fonts/vga.ttf)  format("truetype"), /* Safari, Android, iOS */
+        url(../fonts/vga.woff) format("woff");
+}
+html body * {
+  font-family: "vga";
+}
+
+
+:root,
+[data-theme] {
+  background: hsl(var(--b2));
+}
+
+body {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+.btn {
+  @apply shadow-md;
+}
+
+.btn.btn-ghost {
+  @apply shadow-none;
+}
