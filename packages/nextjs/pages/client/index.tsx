@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import AddJob from "~~/components/AddJob";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
+import Jobs from "~~/components/Jobs";
 
 // Import the CSS for styling
 
@@ -29,12 +30,18 @@ const client: NextPage = () => {
           View Previous Jobs
         </a>
       </div>
-      <div className="px-5 mt-[2%]">
-        <h1 className="text-center mb-8">
-          <span className="block text-4xl font-bold">Add a Job</span>
-        </h1>
-      </div>
-      <AddJob />
+      {active ? (
+        <>
+          <div className="px-5 mt-[2%]">
+            <h1 className="text-center mb-8">
+              <span className="block text-4xl font-bold">Add a Job</span>
+            </h1>
+          </div>
+          <AddJob />
+        </>
+      ) : (
+        <Jobs type="client" />
+      )}
     </div>
   );
 };
