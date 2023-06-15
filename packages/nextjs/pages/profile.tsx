@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Earnings from "~~/components/Earnings";
 import Profile from "~~/components/Profile";
-import Referees from "~~/components/Referees";
 import References from "~~/components/References";
 import Referrals from "~~/components/Referrals";
+import Referees from "~~/components/Referres";
 
 type Props = {};
 
