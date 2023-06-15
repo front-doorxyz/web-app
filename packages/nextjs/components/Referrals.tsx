@@ -13,8 +13,20 @@ const Referrals = (props: Props) => {
           <p>Overall Score = Average score out of 5 * # referrals made * % of successful referrals</p>
         </div>
       </div>
-      <Block title="Average score out of 5" content={["Referral 1", "Referral 2", "Referral 3"]} type="string" />
-      <Block title="Role Title of successful referrals" content={[1, 3, 5]} type="star" />
+      <div className="grid grid-cols-2 grid-rows-2 gap-8 mt-[2%]">
+        <div className="flex flex-col gap-8">
+          <Block title="Average score out of 5" content={["Referral 1", "Referral 2", "Referral 3"]} type="string" />
+          <Block title="Awarded Score" content={[1, 3, 5]} type="star" />
+        </div>
+        <div className="flex flex-col gap-8">
+          <Block
+            title="Roles referred candidates to"
+            content={["Referral 1", "Referral 2", "Referral 3"]}
+            type="string"
+          />
+          <Block title="Successful referrals" content={["5", "2", "6"]} type="string" />
+        </div>
+      </div>
     </div>
   );
 };

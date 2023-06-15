@@ -18,7 +18,9 @@ const Block = (props: Props) => {
             if (props.type === "star") {
               return (
                 <tr key={index}>
-                  <StarRating score={item} />
+                  <td className="px-4 py-2 border">
+                    <StarRating score={item} />
+                  </td>
                 </tr>
               );
             }
