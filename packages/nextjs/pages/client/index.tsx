@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import type { NextPage } from "next";
-import AddJob from "~~/components/AddJob";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
+import AddJob from "~~/components/JobInfo";
 import Jobs from "~~/components/Jobs";
 
 // Import the CSS for styling
@@ -37,7 +37,7 @@ const client: NextPage = () => {
               <span className="block text-4xl font-bold">Add a Job</span>
             </h1>
           </div>
-          <AddJob />
+          <AddJob type="add" />
         </>
       ) : (
         <Jobs type="client" />

@@ -1,8 +1,11 @@
 import React from "react";
+import { type } from "os";
 
-type Props = {};
+type Props = {
+  type: "edit" | "add";
+};
 
-const AddJob = (props: Props) => {
+const JobFill = (props: Props) => {
   const [jobInfo, setJobInfo] = React.useState({
     title: "Role Title",
     description: "Describe the Role",
@@ -16,6 +19,11 @@ const AddJob = (props: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setJobInfo({ ...jobInfo, [e.target.name]: e.target.value });
   };
+
+  if (props.type === "edit") {
+    console.log("api call here");
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <input
@@ -74,9 +82,9 @@ const AddJob = (props: Props) => {
         name="minSalary"
         value={jobInfo.minSalary}
       />
-      <button className="btn btn-primary">Add a job</button>
+      <button className="btn btn-primary">{props.type === "edit" ? "Edit Job" : "Add Job"}</button>
     </div>
   );
 };
 
-export default AddJob;
+export default JobFill;
