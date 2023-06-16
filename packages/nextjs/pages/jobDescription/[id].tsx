@@ -30,9 +30,12 @@ const Description = () => {
           </div>
           <div className="card  rounded-lg shadow-lg p-[2%] w-[30vw]">
             <div className="flex flex-col justify-start items-center gap-4 ">
-              <div className="text-md md:text-xl">Edit Job as Owner</div>
+              <div className="text-md md:text-xl">Edit Job or Delete Job as owner</div>
               <button className="btn btn-primary" onClick={handleEditJob}>
                 Edit Job
+              </button>
+              <button className="btn btn-primary" onClick={handleEditJob}>
+                Delete Job
               </button>
             </div>
           </div>
