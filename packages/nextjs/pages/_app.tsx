@@ -11,6 +11,7 @@ import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
+import { GeneralProvider } from "~~/providers/GeneralContext";
 import { useGlobalState } from "~~/services/store/store";
 import { wagmiClient } from "~~/services/web3/wagmiClient";
 import { appChains } from "~~/services/web3/wagmiConnectors";
@@ -36,21 +37,24 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   return (
     <WagmiConfig client={wagmiClient}>
       <NextNProgress />
+
       <RainbowKitProvider
         chains={appChains.chains}
         avatar={BlockieAvatar}
         theme={isDarkTheme ? darkTheme() : lightTheme()}
       >
-        <Head>
-          <title>Front-Door</title>
-        </Head>
-        <Header />
-        <main className="relative flex flex-col flex-1">
-          <Component {...pageProps} />
-        </main>
-        <Footer />
+        <GeneralProvider>
+          <Head>
+            <title>Front-Door</title>
+          </Head>
+          <Header />
+          <main className="relative flex flex-col flex-1">
+            <Component {...pageProps} />
+          </main>
+          <Footer />
 
-        <Toaster />
+          <Toaster />
+        </GeneralProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
