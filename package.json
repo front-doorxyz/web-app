@@ -26,7 +26,11 @@
     "postinstall": "husky install",
     "precommit": "lint-staged",
     "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
+    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
+    "aws:profile": "export AWS_PROFILE=default",
+    "aws:purge": "npm run aws:profile && aws cloudfront create-invalidation --distribution-id E10U3QXB9T5GTI --paths \"/*\"",
+    "aws:release": "npm run aws:profile && aws s3 cp \"/build\" s3://djinndao --recursive",
+    "aws": "npm run aws:profile && npm run build && npm run aws:release && npm run aws:purge"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
