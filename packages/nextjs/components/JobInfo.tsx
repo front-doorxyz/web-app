@@ -1,24 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { type } from "os";
+import { useSigner } from "wagmi";
+import { useDeployedContractInfo, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { GeneralContext } from "~~/providers/GeneralContext";
 
 type Props = {
   type: "edit" | "add";
 };
 
 const JobFill = (props: Props) => {
-  const [jobInfo, setJobInfo] = React.useState({
-    title: "Role Title",
-    description: "Describe the Role",
-    company: "Company name",
-    location: "Location",
-    maxSalary: "Max Salary",
-    bounty: "Bounty",
-    minSalary: "Min Salary",
-  });
+  const { data: signer } = useSigner();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobInfo({ ...jobInfo, [e.target.name]: e.target.value });
-  };
+  const { jobInfo, handleChange, registerJob } = useContext(GeneralContext);
 
   if (props.type === "edit") {
     console.log("api call here");
@@ -82,7 +75,14 @@ const JobFill = (props: Props) => {
         name="minSalary"
         value={jobInfo.minSalary}
       />
-      <button className="btn btn-primary">{props.type === "edit" ? "Edit Job" : "Add Job"}</button>
+      <button
+        className={`btn btn-primary `}
+        onClick={async () => {
+          await registerJob();
+        }}
+      >
+        {props.type === "edit" ? "Edit Job" : "Add Job"}
+      </button>
     </div>
   );
 };
