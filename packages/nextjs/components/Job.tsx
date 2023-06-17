@@ -1,7 +1,9 @@
 import React from "react";
+import { useRouter } from "next/router";
 import StarRating from "./StarRating";
 
 type Props = {
+  id: string;
   title: string;
   location: string;
   salary: string;
@@ -9,8 +11,16 @@ type Props = {
 };
 
 const Job = (props: Props) => {
+  const router = useRouter();
+  const handleJobClick = () => {
+    router.push(`/jobDescription/${props.id}`);
+  };
+
   return (
-    <div className="w-[70vw] h-[110px] border-neutral border-2 text-neutral rounded-md hover:border-accent   transition-all duration-300">
+    <div
+      className="w-[70vw] h-[110px] border-neutral border-2 text-neutral rounded-md hover:border-accent   transition-all duration-300"
+      onClick={handleJobClick}
+    >
       <div className="ml-[0.2%] flex flex-col">
         <div className="flex  justify-start w-[70vw]">
           <div className="four columns w-[35%]">Engineering Manager Amazonas</div>

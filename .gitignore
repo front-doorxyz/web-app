@@ -11,6 +11,8 @@ node_modules
 .eslintcache
 .vscode/**
 .DS_Store
+package-lock.json
+yarn-lock.json
 
 
 # JetBrains
