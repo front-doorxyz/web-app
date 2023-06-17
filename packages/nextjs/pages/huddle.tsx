@@ -166,11 +166,9 @@ const App = () => {
           <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
             JOIN_ROOM
           </button>
-
           <button disabled={!state.matches("Initialized.JoinedLobby")} onClick={() => send("LEAVE_LOBBY")}>
             LEAVE_LOBBY
           </button>
-
           <button disabled={!stopVideoStream.isCallable} onClick={stopVideoStream}>
             STOP_VIDEO_STREAM
           </button>
