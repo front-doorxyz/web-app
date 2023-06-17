@@ -35,8 +35,24 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   // const yourContract = await hre.ethers.getContract("YourContract", deployer);
 };
 
-export default deployYourContract;
+const deployRecruitmentContract: DeployFunction =async function (hre: HardhatRuntimeEnvironment) {
+
+  const { deployer } = await hre.getNamedAccounts();
+  const { deploy } = hre.deployments;
+
+  await deploy("Recruitment", {
+    from: deployer,
+    args: [],
+    log: true,
+    autoMine: true,
+  });
+
+  const recruitmentContract = await hre.ethers.getContract("Recruitment", deployer);
+  
+};
+
+export default deployRecruitmentContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployRecruitmentContract.tags = ["Recruitment"];

@@ -6,12 +6,17 @@
     "dev": "next dev",
     "start": "next dev",
     "build": "next build",
+    "build:yolo": "export NEXT_PUBLIC_IGNORE_BUILD_ERROR=true && next build",
     "serve": "next start",
     "lint": "next lint",
     "format": "prettier --write . '!(node_module|.next|contracts)/**/*'",
     "check-types": "tsc --noEmit --incremental",
     "vercel": "vercel",
-    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
+    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
+    "aws:profile": "export AWS_PROFILE=default",
+    "aws:purge": "npm run aws:profile && aws cloudfront create-invalidation --distribution-id E10U3QXB9T5GTI --paths \"/*\"",
+    "aws:release": "npm run aws:profile && aws s3 cp \"$PWD/out\" s3://djinndao --recursive",
+    "aws": "npm run aws:profile && npm run build:yolo && npm run aws:release && npm run aws:purge"
   },
   "dependencies": {
     "@ethersproject/networks": "^5.7.1",
