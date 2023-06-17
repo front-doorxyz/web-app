@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+package-lock.json
+yarn-lock.json
 
 # testing
 /coverage
@@ -36,3 +38,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# local development files
+*playground.ts
+*playground.tsx
