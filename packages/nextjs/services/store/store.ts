@@ -22,7 +22,39 @@ export const useGlobalState = create<TGlobalState>(set => ({
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
 }));
 
-let database = {}
+const database = {
+    'KqgNu28QeaWfrTp9MjhM4SGtd8ePSiD8wqWmjdwXqyNg0sAXRhQpGIIautVWBfgs': {
+      id: 'KqgNu28QeaWfrTp9MjhM4SGtd8ePSiD8wqWmjdwXqyNg0sAXRhQpGIIautVWBfgs',
+      roleTitle: "Software Engineer",
+      description: "Develop and maintain software applications",
+      location: "Remote",
+      maxSalary: 150000,
+      minSalary: 100000,
+      bounty: 5000,
+      companyName: "Tech Corp"
+    },
+    'jepJ74p9tayS1Z22YQP9qb3UphMDqZbmhMNw3b66bQk2GiPQHHOEzuTGpQ9OEafV': {
+      id: 'jepJ74p9tayS1Z22YQP9qb3UphMDqZbmhMNw3b66bQk2GiPQHHOEzuTGpQ9OEafV',
+      roleTitle: "Data Scientist",
+      description: "Analyze and interpret complex data",
+      location: "New York",
+      maxSalary: 180000,
+      minSalary: 120000,
+      bounty: 7000,
+      companyName: "Data Analytics Inc"
+    },
+    'OkDRlVJl0tkptDRDgiMHIhNP44nRZ2KzReYM9hToPt3XnjlNC9A3jrY2yWqwsafX': {
+      id: 'OkDRlVJl0tkptDRDgiMHIhNP44nRZ2KzReYM9hToPt3XnjlNC9A3jrY2yWqwsafX',
+      roleTitle: "Product Manager",
+      description: "Drive product development and strategy",
+      location: "San Francisco",
+      maxSalary: 200000,
+      minSalary: 140000,
+      bounty: 8000,
+      companyName: "Products Co"
+    }
+
+}
 
 function mockid(length: number) {
   let result = '';
@@ -37,60 +69,24 @@ function mockid(length: number) {
 }
 
 
-function mockDatabase () {
-  const mockJobListings: JobListing[] = [
-    {
-      roleTitle: "Software Engineer",
-      description: "Develop and maintain software applications",
-      location: "Remote",
-      maxSalary: 150000,
-      minSalary: 100000,
-      bounty: 5000,
-      companyName: "Tech Corp"
-    },
-    {
-      roleTitle: "Data Scientist",
-      description: "Analyze and interpret complex data",
-      location: "New York",
-      maxSalary: 180000,
-      minSalary: 120000,
-      bounty: 7000,
-      companyName: "Data Analytics Inc"
-    },
-    {
-      roleTitle: "Product Manager",
-      description: "Drive product development and strategy",
-      location: "San Francisco",
-      maxSalary: 200000,
-      minSalary: 140000,
-      bounty: 8000,
-      companyName: "Products Co"
-    }
-  ];
 
-  mockJobListings.forEach(async jobListing => {
-    await create(jobListing);
-  });
-}
-
-
-async function create (jobListing: JobListing): Promise<JobListing> {
+export async function createJobListing (jobListing: JobListing): Promise<JobListing> {
   let id = mockid(64);
   jobListing.id = id;
 
   database[id] = jobListing;
 
-  console.log('Content added with id:', id)
+  console.log('JobListing added with id:', id)
   return jobListing;
 }
 
-async function readById (id: string): Promise<JobListing> {
+export async function readJobListingById (id: string): Promise<JobListing> {
     return database[id];
 }
 
-async function readAll(): Promise<JobListing[]> {
+export async function readAllJobListings (): Promise<JobListing[]> {
   return Object.values(database)
 }
 
 
-mockDatabase();
+// readAllJobListings().then((listings) => {  console.log('Reading completed', listings);}).catch((error) => {console.log('Error during reading:', error);});
