@@ -138,7 +138,7 @@ contract Recruitment is Ownable {
     * @notice Registers a job
     * @param bounty The amount of bounty set by the job poster.
   */
-  function registerJob(uint256 bounty) external {
+  function registerJob(uint256 bounty) external returns(uint256) {
     uint256 jobId = jobIdCounter.current();
     FrontDoorStructs.Job memory job = FrontDoorStructs.Job(jobId, bounty, true, msg.sender);
     jobList[jobId] = job;
@@ -146,6 +146,7 @@ contract Recruitment is Ownable {
     FrontDoorStructs.Company memory company = companyList[msg.sender];
     company.jobsCreated++;
     companyList[msg.sender] = company;
+    return jobId;
   }
 
   /**
