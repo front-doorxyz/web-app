@@ -1,28 +1,45 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { createJobListing, jobUpdate } from "../services/store/store";
 import { type } from "os";
+import { useSigner } from "wagmi";
+import { GeneralContext } from "~~/providers/GeneralContext";
 
 type Props = {
   type: "edit" | "add";
 };
 
 const JobFill = (props: Props) => {
-  const [jobInfo, setJobInfo] = React.useState({
-    title: "Role Title",
-    description: "Describe the Role",
-    company: "Company name",
-    location: "Location",
-    maxSalary: "Max Salary",
-    bounty: "Bounty",
-    minSalary: "Min Salary",
-  });
+  const { data: signer } = useSigner();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobInfo({ ...jobInfo, [e.target.name]: e.target.value });
+  const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
+
+  useEffect(() => {
+    if (props.type === "add") {
+      setJobInfo({
+        id: 0,
+        roleTitle: "Role Title",
+        description: "Describe the Role",
+        companyName: "Company name",
+        location: "Location",
+        maxSalary: "",
+        bounty: "",
+        minSalary: "",
+      });
+    }
+  }, []);
+
+  const handleJob = async () => {
+    if (props.type === "add") {
+      let jobId = await registerJob(Number(jobInfo.bounty));
+      if (!jobId) alert("Error in smartcontract transaction: registerJob");
+      console.log("jobId", jobId);
+      jobInfo.id = jobId;
+      await createJobListing(jobInfo);
+    } else {
+      const jobUpdated = await jobUpdate(id, jobInfo);
+      console.log(jobUpdated);
+    }
   };
-
-  if (props.type === "edit") {
-    console.log("api call here");
-  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,8 +48,8 @@ const JobFill = (props: Props) => {
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
-        name="company"
-        value={jobInfo.company}
+        name="companyName"
+        value={jobInfo.companyName}
       />
       <input
         type="text-area"
@@ -55,11 +72,11 @@ const JobFill = (props: Props) => {
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
-        name="title"
-        value={jobInfo.title}
+        name="roleTitle"
+        value={jobInfo.roleTitle}
       />
       <input
-        type="text"
+        type="number"
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
@@ -67,7 +84,7 @@ const JobFill = (props: Props) => {
         value={jobInfo.bounty}
       />
       <input
-        type="text"
+        type="number"
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
@@ -75,14 +92,21 @@ const JobFill = (props: Props) => {
         value={jobInfo.maxSalary}
       />
       <input
-        type="text"
+        type="number"
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="minSalary"
         value={jobInfo.minSalary}
       />
-      <button className="btn btn-primary">{props.type === "edit" ? "Edit Job" : "Add Job"}</button>
+      <button
+        className={`btn btn-primary `}
+        onClick={handleJob}
+        disabled={loading}
+        // onClick={() => createJobListing(jobInfo)}
+      >
+        {props.type === "edit" ? "Edit Job" : "Add Job"}
+      </button>
     </div>
   );
 };

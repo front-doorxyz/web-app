@@ -15,16 +15,20 @@ const Referrals = (props: Props) => {
       </div>
       <div className="grid grid-cols-2 grid-rows-2 gap-8 mt-[2%]">
         <div className="flex flex-col gap-8">
-          <Block title="Average score out of 5" content={["Referral 1", "Referral 2", "Referral 3"]} type="string" />
-          <Block title="Awarded Score" content={[1, 3, 5]} type="star" />
-        </div>
-        <div className="flex flex-col gap-8">
           <Block
-            title="Roles referred candidates to"
-            content={["Referral 1", "Referral 2", "Referral 3"]}
+            title="Role Title of successful referrals"
+            content={["Java Developer", "C++ Developer", "Python Developer"]}
             type="string"
           />
-          <Block title="Successful referrals" content={["5", "2", "6"]} type="string" />
+          <Block
+            title="Roles referred candidates to"
+            content={["Android Developer", "Mobile app dev", "Solidity smart contracts developer"]}
+            type="string"
+          />
+        </div>
+        <div className="flex flex-col gap-8">
+          <Block title="Awarded Score" content={[1, 3, 5]} type="star" />
+          <Block title="Number of Referrals made per role" content={["5", "2", "6"]} type="string" />
         </div>
       </div>
     </div>

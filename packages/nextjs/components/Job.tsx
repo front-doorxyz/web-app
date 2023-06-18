@@ -4,10 +4,11 @@ import StarRating from "./StarRating";
 
 type Props = {
   id: string;
-  title: string;
+  roleTitle: string;
   location: string;
-  salary: string;
+  minSalary: number;
   bounty: string;
+  maxSalary: number;
 };
 
 const Job = (props: Props) => {
@@ -23,10 +24,12 @@ const Job = (props: Props) => {
     >
       <div className="ml-[0.2%] flex flex-col">
         <div className="flex  justify-start w-[70vw]">
-          <div className="four columns w-[35%]">Engineering Manager Amazonas</div>
-          <div className="two columns w-[25%]">Remote (Europe/Uk/Russia)</div>
-          <div className="two columns w-[25%]">Competitive Package</div>
-          <div className="two columns w-[25%]">$10000</div>
+          <div className="four columns w-[35%]">{props.roleTitle}</div>
+          <div className="two columns w-[25%]">{props.location}</div>
+          <div className="two columns w-[25%]">
+            {props.minSalary}-{props.maxSalary}
+          </div>
+          <div className="two columns w-[25%]">${props.bounty}</div>
           <div className="flex flex-col justify-start items-end mr-[1%] gap-2 absolute right-[15vw]">
             <button className="btn btn-success">Refer</button>
             <button className="btn btn-warning">Apply</button>

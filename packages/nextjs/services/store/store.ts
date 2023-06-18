@@ -73,9 +73,7 @@ function mockid(length: number) {
 export async function createJobListing (jobListing: JobListing): Promise<JobListing> {
   let id = mockid(64);
   jobListing.id = id;
-
   database[id] = jobListing;
-
   console.log('JobListing added with id:', id)
   return jobListing;
 }
@@ -86,6 +84,17 @@ export async function readJobListingById (id: string): Promise<JobListing> {
 
 export async function readAllJobListings (): Promise<JobListing[]> {
   return Object.values(database)
+}
+
+export async function jobUpdate(id: string, updatedJob: Partial<JobListing>): Promise<JobListing | undefined> {
+  const job = database[id];
+  if (job) {
+    const updatedJobListing = { ...job, ...updatedJob };
+    database[id] = updatedJobListing;
+    console.log('JobListing updated with id:', id);
+    return updatedJobListing;
+  }
+  return undefined;
 }
 
 
