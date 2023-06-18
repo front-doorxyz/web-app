@@ -6,7 +6,6 @@ import {DID} from 'dids'
 import {Ed25519Provider} from 'key-did-provider-ed25519'
 import {getResolver} from 'key-did-resolver'
 import {fromString} from 'uint8arrays/from-string'
-import {JobListing} from "./model.js";
 
 
 const ceramicUrl = process.env.CERAMIC_CLIENT_INSTANCE_URL || "http://localhost:7007";
@@ -29,6 +28,7 @@ const newDid = async (seed) => {
 async function getCeramicClient() {
     const ceramicClient = new ComposeClient({ceramic: ceramicUrl, definition});
     ceramicClient.setDID(await newDid(CERAMIC_ADMIN_KEY))
+    return ceramicClient;
 }
 
 
@@ -75,7 +75,12 @@ export async function createJobListing (jobListing) {
 }
 
 export async function readJobListingById (id) {
-    return database[id];
+    const fetchedById = (await readAllJobListings()).filter(jobListing => jobListing.id === id)
+    if (fetchedById.length === 0) {
+        console.error(`No job listing found with id ${id}`)
+        return null;
+    }
+    return fetchedById[0];
 }
 
 function edgeToJobListing(edge) {
@@ -93,12 +98,12 @@ function edgeToJobListing(edge) {
 
 export async function readAllJobListings() {
 
-    console.log('Reading all job listing from:', jobListing)
+    console.log("Reading all job listings")
     const ceramicClient = await getCeramicClient();
 
     let response = await ceramicClient.executeQuery(`
             query{
-                jobListingIndex(last:20) {
+                jobListingIndex(last:50) {
                     edges {
                         node {
                             id
@@ -120,4 +125,20 @@ export async function readAllJobListings() {
     return allListings;
 }
 
-main2().then(() => {console.log("Done")}).catch((err) => {console.error(err)})
+async function test() {
+
+    const jobListing = {
+        roleTitle: "Software Engineer",
+        description: "Develop and maintain software applications",
+        location: "Remote",
+        maxSalary: 150000,
+        minSalary: 100000,
+        bounty: 5000,
+        companyName: "Tech Corp"
+    }
+    // await createJobListing(jobListing);
+    let resp = await readJobListingById("kjzl6kcym7w8y6dggv1i48t71p02z7v9r2ax83eq0setnm6fqmu59asqivb67kw");
+    console.log(resp);
+}
+
+// test().then(() => {console.log("Done")}).catch((err) => {console.error(err)})

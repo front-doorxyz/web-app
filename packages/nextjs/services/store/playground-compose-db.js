@@ -48,9 +48,34 @@ async function main2() {
     const ceramicClient = new ComposeClient({ceramic: ceramicUrl, definition});
     ceramicClient.setDID(await newDid(CERAMIC_ADMIN_KEY))
 
-    await second_one(ceramicClient);
+    await fetchJobListingById(ceramicClient, 'kjzl6kcym7w8y6dggv1i48t71p02z7v9r2ax83eq0setnm6fqmu59asqivb67kw');
 }
 
+
+
+async function fetchJobListingById(ceramicClient, id) {
+    let response = await ceramicClient.executeQuery(`
+            query {
+                jobListingIndex(id: "${id}") {
+                    edges {
+                        node {
+                            id
+                            roleTitle
+                            description
+                            location
+                            maxSalary
+                            minSalary
+                            bounty
+                            companyName
+                        }
+                    }
+                }
+            }
+        `);
+
+
+    console.log("result:", JSON.stringify(response));
+}
 
 async function second_two(ceramicClient) {
     let result = await ceramicClient.executeQuery(`
@@ -75,6 +100,7 @@ async function second_two(ceramicClient) {
     //console.log("Response:", response);
     console.log("result:", JSON.stringify(result));
 }
+
 async function second_one(ceramicClient) {
     let response = await ceramicClient.executeQuery(`
     mutation CreateNewJobListing($i: CreateJobListingInput!) {
