@@ -10,8 +10,8 @@ export const GeneralProvider = ({ children }) => {
   const { data: signer } = useSigner();
   const [walletAddress, setWalletAddress] = useState("");
   const [allJobs, setAllJobs] = useState([]);
-
-  const contractAddress = "0xC73A4F24B197b276cf738B0b76EA5b9cf1CB5184";
+  
+  const contractAddress = "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298";
 
   const [jobInfo, setJobInfo] = React.useState({
     id: 0,
@@ -33,20 +33,19 @@ export const GeneralProvider = ({ children }) => {
     });
   };
 
-  const registerJob = async () => {
+  const registerJob = async (bounty) => {
+    if (isNaN(bounty)) return undefined
     const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-
-    const tx = await deployedContract.registerJob(1000);
-    await tx.wait();
-    // Wait for the transaction to be mined and obtain the receipt
-    console.log(tx.hash);
+    const tx = await deployedContract.registerJob(bounty);
+    return tx?.data ? tx?.data : null;
   };
 
   const getAllJobs = async () => {
     const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-
-    const tx = await deployedContract.getAllJobs(1);
-    console.log(tx);
+    console.log("signer",signer);
+    const tx = await deployedContract.getAllJobs(0);
+    console.log("getAllJobs", tx);
+    return tx;
   };
 
   const deleteJob = async jobId => {

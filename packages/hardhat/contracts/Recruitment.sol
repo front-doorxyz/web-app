@@ -33,20 +33,6 @@ contract Recruitment is Ownable {
     //owner = msg.sender;
   }
 
-  function whitelistToken(bytes32 symbol, address tokenAddress, uint8 decimals) external onlyOwner {
-    //require(msg.sender == owner, 'This function is not public');
-    whitelistedTokenDecimals[symbol] = decimals;
-    whitelistedTokens[symbol] = tokenAddress;
-  }
-
-  function getWhitelistedTokenAddresses(bytes32 token) external view returns(address) {
-    return whitelistedTokens[token];
-  }
-
-  function getWhitelistedTokenDecimals(bytes32 token) external view returns(uint8) {
-    return whitelistedTokenDecimals[token];
-  }
-
   function getAccountCompleteDeposits() external view returns(uint8[] memory) {
     return accountCompleteDeposits[msg.sender];
   }
@@ -140,7 +126,7 @@ contract Recruitment is Ownable {
   */
   function registerJob(uint256 bounty) external returns(uint256) {
     uint256 jobId = jobIdCounter.current();
-    FrontDoorStructs.Job memory job = FrontDoorStructs.Job(jobId, bounty, true, msg.sender);
+    FrontDoorStructs.Job memory job = FrontDoorStructs.Job(jobId, bounty, false, msg.sender);
     jobList[jobId] = job;
     jobIdCounter.increment();
     FrontDoorStructs.Company memory company = companyList[msg.sender];
@@ -156,8 +142,8 @@ contract Recruitment is Ownable {
   function deleteJob(uint256 jobId) external {
     FrontDoorStructs.Job memory job = jobList[jobId];
     if (job.creator != msg.sender) revert Errors.OnlyJobCreatorAllowedToDelete(); 
-    if (job.isRemoved == false) revert Errors.JobAlreadyDeleted();
-    job.isRemoved = false;
+    if (job.isRemoved == true) revert Errors.JobAlreadyDeleted();
+    job.isRemoved = true;
     jobList[jobId] = job;
   }
 
@@ -167,23 +153,20 @@ contract Recruitment is Ownable {
     * @return FrontDoorStructs.Job[] an Array of Job struct
   */
   function getAllJobs(uint256 startId) external view returns(FrontDoorStructs.Job[] memory){
-
     if (startId > jobIdCounter.current()) revert Errors.JobListingLimitExceed();
-
     uint256 jobsFetched = 0;
-
-    FrontDoorStructs.Job[] memory jobArray;
+    uint256 len = (jobIdCounter.current() - startId < jobListingLimit) ? jobIdCounter.current() - startId : jobListingLimit;
+    FrontDoorStructs.Job[] memory jobArray = new FrontDoorStructs.Job[](len);
     for (uint i=startId; i<jobIdCounter.current(); i++) {
-      if (jobList[i].isRemoved == true) {
+      if (jobList[i].isRemoved == false) {
         jobArray[jobsFetched] = jobList[i];
-        jobsFetched++;
       }
       if (jobsFetched >= jobListingLimit) {
         return jobArray;
       }
+      jobsFetched++;
     }
     return jobArray;
-
   }
 
   /**
@@ -198,7 +181,7 @@ contract Recruitment is Ownable {
     FrontDoorStructs.Job[] memory jobArray;
     for (uint i=startId; i<jobIdCounter.current(); i++) {
       if (jobList[i].creator == companyWallet) {
-        if (jobList[i].isRemoved == true) {
+        if (jobList[i].isRemoved == false) {
           jobArray[jobsFetched] = jobList[i];
           jobsFetched++;
         }

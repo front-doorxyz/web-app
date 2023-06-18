@@ -92,7 +92,13 @@ const JobFill = (props: Props) => {
         // onClick={async () => {
         //   await registerJob();
         // }}
-        onClick={() => createJobListing(jobInfo)}
+        onClick={async () => {
+          let jobId = await registerJob(Number(jobInfo.bounty));
+          if (!jobId) alert("Error in smartcontract transaction: registerJob");
+          console.log("jobId", jobId);
+          jobInfo.id = jobId;
+          await createJobListing(jobInfo);
+        }}
       >
         {props.type === "edit" ? "Edit Job" : "Add Job"}
       </button>

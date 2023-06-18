@@ -1,11 +1,11 @@
 const contracts = {
-  31337: [
+  5: [
     {
-      name: "localhost",
-      chainId: "31337",
+      name: "goerli",
+      chainId: "5",
       contracts: {
         Recruitment: {
-          address: "0x30852CF041B5aa3964753D928778D0a31837B9C1",
+          address: "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298",
           abi: [
             {
               inputs: [],
@@ -812,44 +812,6 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "bytes32",
-                  name: "token",
-                  type: "bytes32",
-                },
-              ],
-              name: "getWhitelistedTokenAddresses",
-              outputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "bytes32",
-                  name: "token",
-                  type: "bytes32",
-                },
-              ],
-              name: "getWhitelistedTokenDecimals",
-              outputs: [
-                {
-                  internalType: "uint8",
-                  name: "",
-                  type: "uint8",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
                   internalType: "address",
                   name: "",
                   type: "address",
@@ -1357,29 +1319,6 @@ const contracts = {
                 },
               ],
               name: "updateJobListingLimit",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "bytes32",
-                  name: "symbol",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "address",
-                  name: "tokenAddress",
-                  type: "address",
-                },
-                {
-                  internalType: "uint8",
-                  name: "decimals",
-                  type: "uint8",
-                },
-              ],
-              name: "whitelistToken",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",
