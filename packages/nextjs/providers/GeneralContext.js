@@ -13,6 +13,7 @@ export const GeneralProvider = ({ children }) => {
   const [id, setId] = useState("");
   const [allJobs, setAllJobs] = useState([]);
   const [email, setEmail] = useState("");
+  const [roomId, setRoomId] = useState("");
   const contractAddress = "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298";
   const [loading, setLoading] = useState(false);
   const [jobInfo, setJobInfo] = React.useState({
@@ -123,7 +124,9 @@ export const GeneralProvider = ({ children }) => {
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log("error", error))
-        .finally(() => alert("An email was sent to this candidate for referral confirmation. Thank you!"));
+        .finally(() =>
+          notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
+        );
     } catch (error) {
       console.error("Error:", error);
       notification.error("Failed to register referral");
@@ -132,7 +135,7 @@ export const GeneralProvider = ({ children }) => {
     }
   };
 
-  const sendInterviewMail  = async (roomId, email) => {
+  const sendInterviewMail = async (roomId, email) => {
     setLoading(true);
     try {
       //Send email
@@ -156,10 +159,10 @@ export const GeneralProvider = ({ children }) => {
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log("error", error))
-        .finally(() => alert("An email was sent to this candidate with the Huddle roomid!"));
+        .finally(() => notification.success("An email was sent to this candidate with the Huddle link!"));
     } catch (error) {
       console.error("Error:", error);
-      notification.error("Failed to register referral");
+      notification.error("Failed to send email");
     } finally {
       setLoading(false);
     }
@@ -183,6 +186,9 @@ export const GeneralProvider = ({ children }) => {
     setId,
     loading,
     setLoading,
+    sendInterviewMail,
+    roomId,
+    setRoomId,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;

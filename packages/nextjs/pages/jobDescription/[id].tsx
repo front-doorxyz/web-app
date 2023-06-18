@@ -4,7 +4,8 @@ import { readJobListingById } from "../../services/store/store";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
-  const { jobInfo, deleteJob, setJobInfo, registerReferral, email, setEmail, id, setId } = useContext(GeneralContext);
+  const { jobInfo, deleteJob, setJobInfo, registerReferral, email, setEmail, id, setId, loading } =
+    useContext(GeneralContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -67,10 +68,10 @@ const Description = () => {
                   placeholder="Email"
                   className="input input-bordered w-[20vw]"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </div>
-              <button className="btn btn-primary" onClick={() => registerReferral("0x01", email)}>
+              <button className="btn btn-primary" disabled={loading} onClick={() => registerReferral("0x01", email)}>
                 Refer Candidate
               </button>
             </div>
@@ -81,7 +82,7 @@ const Description = () => {
               <button className="btn btn-primary" onClick={handleEditJob}>
                 Edit Job
               </button>
-              <button className="btn btn-primary" onClick={() => deleteJob(jobInfo.id)}>
+              <button className="btn btn-primary" disabled={loading} onClick={() => deleteJob("0x03")}>
                 Delete Job
               </button>
             </div>
