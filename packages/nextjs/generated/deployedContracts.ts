@@ -5,7 +5,7 @@ const contracts = {
       chainId: "5",
       contracts: {
         Recruitment: {
-          address: "0xC73A4F24B197b276cf738B0b76EA5b9cf1CB5184",
+          address: "0x30852CF041B5aa3964753D928778D0a31837B9C1",
           abi: [
             {
               inputs: [],
@@ -1180,7 +1180,13 @@ const contracts = {
                 },
               ],
               name: "registerJob",
-              outputs: [],
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
               stateMutability: "nonpayable",
               type: "function",
             },
