@@ -41,7 +41,7 @@ https://composedb.js.org/docs/0.4.x/create-your-composite
 https://composedb.js.org/docs/0.4.x/guides/data-modeling/schemas
 
 Write a "createModel"
-E.g. JobListing.graphql
+E.g. JobListing-create.graphql
 ```graphql
 type JobListing @createModel(accountRelation: LIST, description: "Job listings")
     roleTitle: String! @string(maxLength: 127)
@@ -58,7 +58,7 @@ type JobListing @createModel(accountRelation: LIST, description: "Job listings")
 https://composedb.js.org/docs/0.4.x/guides/data-modeling/composites#creating-composites
 
 ```shell
-composedb composite:create JobListing.graphql --output=JobListing-composite.json --did-private-key=$GLAZE_DID_SEED
+composedb composite:create JobListing-create.graphql --output=JobListing-composite.json --did-private-key=$GLAZE_DID_SEED
 ```
 
 JobListing-composite.json
@@ -188,3 +188,4 @@ create graphQl schema for the composite:
 ```shell
 composedb graphql:schema JobListing-runtime-composite.json --output=JobListing-schema.graphql
 ```
+

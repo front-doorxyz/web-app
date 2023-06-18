@@ -2,7 +2,7 @@
 export const definition = {
     "models": {
         "SimpleProfile": {
-            "id": "kjzl6hvfrbw6c6gidm618gwgcwzfx059qfzvdkxsmyt8ay2wku9ctzmqneip3x2",
+            "id": "kjzl6hvfrbw6c9ukupfg1n3jj0gx5t7z7a635avs8wan9pedkbth544qfrdn29v",
             "accountRelation": {"type": "single"}
         }
     },
