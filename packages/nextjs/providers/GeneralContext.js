@@ -132,6 +132,39 @@ export const GeneralProvider = ({ children }) => {
     }
   };
 
+  const sendInterviewMail  = async (roomId, email) => {
+    setLoading(true);
+    try {
+      //Send email
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var raw = JSON.stringify({
+        body: {
+          roomId: roomId,
+          email: email,
+        },
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log("error", error))
+        .finally(() => alert("An email was sent to this candidate with the Huddle roomid!"));
+    } catch (error) {
+      console.error("Error:", error);
+      notification.error("Failed to register referral");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     walletAddress,
     setWalletAddress,
