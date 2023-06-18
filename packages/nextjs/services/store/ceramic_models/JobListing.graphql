@@ -1,9 +1,0 @@
-type JobListing {
-    roleTitle: String! @string(minLength: 1)
-    description: String!
-    location: String
-    maxSalary: Int
-    minSalary: Int
-    bounty: Int
-    companyName: String
-}
