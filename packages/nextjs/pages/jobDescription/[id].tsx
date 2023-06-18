@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
+import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
+  const { jobInfo, deleteJob } = useContext(GeneralContext);
   const router = useRouter();
   const handleEditJob = () => {
     router.push("/client/editJob/1");
@@ -34,7 +36,7 @@ const Description = () => {
               <button className="btn btn-primary" onClick={handleEditJob}>
                 Edit Job
               </button>
-              <button className="btn btn-primary" onClick={handleEditJob}>
+              <button className="btn btn-primary" onClick={() => deleteJob(jobInfo.id)}>
                 Delete Job
               </button>
             </div>
