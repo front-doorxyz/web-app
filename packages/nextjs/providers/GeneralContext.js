@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Recruitment from "../generated/recruitment.json";
+import { readAll, write } from "../services/store/playground_store";
 import axios from "axios";
 import { ethers } from "ethers";
 import { useSigner } from "wagmi";
 
-const { JsonRpcProvider } = require("@ethersproject/providers");
 export const GeneralContext = React.createContext();
 export const GeneralProvider = ({ children }) => {
   const { data: signer } = useSigner();
   const [walletAddress, setWalletAddress] = useState("");
+  const [allJobs, setAllJobs] = useState([]);
 
   const contractAddress = "0xC73A4F24B197b276cf738B0b76EA5b9cf1CB5184";
 
   const [jobInfo, setJobInfo] = React.useState({
     id: 0,
-    title: "Role Title",
+    roleTitle: "Role Title",
     description: "Describe the Role",
-    company: "Company name",
+    companyName: "Company name",
     location: "Location",
     maxSalary: "Max Salary",
     bounty: "Bounty",
     minSalary: "Min Salary",
   });
 
-  const handleChange = () => {
-    setJobInfo({ ...jobInfo, [e.target.name]: e.target.value });
+  const handleChange = e => {
+    const { name, value } = e.target;
+    console.log({ name, value });
+    setJobInfo({
+      ...jobInfo,
+      [name]: value,
+    });
   };
 
   const registerJob = async () => {
@@ -51,9 +57,16 @@ export const GeneralProvider = ({ children }) => {
     console.log(del.hash);
   };
 
-  // useEffect(() => {
-  //   getAllJobs();
-  // });
+  const registerReferral = async () => {
+    const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+    const regRef = await deployedContract.registerReferral(1, "bhavya.gor9999@gmail.com");
+    await regRef.wait();
+    console.log(regRef.hash);
+  };
+
+  useEffect(() => {
+    console.log(jobInfo);
+  }, [jobInfo]);
 
   const value = {
     walletAddress,
@@ -64,11 +77,10 @@ export const GeneralProvider = ({ children }) => {
     registerJob,
     getAllJobs,
     deleteJob,
+    allJobs,
+    setAllJobs,
+    registerReferral,
   };
-
-  useEffect(() => {
-    console.log(walletAddress);
-  }, [walletAddress]);
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;
 };

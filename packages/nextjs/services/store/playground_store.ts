@@ -1,4 +1,4 @@
-import create from "zustand";
+import {create} from "zustand";
 import process from 'process'
 import { Web3Storage, getFilesFromPath, Filelike } from 'web3.storage'
 import { JobListing } from "./model";
@@ -36,70 +36,6 @@ if (!process.env.WEB3_STORAGE_API_KEY) {
 const WEB3_STORAGE_CLIENT = new Web3Storage({ token : process.env.WEB3_STORAGE_API_KEY! })
 
 
-
-
-
-
-async function write (jobListing: JobListing) {
-  let jobListingJson = JSON.stringify(jobListing);
-  const blob = new Blob([jobListingJson], { type: 'application/json' });
-  //const cid = await WEB3_STORAGE_CLIENT.put(jobListingJson)
-
-  const file = Web3File.fromBlob(blob, 'image.png', {})
-
-
-  //const file = Web3File.fromText('web3file', 'file.txt', null);
-  
-  //const file = File.fromIterable("jobListing.json", [jobListingJson]);
-
-  const filelike = createFilelike("jobListing.json", jobListingJson);
-
-  const cid = await WEB3_STORAGE_CLIENT.put([filelike]);
-
-
-  console.log('Content added with CID:', cid)
-
-}
-
-async function readByCid (cid: string) {
-  const dummy_cid = "bafybeia6nedhdk5sgrqeanq3uznjfuqn73t2m7g6vpjm4wfhyi6om6lxby";
-  const root_cid = "";
-  
-  const info = await WEB3_STORAGE_CLIENT.status(dummy_cid);
-  const res = await WEB3_STORAGE_CLIENT.get(dummy_cid);
-
-  const files = await res!.files() // Promise<Web3File[]>
-
-  for (const file of files) {
-    console.log(`${file.cid} ${file.name} ${file.size}`)
-  }
-}
-
-async function readAll() {
-  const dummy_cid = "bafybeia6nedhdk5sgrqeanq3uznjfuqn73t2m7g6vpjm4wfhyi6om6lxby";
-  const root_cid = "";
-  const cid = dummy_cid;
-  
-  const info = await WEB3_STORAGE_CLIENT.status(cid);
-  console.log(`Info for cid "${cid}": ${info}`);
-
-  const res = await WEB3_STORAGE_CLIENT.get(cid);
-
-  const files = await res!.files() // Promise<Web3File[]>
-
-  for (const file of files) {
-    console.log(`${file.cid} ${file.name} ${file.size}`)
-  }
-
-}
-
-
-function update () {
-  
-}
-
-
-
 type TGlobalState = {
   nativeCurrencyPrice: number;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
@@ -110,6 +46,64 @@ export const useGlobalState = create<TGlobalState>(set => ({
   nativeCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
 }));
+
+
+
+
+export const write = async (jobListing:JobListing) => {
+  const jobListingJson = JSON.stringify(jobListing);
+  const blob = new Blob([jobListingJson], { type: 'application/json' });
+  // const cid = await WEB3_STORAGE_CLIENT.put(jobListingJson)
+
+  const file = Web3File.fromBlob(blob, 'image.png', {});
+  // const file = Web3File.fromText('web3file', 'file.txt', null);
+  // const file = File.fromIterable("jobListing.json", [jobListingJson]);
+
+  const filelike = createFilelike('jobListing.json', jobListingJson);
+  const cid = await WEB3_STORAGE_CLIENT.put([filelike]);
+
+  console.log('Content added with CID:', cid);
+};
+
+export async function readByCid(cid:string) {
+  const dummy_cid = "bafybeia6nedhdk5sgrqeanq3uznjfuqn73t2m7g6vpjm4wfhyi6om6lxby";
+  const root_cid = "";
+
+  const info = await WEB3_STORAGE_CLIENT.status(dummy_cid);
+  const res = await WEB3_STORAGE_CLIENT.get(dummy_cid);
+
+  const files = await res!.files(); // Promise<Web3File[]>
+
+  for (const file of files) {
+    console.log(`${file.cid} ${file.name} ${file.size}`);
+  }
+}
+
+export async function readAll() {
+  const dummy_cid = "bafybeia6nedhdk5sgrqeanq3uznjfuqn73t2m7g6vpjm4wfhyi6om6lxby";
+  const root_cid = "";
+  const cid = dummy_cid;
+
+  const info = await WEB3_STORAGE_CLIENT.status(cid);
+  console.log(`Info for cid "${cid}": ${info}`);
+
+  const res = await WEB3_STORAGE_CLIENT.get(cid);
+
+  const files = await res!.files(); // Promise<Web3File[]>
+
+  for (const file of files) {
+    console.log(`${file.cid} ${file.name} ${file.size}`);
+  }
+}
+
+
+
+function update () {
+  
+}
+
+
+
 
 
 const jobListing: JobListing = {

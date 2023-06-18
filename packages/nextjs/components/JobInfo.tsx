@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { createJobListing } from "../services/store/store";
 import { type } from "os";
 import { useSigner } from "wagmi";
 import { useDeployedContractInfo, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
@@ -11,11 +12,22 @@ type Props = {
 const JobFill = (props: Props) => {
   const { data: signer } = useSigner();
 
-  const { jobInfo, handleChange, registerJob } = useContext(GeneralContext);
+  const { jobInfo, handleChange, registerJob, setJobInfo } = useContext(GeneralContext);
 
-  if (props.type === "edit") {
-    console.log("api call here");
-  }
+  useEffect(() => {
+    if (props.type === "add") {
+      setJobInfo({
+        id: 0,
+        roleTitle: "Role Title",
+        description: "Describe the Role",
+        companyName: "Company name",
+        location: "Location",
+        maxSalary: "Max Salary",
+        bounty: "Bounty",
+        minSalary: "Min Salary",
+      });
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
@@ -24,8 +36,8 @@ const JobFill = (props: Props) => {
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
-        name="company"
-        value={jobInfo.company}
+        name="companyName"
+        value={jobInfo.companyName}
       />
       <input
         type="text-area"
@@ -48,8 +60,8 @@ const JobFill = (props: Props) => {
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
-        name="title"
-        value={jobInfo.title}
+        name="roleTitle"
+        value={jobInfo.roleTitle}
       />
       <input
         type="text"
@@ -77,9 +89,10 @@ const JobFill = (props: Props) => {
       />
       <button
         className={`btn btn-primary `}
-        onClick={async () => {
-          await registerJob();
-        }}
+        // onClick={async () => {
+        //   await registerJob();
+        // }}
+        onClick={() => createJobListing(jobInfo)}
       >
         {props.type === "edit" ? "Edit Job" : "Add Job"}
       </button>

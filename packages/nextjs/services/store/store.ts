@@ -73,9 +73,7 @@ function mockid(length: number) {
 export async function createJobListing (jobListing: JobListing): Promise<JobListing> {
   let id = mockid(64);
   jobListing.id = id;
-
   database[id] = jobListing;
-
   console.log('JobListing added with id:', id)
   return jobListing;
 }

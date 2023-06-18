@@ -1,20 +1,56 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { readJobListingById } from "../../services/store/store";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
-  const { jobInfo, deleteJob } = useContext(GeneralContext);
+  const { jobInfo, deleteJob, setJobInfo } = useContext(GeneralContext);
   const router = useRouter();
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    const { id } = router.query;
+    setId(id);
+    readJobListingById(id)
+      .then(jobListings => setJobInfo(jobListings))
+      .catch(error => {
+        // Handle the error appropriately
+      });
+  }, []);
+
   const handleEditJob = () => {
-    router.push("/client/editJob/1");
+    router.push(`/client/editJob/${id}`);
   };
   return (
     <div className="flex items-center justify-center">
       <div className="flex w-[80vw] justify-center items-start mt-[3%] gap-4 ">
         <div className=" card rounded-lg shadow-lg flex justify-start items-start w-[50vw] flex-col gap-2">
-          <div className="text-xl">JOB TITLE</div>
-          <div className="text-[12px] mr-[1%]  text-justify">
-            JOB DESCRIPTION LOCATION ROLE TITLE BOUNTY MAX Salary Min Salary
+          <div className="text-2xl">{jobInfo.roleTitle}</div>
+          <div className="card flex flex-col gap-4 p-4 bg-primary w-[50vw] rounded-md shadow-md">
+            <div className="flex flex-col">
+              <span className="font-bold">JOB DESCRIPTION</span>
+              <span className="text-sm">{jobInfo.description}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">LOCATION</span>
+              <span className="text-sm">{jobInfo.location}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">ROLE TITLE</span>
+              <span className="text-sm">{jobInfo.roleTitle}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">BOUNTY</span>
+              <span className="text-sm">${jobInfo.bounty}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">MIN Salary</span>
+              <span className="text-sm">{jobInfo.minSalary}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">MAX Salary</span>
+              <span className="text-sm">{jobInfo.maxSalary}</span>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-8">
