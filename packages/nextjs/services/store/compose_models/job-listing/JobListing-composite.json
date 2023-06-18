@@ -17,7 +17,9 @@
       }
     ]
   },
-  "aliases": {},
+  "aliases": {
+    "kjzl6hvfrbw6cahsqm3n5prd3h661txxvuvson0tvj2cs035j32evnd9x26isll":  "JobListing"
+  },
   "views": {
     "account": {},
     "root": {},

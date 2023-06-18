@@ -2,7 +2,7 @@
   "name": "@se-2/nextjs",
   "private": true,
   "version": "0.1.0",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "start": "next dev",
@@ -31,6 +31,7 @@
     "@uniswap/sdk": "^3.0.3",
     "axios": "^1.4.0",
     "daisyui": "^2.31.0",
+    "dids": "^4.0.1",
     "ethers": "^5.0.0",
     "next": "^13.1.6",
     "nextjs-progressbar": "^0.0.16",

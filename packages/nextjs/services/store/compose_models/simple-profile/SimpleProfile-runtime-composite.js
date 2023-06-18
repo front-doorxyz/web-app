@@ -6,7 +6,11 @@ export const definition = {
             "accountRelation": {"type": "single"}
         }
     },
-    "objects": {"SimpleProfile": {"displayName": {"type": "string", "required": true}}},
+    "objects": {
+        "SimpleProfile": {
+            "displayName": {"type": "string", "required": true}
+        }
+    },
     "enums": {},
     "accountData": {"simpleProfile": {"type": "node", "name": "SimpleProfile"}}
 }

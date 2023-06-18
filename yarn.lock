@@ -6060,6 +6060,7 @@ __metadata:
     autoprefixer: ^10.4.12
     axios: ^1.4.0
     daisyui: ^2.31.0
+    dids: ^4.0.1
     eslint: ^8.15.0
     eslint-config-next: ^13.1.6
     eslint-config-prettier: ^8.5.0
@@ -11529,7 +11530,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dids@npm:^4.0.0":
+"dids@npm:^4.0.0, dids@npm:^4.0.1":
   version: 4.0.1
   resolution: "dids@npm:4.0.1"
   dependencies:
