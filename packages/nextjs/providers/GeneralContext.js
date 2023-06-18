@@ -86,10 +86,37 @@ export const GeneralProvider = ({ children }) => {
   const registerReferral = async (jobId, email) => {
     setLoading(true);
     try {
+      //register referral
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
       const regRef = await deployedContract.registerReferral(jobId, email);
       await regRef.wait();
       console.log("Success! Transaction hash:", regRef.transactionHash);
+
+      //Get referrals
+      const refIds = await deployedContract.getReferralIDs();
+
+      //Send email
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var raw = JSON.stringify({
+        "body": {
+          "refId": refIds[refIds.length-1],
+          "email": email
+        }
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error))
+        .finally(() => alert("An email was sent to this candidate for referral confirmation. Thank you!"));
     } catch (error) {
       console.error("Error:", error);
     } finally {

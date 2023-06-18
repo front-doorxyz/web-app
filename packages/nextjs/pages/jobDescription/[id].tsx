@@ -67,10 +67,10 @@ const Description = () => {
                   placeholder="Email"
                   className="input input-bordered w-[20vw]"
                   value={email}
-                  onChange={() => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <button className="btn btn-primary" onClick={registerReferral}>
+              <button className="btn btn-primary" onClick={() => registerReferral("0x01", email)}>
                 Refer Candidate
               </button>
             </div>
