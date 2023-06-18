@@ -1,4 +1,5 @@
 import React from "react";
+import { HuddleIframe } from "@huddle01/iframe";
 
 type Props = {};
 

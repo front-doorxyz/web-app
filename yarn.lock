@@ -3128,6 +3128,13 @@
     react "^18.2.0"
     zustand "^4.0.0-rc.1"
 
+"@huddle01/iframe@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@huddle01/iframe/-/iframe-0.0.7.tgz#9e2db695ed38edee35b9649699659ad093151a21"
+  integrity sha512-G9JR1WFNONn3qeJInCAGo4pr8hokxNjfaCy8Piggd5+kaDIymPjywiHnh1j0H+alJWRyEL4KC1nMCw8y+CszQA==
+  dependencies:
+    zod "^3.21.4"
+
 "@huddle01/react@^0.0.11":
   version "0.0.11"
   resolved "https://registry.npmjs.org/@huddle01/react/-/react-0.0.11.tgz"
@@ -19740,7 +19747,7 @@ zksync-web3@^0.14.3:
   resolved "https://registry.npmjs.org/zksync-web3/-/zksync-web3-0.14.3.tgz"
   integrity sha512-hT72th4AnqyLW1d5Jlv8N2B/qhEnl2NePK2A3org7tAa24niem/UAaHMkEvmWI3SF9waYUPtqAtjpf+yvQ9zvQ==
 
-zod@3.21.4:
+zod@3.21.4, zod@^3.21.4:
   version "3.21.4"
   resolved "https://registry.npmjs.org/zod/-/zod-3.21.4.tgz"
   integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==

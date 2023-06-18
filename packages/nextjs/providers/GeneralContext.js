@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Recruitment from "../generated/recruitment.json";
 import { readAll, write } from "../services/store/playground_store";
+import { notification } from "../utils/scaffold-eth/notification";
 import axios from "axios";
 import { ethers } from "ethers";
 import { useSigner } from "wagmi";
@@ -44,12 +45,16 @@ export const GeneralProvider = ({ children }) => {
   const registerJob = async bounty => {
     setLoading(true);
     try {
-      if (isNaN(bounty)) return undefined
+      if (isNaN(bounty)) return undefined;
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const tx = await deployedContract.registerJob(bounty);
+      const tx = await deployedContract.registerJob(Number(bounty));
+      const receipt = await tx.wait();
+      console.log("Success! Transaction hash:", receipt.transactionHash);
+      notification.success("Job registered successfully");
       return tx?.data ? tx?.data : null;
     } catch (error) {
       console.error("Error:", error);
+      notification.error("Failed to register job");
     } finally {
       setLoading(false);
     }
@@ -63,6 +68,7 @@ export const GeneralProvider = ({ children }) => {
       console.log(tx);
     } catch (error) {
       console.error("Error:", error);
+      notification.error("Failed to get jobs");
     } finally {
       setLoading(false);
     }
@@ -74,10 +80,11 @@ export const GeneralProvider = ({ children }) => {
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
       const del = await deployedContract.deleteJob(jobId);
       await del.wait();
-      // Wait for the transaction to be mined and obtain the receipt
       console.log("Success! Transaction hash:", del.transactionHash);
+      notification.success("Job deleted successfully");
     } catch (error) {
       console.error("Error:", error);
+      notification.error("Failed to delete job");
     } finally {
       setLoading(false);
     }
@@ -99,34 +106,31 @@ export const GeneralProvider = ({ children }) => {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       var raw = JSON.stringify({
-        "body": {
-          "refId": refIds[refIds.length-1],
-          "email": email
-        }
+        body: {
+          refId: refIds[refIds.length - 1],
+          email: email,
+        },
       });
 
       var requestOptions = {
-        method: 'POST',
+        method: "POST",
         headers: myHeaders,
         body: raw,
-        redirect: 'follow'
+        redirect: "follow",
       };
 
       fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
-        .catch(error => console.log('error', error))
+        .catch(error => console.log("error", error))
         .finally(() => alert("An email was sent to this candidate for referral confirmation. Thank you!"));
     } catch (error) {
       console.error("Error:", error);
+      notification.error("Failed to register referral");
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    console.log(jobInfo);
-  }, [jobInfo]);
 
   const value = {
     walletAddress,
