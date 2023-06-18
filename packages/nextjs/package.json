@@ -41,8 +41,6 @@
     "use-debounce": "^8.0.4",
     "usehooks-ts": "^2.7.2",
     "wagmi": "^0.11.6",
-    "web3-file": "^0.2.0",
-    "web3.storage": "^4.5.4",
     "zustand": "^4.1.2"
   },
   "devDependencies": {
