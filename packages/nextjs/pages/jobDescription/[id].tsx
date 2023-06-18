@@ -4,7 +4,7 @@ import { readJobListingById } from "../../services/store/store";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
-  const { jobInfo, deleteJob, setJobInfo } = useContext(GeneralContext);
+  const { jobInfo, deleteJob, setJobInfo, registerReferral } = useContext(GeneralContext);
   const router = useRouter();
   const [id, setId] = useState("");
 
@@ -24,9 +24,11 @@ const Description = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="flex w-[80vw] justify-center items-start mt-[3%] gap-4 ">
-        <div className=" card rounded-lg shadow-lg flex justify-start items-start w-[50vw] flex-col gap-2">
-          <div className="text-2xl">{jobInfo.roleTitle}</div>
-          <div className="card flex flex-col gap-4 p-4 bg-primary w-[50vw] rounded-md shadow-md">
+        <div className=" card  bg-primary rounded-lg shadow-lg flex justify-start items-start w-[50vw] flex-col gap-2 pt-[2%] ">
+          <div className="text-2xl pl-4">
+            {jobInfo.companyName} -- {jobInfo.roleTitle}
+          </div>
+          <div className="card flex flex-col p-4 gap-4 w-[50vw] rounded-md shadow-md">
             <div className="flex flex-col">
               <span className="font-bold">JOB DESCRIPTION</span>
               <span className="text-sm">{jobInfo.description}</span>
@@ -63,7 +65,9 @@ const Description = () => {
               <div>
                 <input type="text" placeholder="Email" className="input input-bordered w-[20vw]" />
               </div>
-              <button className="btn btn-primary">Refer Candidate</button>
+              <button className="btn btn-primary" onClick={registerReferral}>
+                Refer Candidate
+              </button>
             </div>
           </div>
           <div className="card  rounded-lg shadow-lg p-[2%] w-[30vw]">

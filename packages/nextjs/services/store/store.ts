@@ -86,5 +86,16 @@ export async function readAllJobListings (): Promise<JobListing[]> {
   return Object.values(database)
 }
 
+export async function jobUpdate(id: string, updatedJob: Partial<JobListing>): Promise<JobListing | undefined> {
+  const job = database[id];
+  if (job) {
+    const updatedJobListing = { ...job, ...updatedJob };
+    database[id] = updatedJobListing;
+    console.log('JobListing updated with id:', id);
+    return updatedJobListing;
+  }
+  return undefined;
+}
+
 
 // readAllJobListings().then((listings) => {  console.log('Reading completed', listings);}).catch((error) => {console.log('Error during reading:', error);});

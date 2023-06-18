@@ -29,6 +29,12 @@ const JobFill = (props: Props) => {
     }
   }, []);
 
+  const handleAddJob = async () => {
+    const jobId = await registerJob(jobInfo.bounty);
+    // const newJob = createJobListing(jobInfo);
+    console.log(jobId);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <input
@@ -89,10 +95,8 @@ const JobFill = (props: Props) => {
       />
       <button
         className={`btn btn-primary `}
-        // onClick={async () => {
-        //   await registerJob();
-        // }}
-        onClick={() => createJobListing(jobInfo)}
+        onClick={handleAddJob}
+        // onClick={() => createJobListing(jobInfo)}
       >
         {props.type === "edit" ? "Edit Job" : "Add Job"}
       </button>
