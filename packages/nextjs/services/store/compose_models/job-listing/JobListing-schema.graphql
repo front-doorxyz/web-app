@@ -1,0 +1,172 @@
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  jobListingIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): JobListingConnection
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type CeramicAccount implements Node {
+  """Globally unique identifier of the account (DID string)"""
+  id: ID!
+
+  """
+  Whether the Ceramic instance is currently authenticated with this account or not
+  """
+  isViewer: Boolean!
+  jobListingList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): JobListingConnection
+}
+
+"""A connection to a list of items."""
+type JobListingConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [JobListingEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type JobListingEdge {
+  """The item at the end of the edge"""
+  node: JobListing
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type JobListing implements Node {
+  id: ID!
+  bounty: Int
+  location: String!
+  maxSalary: Int
+  minSalary: Int
+  roleTitle: String!
+  companyName: String!
+  description: String!
+}
+
+type Mutation {
+  createJobListing(input: CreateJobListingInput!): CreateJobListingPayload
+  updateJobListing(input: UpdateJobListingInput!): UpdateJobListingPayload
+}
+
+type CreateJobListingPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: JobListing!
+  clientMutationId: String
+}
+
+input CreateJobListingInput {
+  content: JobListingInput!
+  clientMutationId: String
+}
+
+input JobListingInput {
+  bounty: Int
+  location: String!
+  maxSalary: Int
+  minSalary: Int
+  roleTitle: String!
+  companyName: String!
+  description: String!
+}
+
+type UpdateJobListingPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+
+  """Account currently authenticated on the Ceramic instance, if set"""
+  viewer: CeramicAccount
+  document: JobListing!
+  clientMutationId: String
+}
+
+input UpdateJobListingInput {
+  id: ID!
+  content: PartialJobListingInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input PartialJobListingInput {
+  bounty: Int
+  location: String
+  maxSalary: Int
+  minSalary: Int
+  roleTitle: String
+  companyName: String
+  description: String
+}
+
+input UpdateOptionsInput {
+  """
+  Fully replace the document contents instead of performing a shallow merge
+  """
+  replace: Boolean = false
+
+  """Only perform mutation if the document matches the provided version"""
+  version: CeramicCommitID
+}
+
+"""A Ceramic Commit ID"""
+scalar CeramicCommitID @specifiedBy(url: "https://github.com/ceramicnetwork/CIP/blob/main/CIPs/CIP-59/CIP-59.md#commitid")

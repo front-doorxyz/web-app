@@ -1,0 +1,9 @@
+type JobListing @createModel(accountRelation: LIST, description: "Job listings") {
+    roleTitle: String! @string(maxLength: 127)
+    description: String! @string(maxLength: 127)
+    location: String!  @string(maxLength: 127)
+    maxSalary: Int @int(min: 1, max: 2147483647)
+    minSalary: Int @int(min: 1, max: 2147483647)
+    bounty: Int @int(min: 1, max: 2147483647)
+    companyName: String! @string(maxLength: 127)
+}
