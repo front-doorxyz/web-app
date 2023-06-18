@@ -9,10 +9,11 @@ export const GeneralContext = React.createContext();
 export const GeneralProvider = ({ children }) => {
   const { data: signer } = useSigner();
   const [walletAddress, setWalletAddress] = useState("");
+  const [id, setId] = useState("");
   const [allJobs, setAllJobs] = useState([]);
-
+  const [email, setEmail] = useState("");
   const contractAddress = "0x30852CF041B5aa3964753D928778D0a31837B9C1";
-
+  const [loading, setLoading] = useState(false);
   const [jobInfo, setJobInfo] = React.useState({
     id: 0,
     roleTitle: "Role Title",
@@ -26,42 +27,77 @@ export const GeneralProvider = ({ children }) => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    console.log({ name, value });
+    let parsedValue = value; // Initialize parsedValue with the original value
+
+    if (name === "minSalary" || name === "maxSalary" || name === "bounty") {
+      parsedValue = parseInt(value); // Convert value to an integer
+      // If you want to allow decimal values, use parseFloat instead:
+      // parsedValue = parseFloat(value);
+    }
+
     setJobInfo({
       ...jobInfo,
-      [name]: value,
+      [name]: parsedValue,
     });
   };
 
   const registerJob = async bounty => {
-    const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-    const tx = await deployedContract.registerJob(Number(bounty));
-    const receipt = await tx.wait();
-    // const jobId = receipt.events[0].args[0].toNumber();
-    // console.log("Job registered with jobId:", jobId);
-    return receipt;
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const tx = await deployedContract.registerJob(Number(bounty));
+      const receipt = await tx.wait();
+      // const jobId = receipt.events[0].args[0].toNumber();
+      // console.log("Job registered with jobId:", jobId);
+      console.log("Success! Transaction hash:", receipt.transactionHash);
+      return receipt.transactionHash;
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getAllJobs = async () => {
-    const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-
-    const tx = await deployedContract.getAllJobs(1);
-    console.log(tx);
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const tx = await deployedContract.getAllJobs(1);
+      console.log(tx);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const deleteJob = async jobId => {
-    const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-    const del = await deployedContract.deleteJob(jobId);
-    await del.wait();
-    // Wait for the transaction to be mined and obtain the receipt
-    console.log(del.hash);
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const del = await deployedContract.deleteJob(jobId);
+      await del.wait();
+      // Wait for the transaction to be mined and obtain the receipt
+      console.log("Success! Transaction hash:", del.transactionHash);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const registerReferral = async () => {
-    const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-    const regRef = await deployedContract.registerReferral(1, "bhavya.gor9999@gmail.com");
-    await regRef.wait();
-    console.log(regRef.hash);
+  const registerReferral = async (jobId, email) => {
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const regRef = await deployedContract.registerReferral(jobId, email);
+      await regRef.wait();
+      console.log("Success! Transaction hash:", regRef.transactionHash);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -80,6 +116,12 @@ export const GeneralProvider = ({ children }) => {
     allJobs,
     setAllJobs,
     registerReferral,
+    email,
+    setEmail,
+    id,
+    setId,
+    loading,
+    setLoading,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;

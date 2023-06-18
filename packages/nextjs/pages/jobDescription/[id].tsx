@@ -4,9 +4,8 @@ import { readJobListingById } from "../../services/store/store";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
-  const { jobInfo, deleteJob, setJobInfo, registerReferral } = useContext(GeneralContext);
+  const { jobInfo, deleteJob, setJobInfo, registerReferral, email, setEmail, id, setId } = useContext(GeneralContext);
   const router = useRouter();
-  const [id, setId] = useState("");
 
   useEffect(() => {
     const { id } = router.query;
@@ -63,7 +62,13 @@ const Description = () => {
                 <input type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
               </div>
               <div>
-                <input type="text" placeholder="Email" className="input input-bordered w-[20vw]" />
+                <input
+                  type="text"
+                  placeholder="Email"
+                  className="input input-bordered w-[20vw]"
+                  value={email}
+                  onChange={() => setEmail(e.target.value)}
+                />
               </div>
               <button className="btn btn-primary" onClick={registerReferral}>
                 Refer Candidate
