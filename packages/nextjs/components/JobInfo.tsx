@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { createJobListing } from "../services/store/store";
+import { createJobListing, jobUpdate } from "../services/store/store";
 import { type } from "os";
 import { useSigner } from "wagmi";
-import { useDeployedContractInfo, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 type Props = {
@@ -12,7 +11,7 @@ type Props = {
 const JobFill = (props: Props) => {
   const { data: signer } = useSigner();
 
-  const { jobInfo, handleChange, registerJob, setJobInfo } = useContext(GeneralContext);
+  const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
 
   useEffect(() => {
     if (props.type === "add") {
@@ -22,12 +21,25 @@ const JobFill = (props: Props) => {
         description: "Describe the Role",
         companyName: "Company name",
         location: "Location",
-        maxSalary: "Max Salary",
-        bounty: "Bounty",
-        minSalary: "Min Salary",
+        maxSalary: "",
+        bounty: "",
+        minSalary: "",
       });
     }
   }, []);
+
+  const handleJob = async () => {
+    if (props.type === "add") {
+      let jobId = await registerJob(Number(jobInfo.bounty));
+      if (!jobId) alert("Error in smartcontract transaction: registerJob");
+      console.log("jobId", jobId);
+      jobInfo.id = jobId;
+      await createJobListing(jobInfo);
+    } else {
+      const jobUpdated = await jobUpdate(id, jobInfo);
+      console.log(jobUpdated);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -64,7 +76,7 @@ const JobFill = (props: Props) => {
         value={jobInfo.roleTitle}
       />
       <input
-        type="text"
+        type="number"
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
@@ -72,7 +84,7 @@ const JobFill = (props: Props) => {
         value={jobInfo.bounty}
       />
       <input
-        type="text"
+        type="number"
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
@@ -80,7 +92,7 @@ const JobFill = (props: Props) => {
         value={jobInfo.maxSalary}
       />
       <input
-        type="text"
+        type="number"
         placeholder="Type here"
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
@@ -89,16 +101,9 @@ const JobFill = (props: Props) => {
       />
       <button
         className={`btn btn-primary `}
-        // onClick={async () => {
-        //   await registerJob();
-        // }}
-        onClick={async () => {
-          let jobId = await registerJob(Number(jobInfo.bounty));
-          if (!jobId) alert("Error in smartcontract transaction: registerJob");
-          console.log("jobId", jobId);
-          jobInfo.id = jobId;
-          await createJobListing(jobInfo);
-        }}
+        onClick={handleJob}
+        disabled={loading}
+        // onClick={() => createJobListing(jobInfo)}
       >
         {props.type === "edit" ? "Edit Job" : "Add Job"}
       </button>
