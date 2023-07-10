@@ -121,7 +121,10 @@ export const GeneralProvider = ({ children }) => {
       };
 
       fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
-        .then(response => response.text())
+        .then(response => {
+          response.text();
+          console.log(response.text());
+        })
         .then(result => console.log(result))
         .catch(error => console.log("error", error))
         .finally(() =>
@@ -168,6 +171,22 @@ export const GeneralProvider = ({ children }) => {
     }
   };
 
+  const confirmReferral = async (refId, email) => {
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const confirmRef = await deployedContract.confirmReferral(refId, email);
+      await confirmRef.wait();
+      console.log("Success! Transaction hash:", confirmRef.transactionHash);
+      notification.success("Confirmed Referral successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      notification.error("Failed to Confirm Referral");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     walletAddress,
     setWalletAddress,
@@ -189,6 +208,7 @@ export const GeneralProvider = ({ children }) => {
     sendInterviewMail,
     roomId,
     setRoomId,
+    confirmReferral,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;
