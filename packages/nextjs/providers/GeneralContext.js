@@ -94,29 +94,32 @@ export const GeneralProvider = ({ children }) => {
   const registerReferral = async (jobId, email) => {
     setLoading(true);
     try {
-      //register referral
+      // register referral
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
       const regRef = await deployedContract.registerReferral(jobId, email);
       await regRef.wait();
       console.log("Success! Transaction hash:", regRef.transactionHash);
 
-      //Get referrals
+      // Get referrals
       const refIds = await deployedContract.getReferralIDs();
 
-      //Send email
+      // Encode email address
+      const encodedEmail = encodeURIComponent(email);
+
+      // Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       var raw = JSON.stringify({
         body: {
-          refId: refIds[refIds.length - 1],
-          email: email,
+          refId: 1,
+          email: encodedEmail,
         },
       });
-
+      var encodedRaw = encodeURI(raw);
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: encodedRaw,
         redirect: "follow",
       };
 

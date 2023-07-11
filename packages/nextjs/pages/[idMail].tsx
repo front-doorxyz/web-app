@@ -1,11 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import { NextPage } from "next";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { GeneralContext } from "~~/providers/GeneralContext";
 
 const RefConfirm: NextPage = () => {
-  const { confirmReferral, loading } = useContext(GeneralContext);
   const [refId, setRefId] = useState(1);
   const [email, setEmail] = useState("bhavya.gor9999@gmail.com");
 
@@ -27,12 +24,7 @@ const RefConfirm: NextPage = () => {
             <input type="text" placeholder="Ref Id" className="input input-bordered w-[20vw]" value={refId} />
             <input type="text" placeholder="Email" className="input input-bordered w-[20vw]" value={email} />
           </div>
-          <button
-            className="btn btn-primary"
-            disabled={isLoading}
-            onClick={writeAsync}
-            // onClick={() => confirmReferral(refId, email)}
-          >
+          <button className="btn btn-primary" disabled={isLoading} onClick={writeAsync}>
             Confirm Referral
           </button>
         </div>
