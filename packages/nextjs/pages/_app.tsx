@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { Polybase } from "@polybase/client";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import NextNProgress from "nextjs-progressbar";

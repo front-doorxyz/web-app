@@ -25,8 +25,6 @@
     "@ethersproject/networks": "^5.7.1",
     "@ethersproject/web": "^5.7.1",
     "@heroicons/react": "^2.0.11",
-    "@huddle01/huddle01-client": "^0.0.10",
-    "@huddle01/iframe": "^0.0.7",
     "@rainbow-me/rainbowkit": "^0.11.0",
     "@uniswap/sdk": "^3.0.3",
     "axios": "^1.4.0",

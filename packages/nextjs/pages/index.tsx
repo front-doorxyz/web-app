@@ -91,7 +91,7 @@ const AllJobs: NextPage = () => {
     // updateRecord();
     // getAllRecords();
     // createRecord();
-    getFilteredRecords();
+    // getFilteredRecords();
   }, []);
 
   useEffect(() => {

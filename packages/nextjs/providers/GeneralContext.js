@@ -95,44 +95,45 @@ export const GeneralProvider = ({ children }) => {
     setLoading(true);
     try {
       // register referral
-      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const regRef = await deployedContract.registerReferral(jobId, email);
-      await regRef.wait();
-      console.log("Success! Transaction hash:", regRef.transactionHash);
+      // const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      // const regRef = await deployedContract.registerReferral(jobId, email);
+      // await regRef.wait();
+      // console.log("Success! Transaction hash:", regRef.transactionHash);
 
       // Get referrals
-      const refIds = await deployedContract.getReferralIDs();
+      // const refIds = await deployedContract.getReferralIDs();
 
       // Encode email address
-      const encodedEmail = encodeURIComponent(email);
+      // const encodedEmail = encodeURIComponent(email);
 
       // Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      var raw = JSON.stringify({
-        body: {
-          refId: 1,
-          email: encodedEmail,
-        },
-      });
-      var encodedRaw = encodeURI(raw);
+
+      var params = new URLSearchParams();
+      params.append("refId", "123");
+      params.append("email", "email@example.com");
+
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: encodedRaw,
+        body: params.toString(),
         redirect: "follow",
       };
 
-      fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
-        .then(response => {
-          response.text();
-          console.log(response.text());
-        })
-        .then(result => console.log(result))
-        .catch(error => console.log("error", error))
-        .finally(() =>
-          notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
-        );
+      console.log({ requestOptions });
+      console.log(params.toString());
+
+      // fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
+      //   .then(response => {
+      //     response.text();
+      //     console.log(response.text());
+      //   })
+      //   .then(result => console.log(result))
+      //   .catch(error => console.log("error", error))
+      //   .finally(() =>
+      //     notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
+      //   );
     } catch (error) {
       console.error("Error:", error);
       notification.error("Failed to register referral");
