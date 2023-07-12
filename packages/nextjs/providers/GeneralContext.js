@@ -94,39 +94,46 @@ export const GeneralProvider = ({ children }) => {
   const registerReferral = async (jobId, email) => {
     setLoading(true);
     try {
-      //register referral
-      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const regRef = await deployedContract.registerReferral(jobId, email);
-      await regRef.wait();
-      console.log("Success! Transaction hash:", regRef.transactionHash);
+      // register referral
+      // const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      // const regRef = await deployedContract.registerReferral(jobId, email);
+      // await regRef.wait();
+      // console.log("Success! Transaction hash:", regRef.transactionHash);
 
-      //Get referrals
-      const refIds = await deployedContract.getReferralIDs();
+      // Get referrals
+      // const refIds = await deployedContract.getReferralIDs();
 
-      //Send email
+      // Encode email address
+      // const encodedEmail = encodeURIComponent(email);
+
+      // Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      var raw = JSON.stringify({
-        body: {
-          refId: refIds[refIds.length - 1],
-          email: email,
-        },
-      });
+
+      var params = new URLSearchParams();
+      params.append("refId", "123");
+      params.append("email", "email@example.com");
 
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: params.toString(),
         redirect: "follow",
       };
 
-      fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log("error", error))
-        .finally(() =>
-          notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
-        );
+      console.log({ requestOptions });
+      console.log(params.toString());
+
+      // fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
+      //   .then(response => {
+      //     response.text();
+      //     console.log(response.text());
+      //   })
+      //   .then(result => console.log(result))
+      //   .catch(error => console.log("error", error))
+      //   .finally(() =>
+      //     notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
+      //   );
     } catch (error) {
       console.error("Error:", error);
       notification.error("Failed to register referral");
@@ -168,6 +175,22 @@ export const GeneralProvider = ({ children }) => {
     }
   };
 
+  const confirmReferral = async (refId, email) => {
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const confirmRef = await deployedContract.confirmReferral(refId, email);
+      await confirmRef.wait();
+      console.log("Success! Transaction hash:", confirmRef.transactionHash);
+      notification.success("Confirmed Referral successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      notification.error("Failed to Confirm Referral");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     walletAddress,
     setWalletAddress,
@@ -189,6 +212,7 @@ export const GeneralProvider = ({ children }) => {
     sendInterviewMail,
     roomId,
     setRoomId,
+    confirmReferral,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;
