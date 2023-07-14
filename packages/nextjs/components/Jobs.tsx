@@ -21,17 +21,12 @@ const Jobs = (props: Props) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex items-center justify-start ml-[0.6%] mt-[4%] w-[70vw]">
-        <div className="four columns w-[35%]">JOB TITLE</div>
-        <div className="two columns w-[25%]">LOCATION</div>
-        <div className="two columns w-[25%]">SALARY</div>
-        <div className="two columns w-[25%]">BOUNTY</div>
-      </div>
       <div className="flex flex-col  gap-2">
-        <div className="flex flex-col gap-8 mt-[2%]">
+        <div className="flex flex-wrap items-center justify-center gap-8 mt-[2%]">
           {allJobs.map(job => (
             <Job
               id={job.id}
+              companyName={job.companyName}
               roleTitle={job.roleTitle}
               location={job.location}
               minSalary={job.minSalary}
