@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { createJobListing, jobUpdate } from "../services/store/store";
-import { type } from "os";
-import { useSigner } from "wagmi";
+import { useRouter } from "next/router";
+import * as eth from "@polybase/eth";
+import { useAccount, useSigner } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
+import { createJobListing, db, updateJobListing } from "~~/services/polybase/database";
+import { notification } from "~~/utils/scaffold-eth";
 
 type Props = {
   type: "edit" | "add";
@@ -10,9 +12,10 @@ type Props = {
 
 const JobFill = (props: Props) => {
   const { data: signer } = useSigner();
-
+  const { address } = useAccount();
   const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
 
+  const router = useRouter();
   useEffect(() => {
     if (props.type === "add") {
       setJobInfo({
@@ -28,16 +31,48 @@ const JobFill = (props: Props) => {
     }
   }, []);
 
+  db.signer(async (data: string) => {
+    // A permission dialog will be presented to the user
+    const account = address;
+    const sig = await eth.sign(data, account);
+    return { h: "eth-personal-sign", sig };
+  });
+
   const handleJob = async () => {
     if (props.type === "add") {
       let jobId = await registerJob(Number(jobInfo.bounty));
       if (!jobId) alert("Error in smartcontract transaction: registerJob");
       console.log("jobId", jobId);
       jobInfo.id = jobId;
-      await createJobListing(jobInfo);
+      const jobData = [
+        jobInfo.id,
+        jobInfo.roleTitle,
+        jobInfo.description,
+        jobInfo.location,
+        jobInfo.maxSalary,
+        jobInfo.minSalary,
+        jobInfo.bounty,
+        jobInfo.companyName,
+      ];
+      console.log([jobData]);
+      await createJobListing(jobData);
     } else {
-      const jobUpdated = await jobUpdate(id, jobInfo);
-      console.log(jobUpdated);
+      const jobData = [
+        jobInfo.roleTitle,
+        jobInfo.description,
+        jobInfo.location,
+        jobInfo.maxSalary,
+        jobInfo.minSalary,
+        jobInfo.bounty,
+        jobInfo.companyName,
+      ];
+      const jobUpdated = await updateJobListing(jobInfo.id, jobData);
+      if (jobUpdated.id !== "") {
+        notification.success("Job Updated");
+        router.push("/");
+        return;
+      }
+      notification.error("Error while updating job");
     }
   };
 

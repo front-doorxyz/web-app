@@ -1,26 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { readJobListingById } from "../../services/store/store";
+import { readJobListingById } from "../../services/polybase/database";
+import { useAccount } from "wagmi";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
 import StarRating from "~~/components/StarRating";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
   const { jobInfo, deleteJob, setJobInfo, registerReferral, email, setEmail, id, setId, loading } =
     useContext(GeneralContext);
+  const { address } = useAccount();
 
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const { id } = router.query;
     setId(id);
     readJobListingById(id)
-      .then(jobListings => setJobInfo(jobListings))
+      .then(jobListing => {
+        setJobInfo(jobListing);
+        if (jobListing.owner === address) {
+          setIsOwner(true);
+        }
+      })
       .catch(error => {
         // Handle the error appropriately
       });
   }, []);
+
+  const { writeAsync, isLoading } = useScaffoldContractWrite({
+    contractName: "Recruitment",
+    functionName: "deleteJob",
+    args: [0x03],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
 
   const handleEditJob = () => {
     router.push(`/client/editJob/${id}`);
@@ -37,7 +54,7 @@ const Description = () => {
             {isOwner && (
               <div className="flex gap-2 mr-[2%]">
                 <PencilSquareIcon className="h-[30px] w-[30px] hover:cursor-pointer" onClick={handleEditJob} />
-                <button disabled={loading} onClick={() => deleteJob("0x03")}>
+                <button disabled={isLoading} onClick={writeAsync}>
                   <TrashIcon className="h-[30px] w-[30px] hover:cursor-pointer  " />
                 </button>
               </div>

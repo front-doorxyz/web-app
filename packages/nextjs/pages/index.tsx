@@ -1,29 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { readAllJobListings } from "../services/store/store";
-import { Polybase } from "@polybase/client";
+import { db, readAllJobListings } from "../services/polybase/database";
 import type { NextPage } from "next";
 import { useAccount, useSigner } from "wagmi";
 import Jobs from "~~/components/Jobs";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { db } from "~~/services/polybase/database";
-import { notification } from "~~/utils/scaffold-eth";
 
 const AllJobs: NextPage = () => {
   const { data: signer } = useSigner();
   const { address } = useAccount();
   const { setAllJobs, getAllJobs } = useContext(GeneralContext);
 
-  // const collectionReference = db.collection("Jobs");
+  console.log(address);
 
   useEffect(() => {
     if (signer) {
-      // getAllJobs();
-      readAllJobListings()
-        .then(jobListings => setAllJobs(jobListings))
-        .catch(error => {
-          // Handle the error appropriately
-        });
+      getAllJobs();
     }
   }, [signer]);
 
