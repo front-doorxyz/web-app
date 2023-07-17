@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
+import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
 import { useAccount, useSigner } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
@@ -13,7 +14,8 @@ type Props = {
 const JobFill = (props: Props) => {
   const { data: signer } = useSigner();
   const { address } = useAccount();
-  const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
+  const { jobInfo, handleChange, handleDescriptionChange, registerJob, setJobInfo, id, loading } =
+    useContext(GeneralContext);
 
   const router = useRouter();
   useEffect(() => {
@@ -40,7 +42,8 @@ const JobFill = (props: Props) => {
 
   const handleJob = async () => {
     if (props.type === "add") {
-      let jobId = await registerJob(Number(jobInfo.bounty));
+      // let jobId = await registerJob(Number(jobInfo.bounty));
+      let jobId = "1";
       if (!jobId) alert("Error in smartcontract transaction: registerJob");
       console.log("jobId", jobId);
       jobInfo.id = jobId;
@@ -55,7 +58,7 @@ const JobFill = (props: Props) => {
         jobInfo.companyName,
       ];
       console.log([jobData]);
-      await createJobListing(jobData);
+      // await createJobListing(jobData);
     } else {
       const jobData = [
         jobInfo.roleTitle,
@@ -78,6 +81,7 @@ const JobFill = (props: Props) => {
 
   return (
     <div className="flex flex-col gap-4">
+      Company Name
       <input
         type="text"
         placeholder="Type here"
@@ -86,14 +90,9 @@ const JobFill = (props: Props) => {
         name="companyName"
         value={jobInfo.companyName}
       />
-      <input
-        type="text-area"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="description"
-        value={jobInfo.description}
-      />
+      Description
+      <TextEditor readOnly={false} initialValue={jobInfo.description} />
+      Location
       <input
         type="text"
         placeholder="Type here"
@@ -102,6 +101,7 @@ const JobFill = (props: Props) => {
         name="location"
         value={jobInfo.location}
       />
+      Role Title
       <input
         type="text"
         placeholder="Type here"
@@ -110,6 +110,7 @@ const JobFill = (props: Props) => {
         name="roleTitle"
         value={jobInfo.roleTitle}
       />
+      Bounty
       <input
         type="number"
         placeholder="Type here"
@@ -118,6 +119,7 @@ const JobFill = (props: Props) => {
         name="bounty"
         value={jobInfo.bounty}
       />
+      Max Salary
       <input
         type="number"
         placeholder="Type here"
@@ -126,6 +128,7 @@ const JobFill = (props: Props) => {
         name="maxSalary"
         value={jobInfo.maxSalary}
       />
+      Min Salary
       <input
         type="number"
         placeholder="Type here"

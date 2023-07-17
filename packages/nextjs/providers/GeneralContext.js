@@ -36,10 +36,16 @@ export const GeneralProvider = ({ children }) => {
       // If you want to allow decimal values, use parseFloat instead:
       // parsedValue = parseFloat(value);
     }
-
     setJobInfo({
       ...jobInfo,
       [name]: parsedValue,
+    });
+  };
+
+  const handleDescriptionChange = (key, value) => {
+    setJobInfo({
+      ...jobInfo,
+      [key]: value,
     });
   };
 
@@ -124,16 +130,16 @@ export const GeneralProvider = ({ children }) => {
       console.log({ requestOptions });
       console.log(params.toString());
 
-      // fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
-      //   .then(response => {
-      //     response.text();
-      //     console.log(response.text());
-      //   })
-      //   .then(result => console.log(result))
-      //   .catch(error => console.log("error", error))
-      //   .finally(() =>
-      //     notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
-      //   );
+      fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
+        .then(response => {
+          response.text();
+          console.log(response.text());
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log("error", error))
+        .finally(() =>
+          notification.success("An email was sent to this candidate for referral confirmation. Thank you!"),
+        );
     } catch (error) {
       console.error("Error:", error);
       notification.error("Failed to register referral");
@@ -213,6 +219,7 @@ export const GeneralProvider = ({ children }) => {
     roomId,
     setRoomId,
     confirmReferral,
+    handleDescriptionChange,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;

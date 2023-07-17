@@ -4,6 +4,7 @@ import { readJobListingById } from "../../services/polybase/database";
 import { useAccount } from "wagmi";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
 import StarRating from "~~/components/StarRating";
+import TextEditor from "~~/components/TextEditor";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
@@ -62,7 +63,8 @@ const Description = () => {
           </div>
           <div className="p-2 h-[60%]">
             <div className="flex flex-col gap-2 text-sm md:text-lg">
-              <div>Job Description: {jobInfo.description}</div>
+              <TextEditor readOnly={true} initialValue={jobInfo.description} />
+              {/* <div>Job Description: {jobInfo.description}</div> */}
               <div>Role Title: {jobInfo.roleTitle}</div>
               <div>Location: {jobInfo.location}</div>
               <div>Bounty: {jobInfo.bounty}</div>
