@@ -42,8 +42,8 @@ const JobFill = (props: Props) => {
 
   const handleJob = async () => {
     if (props.type === "add") {
-      // let jobId = await registerJob(Number(jobInfo.bounty));
-      let jobId = "1";
+      let jobId = await registerJob(Number(jobInfo.bounty));
+
       if (!jobId) alert("Error in smartcontract transaction: registerJob");
       console.log("jobId", jobId);
       jobInfo.id = jobId;
@@ -58,7 +58,7 @@ const JobFill = (props: Props) => {
         jobInfo.companyName,
       ];
       console.log([jobData]);
-      // await createJobListing(jobData);
+      await createJobListing(jobData);
     } else {
       const jobData = [
         jobInfo.roleTitle,
