@@ -119,11 +119,16 @@ export const GeneralProvider = ({ children }) => {
       var params = new URLSearchParams();
       params.append("refId", "123");
       params.append("email", "email@example.com");
-
+      var raw = {
+        body: {
+          email: "email@example.com",
+          refId: 123,
+        }
+      };
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: params.toString(),
+        body: JSON.stringify(raw),
         redirect: "follow",
       };
 
@@ -154,17 +159,17 @@ export const GeneralProvider = ({ children }) => {
       //Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      var raw = JSON.stringify({
+      var raw = {
         body: {
           roomId: roomId,
           email: email,
-        },
-      });
+        }
+      };
 
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: JSON.stringify(raw),
         redirect: "follow",
       };
 
