@@ -118,10 +118,10 @@ export const GeneralProvider = ({ children }) => {
 
       var params = new URLSearchParams();
       params.append("refId", "123");
-      params.append("email", "email@example.com");
+      params.append("email", email);
       var raw = {
         body: {
-          email: "email@example.com",
+          email: email,
           refId: 123,
         }
       };
