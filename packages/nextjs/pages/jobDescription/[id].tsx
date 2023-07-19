@@ -1,91 +1,106 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { readJobListingById } from "../../services/store/store";
+import { readJobListingById } from "../../services/polybase/database";
+import { useAccount } from "wagmi";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/20/solid";
+import StarRating from "~~/components/StarRating";
+import TextEditor from "~~/components/TextEditor";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
   const { jobInfo, deleteJob, setJobInfo, registerReferral, email, setEmail, id, setId, loading } =
     useContext(GeneralContext);
+  const { address } = useAccount();
+
+  const [isOwner, setIsOwner] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const { id } = router.query;
     setId(id);
     readJobListingById(id)
-      .then(jobListings => setJobInfo(jobListings))
+      .then(jobListing => {
+        setJobInfo(jobListing);
+        if (jobListing.owner === address) {
+          setIsOwner(true);
+        }
+      })
       .catch(error => {
         // Handle the error appropriately
       });
   }, []);
 
+  const { writeAsync, isLoading } = useScaffoldContractWrite({
+    contractName: "Recruitment",
+    functionName: "deleteJob",
+    args: [0x03],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
+
   const handleEditJob = () => {
     router.push(`/client/editJob/${id}`);
   };
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex w-[80vw] justify-center items-start mt-[3%] gap-4 ">
-        <div className=" card  bg-primary rounded-lg shadow-lg flex justify-start items-start w-[50vw] flex-col gap-2 pt-[2%] ">
-          <div className="text-2xl pl-4">
-            {jobInfo.companyName} -- {jobInfo.roleTitle}
-          </div>
-          <div className="card flex flex-col p-4 gap-4 w-[50vw] rounded-md shadow-md">
-            <div className="flex flex-col">
-              <span className="font-bold">JOB DESCRIPTION</span>
-              <span className="text-sm">{jobInfo.description}</span>
+    <div className="flex flex-col items-center">
+      <div className="w-[90vw]  md:w-[50vw]  border-neutral border-[0.7px] text-neutral rounded-md transition-all duration-300 mt-[2%]">
+        <div className="flex flex-col justify-between h-[100%]">
+          <div className="bg-accent h-[50px] flex items-center justify-between  gap-2">
+            <div className="flex items-center justify-center gap-2 ml-[2%]">
+              <div className="text-sm md:text-xl">{jobInfo.companyName}</div>
+              <StarRating score={4.5} />
             </div>
-            <div className="flex flex-col">
-              <span className="font-bold">LOCATION</span>
-              <span className="text-sm">{jobInfo.location}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold">ROLE TITLE</span>
-              <span className="text-sm">{jobInfo.roleTitle}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold">BOUNTY</span>
-              <span className="text-sm">${jobInfo.bounty}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold">MIN Salary</span>
-              <span className="text-sm">{jobInfo.minSalary}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold">MAX Salary</span>
-              <span className="text-sm">{jobInfo.maxSalary}</span>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-8">
-          <div className="card  rounded-lg shadow-lg p-[2%] w-[30vw]">
-            <div className="flex flex-col justify-start items-center gap-4 ">
-              <div className="text-md md:text-xl">Refer someone and earn XXXXXX$</div>
-              <div>
-                <input type="file" className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+            {isOwner && (
+              <div className="flex gap-2 mr-[2%]">
+                <PencilSquareIcon className="h-[30px] w-[30px] hover:cursor-pointer" onClick={handleEditJob} />
+                <button disabled={isLoading} onClick={writeAsync}>
+                  <TrashIcon className="h-[30px] w-[30px] hover:cursor-pointer  " />
+                </button>
               </div>
+            )}
+          </div>
+          <div className="p-2 pt-0 h-[60%]">
+            <div className="flex flex-col gap-2 text-sm md:text-lg">
+              <TextEditor readOnly={true} initialValue={jobInfo.description} />
+              {/* <div>Job Description: {jobInfo.description}</div> */}
+              <div>Role Title: {jobInfo.roleTitle}</div>
+              <div>Location: {jobInfo.location}</div>
+              <div>Bounty: {jobInfo.bounty}</div>
               <div>
-                <input
-                  type="text"
-                  placeholder="Email"
-                  className="input input-bordered w-[20vw]"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                />
+                Salary Range: {jobInfo.minSalary}-{jobInfo.maxSalary}
               </div>
-              <button className="btn btn-primary" disabled={loading} onClick={() => registerReferral("0x01", email)}>
-                Refer Candidate
-              </button>
+              <div className="flex flex-col mt-[2%]">
+                Refer Candidate:
+                <div className="flex flex-col items-center justify-center gap-4">
+                  <div>
+                    <input
+                      type="file"
+                      className="text-sm file-input file-input-bordered file-input-primary  max-w-xs"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Email"
+                      className="text-sm input input-bordered max-w-xs"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="card  rounded-lg shadow-lg p-[2%] w-[30vw]">
-            <div className="flex flex-col justify-start items-center gap-4 ">
-              <div className="text-md md:text-xl">Edit Job or Delete Job as owner</div>
-              <button className="btn btn-primary" onClick={handleEditJob}>
-                Edit Job
-              </button>
-              <button className="btn btn-primary" disabled={loading} onClick={() => deleteJob("0x03")}>
-                Delete Job
-              </button>
-            </div>
+          <div className="flex items-center justify-center h-[20%] gap-2 mt-6">
+            <button
+              className="px-2 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded"
+              disabled={loading}
+              onClick={() => registerReferral("0x01", email)}
+            >
+              Refer
+            </button>
           </div>
         </div>
       </div>

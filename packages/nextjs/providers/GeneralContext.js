@@ -36,10 +36,16 @@ export const GeneralProvider = ({ children }) => {
       // If you want to allow decimal values, use parseFloat instead:
       // parsedValue = parseFloat(value);
     }
-
     setJobInfo({
       ...jobInfo,
       [name]: parsedValue,
+    });
+  };
+
+  const handleDescriptionChange = (key, value) => {
+    setJobInfo({
+      ...jobInfo,
+      [key]: value,
     });
   };
 
@@ -94,34 +100,43 @@ export const GeneralProvider = ({ children }) => {
   const registerReferral = async (jobId, email) => {
     setLoading(true);
     try {
-      //register referral
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
       const regRef = await deployedContract.registerReferral(jobId, email);
       await regRef.wait();
       console.log("Success! Transaction hash:", regRef.transactionHash);
 
-      //Get referrals
       const refIds = await deployedContract.getReferralIDs();
+      console.log(refIds);
 
-      //Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      var raw = JSON.stringify({
-        body: {
-          refId: refIds[refIds.length - 1],
-          email: email,
-        },
-      });
 
+      var params = new URLSearchParams();
+      params.append("refId", refIds[refIds.length - 1]);
+      params.append("email", email);
+      let refId = refIds[refIds.length - 1].toString();
+      console.log(refId);
+      var raw = {
+        body: {
+          email: email,
+          refId: refId,
+        },
+      };
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: JSON.stringify(raw),
         redirect: "follow",
       };
 
+      console.log({ requestOptions });
+      console.log(params.toString());
+
       fetch("https://74p0ofti6d.execute-api.eu-north-1.amazonaws.com/dev/mail", requestOptions)
-        .then(response => response.text())
+        .then(response => {
+          response.text();
+          console.log(response.text());
+        })
         .then(result => console.log(result))
         .catch(error => console.log("error", error))
         .finally(() =>
@@ -141,17 +156,17 @@ export const GeneralProvider = ({ children }) => {
       //Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      var raw = JSON.stringify({
+      var raw = {
         body: {
           roomId: roomId,
           email: email,
         },
-      });
+      };
 
       var requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: JSON.stringify(raw),
         redirect: "follow",
       };
 
@@ -163,6 +178,22 @@ export const GeneralProvider = ({ children }) => {
     } catch (error) {
       console.error("Error:", error);
       notification.error("Failed to send email");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const confirmReferral = async (refId, email) => {
+    setLoading(true);
+    try {
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const confirmRef = await deployedContract.confirmReferral(refId, email);
+      await confirmRef.wait();
+      console.log("Success! Transaction hash:", confirmRef.transactionHash);
+      notification.success("Confirmed Referral successfully");
+    } catch (error) {
+      console.error("Error:", error);
+      notification.error("Failed to Confirm Referral");
     } finally {
       setLoading(false);
     }
@@ -189,6 +220,8 @@ export const GeneralProvider = ({ children }) => {
     sendInterviewMail,
     roomId,
     setRoomId,
+    confirmReferral,
+    handleDescriptionChange,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;

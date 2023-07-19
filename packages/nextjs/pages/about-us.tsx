@@ -1,8 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
 import authImg from "~~/assets/frontdoor.jpg";
-import { Footer } from "~~/components/Footer";
-import { Header } from "~~/components/Header";
 import ContentBody from "~~/components/How";
 
 const AboutUs: NextPage = () => {

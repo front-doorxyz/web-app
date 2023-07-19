@@ -1,27 +1,43 @@
-import React, { useContext, useEffect } from "react";
-import { readAllJobListings } from "../services/store/store";
+import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { db, readAllJobListings } from "../services/polybase/database";
 import type { NextPage } from "next";
-import { Footer } from "~~/components/Footer";
-import { Header } from "~~/components/Header";
+import { useAccount, useSigner } from "wagmi";
 import Jobs from "~~/components/Jobs";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { useSigner } from "wagmi";
 
 const AllJobs: NextPage = () => {
   const { data: signer } = useSigner();
+  const { address } = useAccount();
   const { setAllJobs, getAllJobs } = useContext(GeneralContext);
+  const router = useRouter();
+  useEffect(() => {
+    // Extract the query parameters from the URL
+    const { refId, email } = router.query;
+
+    // Check if the required query parameters exist, and their values match the desired values
+    if (refId && email) {
+      // Redirect to the specific page if the query parameters match
+      router.push(`/${refId}+${email}`);
+    }
+  }, [router.query]);
+
   useEffect(() => {
     if (signer) {
-      getAllJobs().then(jobs => console.log(jobs));
-      readAllJobListings()
-        .then(jobListings => setAllJobs(jobListings))
-        .catch(error => {
-          // Handle the error appropriately
-        });
+      getAllJobs();
     }
   }, [signer]);
+
+  const { data: jobs, isLoading: isJobsLoading } = useScaffoldContractRead({
+    contractName: "Recruitment",
+    functionName: "getAllJobs",
+    args: [1],
+  });
+
   return (
     <>
+      {/* {jobs ? jobs[0]["bounty"].toString() : "Loading......"} */}
       <Jobs type="all" />
     </>
   );
