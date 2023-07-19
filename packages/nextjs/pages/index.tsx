@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { db, readAllJobListings } from "../services/polybase/database";
 import type { NextPage } from "next";
 import { useAccount, useSigner } from "wagmi";
@@ -10,8 +11,17 @@ const AllJobs: NextPage = () => {
   const { data: signer } = useSigner();
   const { address } = useAccount();
   const { setAllJobs, getAllJobs } = useContext(GeneralContext);
+  const router = useRouter();
+  useEffect(() => {
+    // Extract the query parameters from the URL
+    const { refId, email } = router.query;
 
-  console.log(address);
+    // Check if the required query parameters exist, and their values match the desired values
+    if (refId && email) {
+      // Redirect to the specific page if the query parameters match
+      router.push(`/${refId}+${email}`);
+    }
+  }, [router.query]);
 
   useEffect(() => {
     if (signer) {

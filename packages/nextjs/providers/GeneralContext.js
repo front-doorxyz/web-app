@@ -106,21 +106,20 @@ export const GeneralProvider = ({ children }) => {
       console.log("Success! Transaction hash:", regRef.transactionHash);
 
       const refIds = await deployedContract.getReferralIDs();
+      console.log(refIds);
 
-      // Encode email address
-      // const encodedEmail = encodeURIComponent(email);
-
-      // Send email
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       var params = new URLSearchParams();
-      params.append("refId", "123");
+      params.append("refId", refIds[refIds.length - 1]);
       params.append("email", email);
+      let refId = refIds[refIds.length - 1].toString();
+      console.log(refId);
       var raw = {
         body: {
           email: email,
-          refId: 123,
+          refId: refId,
         },
       };
       var requestOptions = {
