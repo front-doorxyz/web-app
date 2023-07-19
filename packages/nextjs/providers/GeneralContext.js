@@ -100,14 +100,12 @@ export const GeneralProvider = ({ children }) => {
   const registerReferral = async (jobId, email) => {
     setLoading(true);
     try {
-      // register referral
-      // const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      // const regRef = await deployedContract.registerReferral(jobId, email);
-      // await regRef.wait();
-      // console.log("Success! Transaction hash:", regRef.transactionHash);
+      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+      const regRef = await deployedContract.registerReferral(jobId, email);
+      await regRef.wait();
+      console.log("Success! Transaction hash:", regRef.transactionHash);
 
-      // Get referrals
-      // const refIds = await deployedContract.getReferralIDs();
+      const refIds = await deployedContract.getReferralIDs();
 
       // Encode email address
       // const encodedEmail = encodeURIComponent(email);
@@ -123,7 +121,7 @@ export const GeneralProvider = ({ children }) => {
         body: {
           email: email,
           refId: 123,
-        }
+        },
       };
       var requestOptions = {
         method: "POST",
@@ -163,7 +161,7 @@ export const GeneralProvider = ({ children }) => {
         body: {
           roomId: roomId,
           email: email,
-        }
+        },
       };
 
       var requestOptions = {
