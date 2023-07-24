@@ -4,8 +4,8 @@ import { NextPage } from "next";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const RefConfirm: NextPage = () => {
-  const [refId, setRefId] = useState(1);
-  const [email, setEmail] = useState("bhavya.gor9999@gmail.com");
+  const [refId, setRefId] = useState();
+  const [email, setEmail] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -14,6 +14,9 @@ const RefConfirm: NextPage = () => {
       const [refid, emailAddress] = id.split("+");
       setRefId(refid);
       setEmail(emailAddress);
+      if (!refid || !emailAddress) {
+        router.push("/");
+      }
     }
   }, [router]);
 

@@ -40,16 +40,19 @@ export const Header = () => {
         <NavLink href="/about-us">About Us</NavLink>
       </li>
       <li>
-        <NavLink href="/">All Jobs</NavLink>
+        <NavLink href="/how-it-works">How it works</NavLink>
       </li>
       <li>
-        <NavLink href="/how-it-works">How it works</NavLink>
+        <NavLink href="/">All Jobs</NavLink>
       </li>
       <li>
         <NavLink href="/client">Client</NavLink>
       </li>
       <li>
         <NavLink href="/profile">Profile</NavLink>
+      </li>
+      <li>
+        <NavLink href="/contactus">Contact us</NavLink>
       </li>
       {/* <li>
         <NavLink href="/debug">

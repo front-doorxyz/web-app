@@ -12,26 +12,11 @@ type Props = {
 };
 
 const JobFill = (props: Props) => {
-  const { data: signer } = useSigner();
   const { address } = useAccount();
   const { jobInfo, handleChange, handleDescriptionChange, registerJob, setJobInfo, id, loading } =
     useContext(GeneralContext);
 
   const router = useRouter();
-  useEffect(() => {
-    if (props.type === "add") {
-      setJobInfo({
-        id: 0,
-        roleTitle: "Role Title",
-        description: "Describe the Role",
-        companyName: "Company name",
-        location: "Location",
-        maxSalary: "",
-        bounty: "",
-        minSalary: "",
-      });
-    }
-  }, []);
 
   db.signer(async (data: string) => {
     // A permission dialog will be presented to the user
@@ -88,10 +73,10 @@ const JobFill = (props: Props) => {
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="companyName"
-        value={jobInfo.companyName}
+        // value={jobInfo.companyName}
       />
       Description
-      <TextEditor readOnly={false} initialValue={jobInfo.description} />
+      <TextEditor readOnly={false} initialValue={""} />
       Location
       <input
         type="text"
@@ -99,7 +84,7 @@ const JobFill = (props: Props) => {
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="location"
-        value={jobInfo.location}
+        // value={jobInfo.location}
       />
       Role Title
       <input
@@ -108,7 +93,7 @@ const JobFill = (props: Props) => {
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="roleTitle"
-        value={jobInfo.roleTitle}
+        // value={jobInfo.roleTitle}
       />
       Bounty
       <input
@@ -117,7 +102,7 @@ const JobFill = (props: Props) => {
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="bounty"
-        value={jobInfo.bounty}
+        // value={jobInfo.bounty}
       />
       Max Salary
       <input
@@ -126,7 +111,7 @@ const JobFill = (props: Props) => {
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="maxSalary"
-        value={jobInfo.maxSalary}
+        // value={jobInfo.maxSalary}
       />
       Min Salary
       <input
@@ -135,7 +120,7 @@ const JobFill = (props: Props) => {
         className="input input-bordered w-[50vw]"
         onChange={handleChange}
         name="minSalary"
-        value={jobInfo.minSalary}
+        // value={jobInfo.minSalary}
       />
       <button
         className={`btn btn-primary `}

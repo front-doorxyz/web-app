@@ -13,7 +13,7 @@ type Props = {
 const Jobs = (props: Props) => {
   const [jobArr, setJobArr] = useState<any>([]);
   const { address } = useAccount();
-
+  const { search } = useContext(GeneralContext);
   useEffect(() => {
     if (props.type === "all") {
       readAllJobListings()

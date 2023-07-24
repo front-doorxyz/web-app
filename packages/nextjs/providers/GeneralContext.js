@@ -16,6 +16,7 @@ export const GeneralProvider = ({ children }) => {
   const [roomId, setRoomId] = useState("");
   const contractAddress = "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298";
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
   const [jobInfo, setJobInfo] = React.useState({
     id: 0,
     roleTitle: "Role Title",
@@ -222,6 +223,8 @@ export const GeneralProvider = ({ children }) => {
     setRoomId,
     confirmReferral,
     handleDescriptionChange,
+    search,
+    setSearch,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;

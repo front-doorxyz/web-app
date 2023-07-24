@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import AddJob from "~~/components/JobInfo";
 import Jobs from "~~/components/Jobs";
+import { GeneralContext } from "~~/providers/GeneralContext";
 
 // Import the CSS for styling
 
 const client: NextPage = () => {
   const [active, setActive] = useState<boolean>(true);
-
+  const { address } = useAccount();
   const activeTab = (e: any) => {
     const id = e.target.id;
     if (id === "1") {
-      console.log("hiii");
       setActive(true);
     } else {
       setActive(false);
@@ -40,7 +41,7 @@ const client: NextPage = () => {
           <AddJob type="add" />
         </>
       ) : (
-        <Jobs type="client" />
+        <>{address ? <Jobs type="client" /> : "Login to see your jobs"}</>
       )}
     </div>
   );
