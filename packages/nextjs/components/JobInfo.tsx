@@ -65,65 +65,64 @@ const JobFill = (props: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      Company Name
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="companyName"
-        // value={jobInfo.companyName}
-      />
-      Description
+    <div className="shadow-2xl flex flex-col justify-center gap-4 p-4">
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Company Name</span>
+        <input
+          type="text"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="companyName"
+        />
+      </label>
+      <label className="join flex flex-col gap-2 mb-[-2%]">
+        <span className="indicator-item badge badge-primary"> Description</span>
+      </label>
       <TextEditor readOnly={false} initialValue={""} />
-      Location
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="location"
-        // value={jobInfo.location}
-      />
-      Role Title
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="roleTitle"
-        // value={jobInfo.roleTitle}
-      />
-      Bounty
-      <input
-        type="number"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="bounty"
-        // value={jobInfo.bounty}
-      />
-      Max Salary
-      <input
-        type="number"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="maxSalary"
-        // value={jobInfo.maxSalary}
-      />
-      Min Salary
-      <input
-        type="number"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="minSalary"
-        // value={jobInfo.minSalary}
-      />
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Role Title</span>
+        <input
+          type="text"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="roleTitle"
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary"> Bounty</span>
+        <input
+          type="number"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="bounty"
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary"> Max Salary</span>
+        <input
+          type="number"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="maxSalary"
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Min Salary</span>
+        <input
+          type="number"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="minSalary"
+        />
+      </label>
+
       <button
-        className={`btn btn-primary `}
+        className={`btn btn-primary`}
         onClick={handleJob}
         disabled={loading}
         // onClick={() => createJobListing(jobInfo)}

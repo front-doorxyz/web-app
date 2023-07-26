@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
+import howitworks from "~~/assets/howitworks.png";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import AddJob from "~~/components/JobInfo";
@@ -22,7 +23,7 @@ const client: NextPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full  mt-[2%]">
+    <div className="flex flex-col  justify-center w-full  mt-[2%]">
       <div className="tabs tabs-boxed flex justify-center items-center">
         <a id="1" className={`tab tab-lg tab-lifted ${active ? "tab-active" : ""}`} onClick={activeTab}>
           Add a job
@@ -32,14 +33,9 @@ const client: NextPage = () => {
         </a>
       </div>
       {active ? (
-        <>
-          <div className="px-5 mt-[2%]">
-            <h1 className="text-center mb-8">
-              <span className="block text-4xl font-bold">Add a Job</span>
-            </h1>
-          </div>
+        <div className="flex items-center justify-center">
           <AddJob type="add" />
-        </>
+        </div>
       ) : (
         <>{address ? <Jobs type="client" /> : "Login to see your jobs"}</>
       )}

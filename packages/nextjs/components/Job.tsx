@@ -20,11 +20,11 @@ const Job = (props: Props) => {
 
   return (
     <div
-      className="w-[300px] h-[200px] md:w-[450px] md:h-[300px] border-neutral border-[0.7px] text-neutral rounded-md transition-all duration-300"
+      className="shadow-xl w-[300px] h-[200px] md:w-[450px] md:h-[300px]  text-neutral rounded-2xl transition-all duration-300"
       onClick={handleJobClick}
     >
       <div className="flex flex-col justify-between h-[100%]">
-        <div className="bg-accent h-[20%] flex items-center justify-center gap-2">
+        <div className="bg-accent h-[20%] rounded-t-2xl flex items-center justify-center gap-2">
           <div className="text-sm md:text-xl">{props.companyName}</div>
           <StarRating score={4.5} />
         </div>
