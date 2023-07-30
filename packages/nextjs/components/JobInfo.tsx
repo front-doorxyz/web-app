@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import JobModal from "./JobModal";
 import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
 import { useAccount, useSigner } from "wagmi";
@@ -15,7 +16,7 @@ const JobFill = (props: Props) => {
   const { address } = useAccount();
   const { jobInfo, handleChange, handleDescriptionChange, registerJob, setJobInfo, id, loading } =
     useContext(GeneralContext);
-
+  const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
 
   db.signer(async (data: string) => {
@@ -25,25 +26,29 @@ const JobFill = (props: Props) => {
     return { h: "eth-personal-sign", sig };
   });
 
+  const confirmJob = async () => {
+    let jobId = await registerJob(Number(jobInfo.bounty));
+
+    if (!jobId) alert("Error in smartcontract transaction: registerJob");
+    console.log("jobId", jobId);
+    jobInfo.id = jobId;
+    const jobData = [
+      jobInfo.id,
+      jobInfo.roleTitle,
+      jobInfo.description,
+      jobInfo.location,
+      jobInfo.maxSalary,
+      jobInfo.minSalary,
+      jobInfo.bounty,
+      jobInfo.companyName,
+    ];
+    console.log([jobData]);
+    await createJobListing(jobData);
+  };
+
   const handleJob = async () => {
     if (props.type === "add") {
-      let jobId = await registerJob(Number(jobInfo.bounty));
-
-      if (!jobId) alert("Error in smartcontract transaction: registerJob");
-      console.log("jobId", jobId);
-      jobInfo.id = jobId;
-      const jobData = [
-        jobInfo.id,
-        jobInfo.roleTitle,
-        jobInfo.description,
-        jobInfo.location,
-        jobInfo.maxSalary,
-        jobInfo.minSalary,
-        jobInfo.bounty,
-        jobInfo.companyName,
-      ];
-      console.log([jobData]);
-      await createJobListing(jobData);
+      setModalOpen(true);
     } else {
       const jobData = [
         jobInfo.roleTitle,
@@ -129,6 +134,7 @@ const JobFill = (props: Props) => {
       >
         {props.type === "edit" ? "Edit Job" : "Add Job"}
       </button>
+      {modalOpen && <JobModal />}
     </div>
   );
 };

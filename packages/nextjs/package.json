@@ -15,9 +15,9 @@
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
     "storage-playground": "ts-node ./services/store/playground.ts",
     "aws:profile": "export AWS_PROFILE=default",
-    "aws:purge": "npm run aws:profile && aws cloudfront create-invalidation --distribution-id E10U3QXB9T5GTI --paths \"/*\"",
-    "aws:release": "npm run aws:profile && aws s3 cp \"$PWD/out\" s3://djinndao --recursive",
-    "aws": "npm run aws:profile && npm run build:yolo && npm run aws:release && npm run aws:purge"
+    "aws:purge": "yarn aws:profile && aws cloudfront create-invalidation --distribution-id E10U3QXB9T5GTI --paths \"/*\"",
+    "aws:release": "yarn aws:profile && aws s3 cp \"$PWD/out\" s3://djinndao --recursive",
+    "aws": "yarn aws:profile && yarn build:yolo && yarn aws:release && yarn aws:purge"
   },
   "dependencies": {
     "@ceramicnetwork/cli": "^2.31.0",

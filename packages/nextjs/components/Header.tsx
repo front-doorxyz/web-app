@@ -105,7 +105,7 @@ export const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Front-Door</span>
-            <span className="text-xs">Open Referrals Network</span>
+            <span className="text-xs flex">Open Referrals Network</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
