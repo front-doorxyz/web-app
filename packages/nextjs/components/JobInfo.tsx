@@ -19,6 +19,12 @@ const JobFill = (props: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    if (props.type === "add") {
+      setJobInfo(() => {});
+    }
+  }, [props.type]);
+
   db.signer(async (data: string) => {
     // A permission dialog will be presented to the user
     const account = address;
@@ -47,6 +53,17 @@ const JobFill = (props: Props) => {
   };
 
   const handleJob = async () => {
+    if (
+      !jobInfo.companyName ||
+      !jobInfo.description ||
+      !jobInfo.roleTitle ||
+      !jobInfo.bounty ||
+      !jobInfo.maxSalary ||
+      !jobInfo.minSalary
+    ) {
+      notification.warning("Please fill in all the required fields.");
+      return;
+    }
     if (props.type === "add") {
       setModalOpen(true);
     } else {
@@ -126,15 +143,10 @@ const JobFill = (props: Props) => {
         />
       </label>
 
-      <button
-        className={`btn btn-primary`}
-        onClick={handleJob}
-        disabled={loading}
-        // onClick={() => createJobListing(jobInfo)}
-      >
+      <button className={`btn btn-primary`} onClick={handleJob} disabled={loading}>
         {props.type === "edit" ? "Edit Job" : "Add Job"}
       </button>
-      {modalOpen && <JobModal />}
+      {modalOpen && <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} />}
     </div>
   );
 };

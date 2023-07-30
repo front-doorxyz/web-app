@@ -11,11 +11,13 @@ import { GeneralContext } from "~~/providers/GeneralContext";
 // Import the CSS for styling
 
 const client: NextPage = () => {
+  const { setJobInfo } = useContext(GeneralContext);
   const [active, setActive] = useState<boolean>(true);
   const { address } = useAccount();
   const activeTab = (e: any) => {
     const id = e.target.id;
     if (id === "1") {
+      setJobInfo(() => {});
       setActive(true);
     } else {
       setActive(false);
@@ -34,7 +36,7 @@ const client: NextPage = () => {
       </div>
       {active ? (
         <div className="flex items-center justify-center">
-          <AddJob type="add" />
+          <AddJob key="add" type="add" />
         </div>
       ) : (
         <>{address ? <Jobs type="client" /> : "Login to see your jobs"}</>

@@ -25,36 +25,44 @@ const JobCandidates: NextPage = () => {
   return (
     <div>
       <div id="table-header" className="flex items-center justify-center gap-2 mt-[1%]">
-        <div className="w-[200px] h-[40px] border-2 flex items-center justify-center text-bold">
+        <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center text-bold">
           Candidate Wallet Address
         </div>
-        <div className="w-[200px] h-[40px] border-2 flex items-center justify-center text-bold">
+        <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center text-bold">
           Refferer Feedback Score
         </div>
-        <div className="w-[200px] h-[40px] border-2 flex items-center justify-center text-bold">
+        <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center text-bold">
           Attached profile link
         </div>
-        <div className="w-[200px] h-[40px] border-2 flex items-center justify-center text-bold">Contact candidate</div>
-        <div className="w-[200px] h-[40px] border-2 flex items-center justify-center text-bold">Reject candidate </div>
-        <div className="w-[200px] h-[40px] border-2 flex items-center justify-center text-bold">Hire Candidate</div>
+        <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center text-bold">
+          Contact candidate
+        </div>
+        <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center text-bold">
+          Reject candidate{" "}
+        </div>
+        <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center text-bold">
+          Hire Candidate
+        </div>
       </div>
       <div id="table info" className="flex flex-col items-center justify-center gap-2 ">
         {candidates.map(candidate => (
           <div key={candidate.id} className="flex items-center justify-center gap-2 mt-[1%]">
-            <div className="w-[200px] h-[40px] border-2 flex items-center justify-center">
+            <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
               {candidate.walletAddress}
             </div>
-            <div className="w-[200px] h-[40px] border-2 flex items-center justify-center">
+            <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
               {candidate.reffererScore}
             </div>
-            <div className="w-[200px] h-[40px] border-2 flex items-center justify-center">{candidate.link}</div>
-            <div className="w-[200px] h-[40px] border-2 flex items-center justify-center">
+            <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
+              {candidate.link}
+            </div>
+            <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
               <button className="px-4 py-1 bg-blue-500 text-sm md:text-sm text-white rounded">Contact</button>
             </div>
-            <div className="w-[200px] h-[40px] border-2 flex items-center justify-center">
+            <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
               <button className="px-4 py-1 bg-red-500 text-sm md:text-sm text-white rounded">Reject</button>
             </div>
-            <div className="w-[200px] h-[40px] border-2 flex items-center justify-center">
+            <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
               <button className="px-4 py-1 bg-green-500 text-sm md:text-sm text-white rounded">Hire</button>
             </div>
           </div>
