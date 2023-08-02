@@ -8,4 +8,5 @@ library Errors {
     error OnlyJobCreatorAllowedToDelete(); 
     error JobAlreadyDeleted();
     error JobListingLimitExceed();
+    error CompanyNotListed();
 }

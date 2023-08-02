@@ -38,7 +38,7 @@ library FrontDoorStructs {
         Referee referee;
         Job job;
         uint256 timeAtWhichReferralStarted; // indicates time at which referral is made 
-        uint256 timeAtWhichReferralEnded; // indicates time at which referral is made 
+        uint256 timeAtWhichReferralEnded; // indicates time at which referral is end 
     }
 
 
@@ -46,11 +46,8 @@ library FrontDoorStructs {
         address wallet;
         uint256 jobsCreated;
         uint256 time_score;
-        mapping(address => uint256) addressToScore; // candiate address which gives score to the company 
         address[] candidates; // list of all candidates hired by the company
-        mapping(address => uint256) addressofCandidateToScore ; // address of candidate to score giving my company 
     }
-
 
     struct CompanyScore{
       uint256 score; //score given to the company
