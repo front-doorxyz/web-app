@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import howitworks from "~~/assets/howitworks.png";
+import ClientJobs from "~~/components/ClientJobs";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import AddJob from "~~/components/JobInfo";
@@ -39,7 +40,7 @@ const client: NextPage = () => {
           <AddJob key="add" type="add" />
         </div>
       ) : (
-        <>{address ? <Jobs type="client" /> : "Login to see your jobs"}</>
+        <>{address ? <ClientJobs /> : "Login to see your jobs"}</>
       )}
     </div>
   );

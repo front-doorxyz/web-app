@@ -12,16 +12,12 @@ type Props = {
   bounty: string;
   maxSalary: number;
   companyName: string;
-  type: string;
 };
 
 const Job = (props: Props) => {
   const router = useRouter();
   const handleJobClick = () => {
     router.push(`/jobDescription/${props.id}`);
-  };
-  const handleClient = () => {
-    router.push(`/jobCandidates/${props.id}`);
   };
 
   const { writeAsync, isLoading } = useScaffoldContractWrite({
@@ -45,14 +41,6 @@ const Job = (props: Props) => {
             <div className="text-sm md:text-xl">{props.companyName}</div>
             <StarRating score={4.5} />
           </div>
-          {props.type !== "all" && (
-            <div className="flex float-right gap-2 mr-[2%]">
-              <PencilSquareIcon className="h-[30px] w-[30px] hover:cursor-pointer" onClick={handleEditJob} />
-              <button disabled={isLoading} onClick={writeAsync}>
-                <TrashIcon className="h-[30px] w-[30px] hover:cursor-pointer  " />
-              </button>
-            </div>
-          )}
         </div>
         <div className="p-2 h-[60%]">
           <div className="flex flex-col gap-2 text-sm md:text-lg">
@@ -65,22 +53,12 @@ const Job = (props: Props) => {
           </div>
         </div>
         <div className="flex items-center justify-center h-[20%] gap-2">
-          {props.type === "all" ? (
-            <>
-              <button className="px-2 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded" onClick={handleJobClick}>
-                Refer
-              </button>
-              <button className="px-4 py-2 bg-green-500 text-sm md:text-lg text-white rounded" onClick={handleJobClick}>
-                Apply
-              </button>{" "}
-            </>
-          ) : (
-            <>
-              <button className="px-4 py-2 bg-blue-500 text-sm md:text-lg text-white rounded" onClick={handleClient}>
-                View Candidates
-              </button>
-            </>
-          )}
+          <button className="px-2 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded" onClick={handleJobClick}>
+            Refer
+          </button>
+          <button className="px-4 py-2 bg-green-500 text-sm md:text-lg text-white rounded" onClick={handleJobClick}>
+            Apply
+          </button>{" "}
         </div>
       </div>
     </div>

@@ -19,12 +19,6 @@ const JobFill = (props: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (props.type === "add") {
-      setJobInfo(() => {});
-    }
-  }, [props.type]);
-
   db.signer(async (data: string) => {
     // A permission dialog will be presented to the user
     const account = address;

@@ -39,7 +39,7 @@ const AllJobs: NextPage = () => {
   return (
     <>
       <Banner />
-      <Jobs type="all" />
+      <Jobs />
     </>
   );
 };
