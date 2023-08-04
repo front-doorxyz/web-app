@@ -58,7 +58,7 @@ const Job = (props: Props) => {
           </button>
           <button className="px-4 py-2 bg-green-500 text-sm md:text-lg text-white rounded" onClick={handleJobClick}>
             Apply
-          </button>{" "}
+          </button>
         </div>
       </div>
     </div>

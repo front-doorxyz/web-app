@@ -3,24 +3,28 @@ import { useRouter } from "next/router";
 import JobModal from "./JobModal";
 import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { createJobListing, db, updateJobListing } from "~~/services/polybase/database";
+import { createJobListing, db, readJobListingById, updateJobListing } from "~~/services/polybase/database";
 import { notification } from "~~/utils/scaffold-eth";
 
 type Props = {
   type: "edit" | "add";
 };
 
-const JobFill = (props: Props) => {
+const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
-  const { jobInfo, handleChange, handleDescriptionChange, registerJob, setJobInfo, id, loading } =
-    useContext(GeneralContext);
+  const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    if (type === "edit") {
+      readJobListingById(id).then(job => setJobInfo(job));
+    }
+  }, [type, id]);
+
   db.signer(async (data: string) => {
-    // A permission dialog will be presented to the user
     const account = address;
     const sig = await eth.sign(data, account);
     return { h: "eth-personal-sign", sig };
@@ -28,8 +32,7 @@ const JobFill = (props: Props) => {
 
   const confirmJob = async () => {
     let jobId = await registerJob(Number(jobInfo.bounty));
-
-    if (!jobId) alert("Error in smartcontract transaction: registerJob");
+    if (!jobId) alert("Error in smart contract transaction: registerJob");
     console.log("jobId", jobId);
     jobInfo.id = jobId;
     const jobData = [
@@ -47,18 +50,15 @@ const JobFill = (props: Props) => {
   };
 
   const handleJob = async () => {
-    if (
-      !jobInfo.companyName ||
-      !jobInfo.description ||
-      !jobInfo.roleTitle ||
-      !jobInfo.bounty ||
-      !jobInfo.maxSalary ||
-      !jobInfo.minSalary
-    ) {
+    const requiredFields = ["companyName", "description", "roleTitle", "bounty", "maxSalary", "minSalary"];
+    const isMissingFields = requiredFields.some(field => !jobInfo[field]);
+
+    if (isMissingFields) {
       notification.warning("Please fill in all the required fields.");
       return;
     }
-    if (props.type === "add") {
+
+    if (type === "add") {
       setModalOpen(true);
     } else {
       const jobData = [
@@ -74,9 +74,9 @@ const JobFill = (props: Props) => {
       if (jobUpdated.id !== "") {
         notification.success("Job Updated");
         router.push("/");
-        return;
+      } else {
+        notification.error("Error while updating job");
       }
-      notification.error("Error while updating job");
     }
   };
 
@@ -138,7 +138,7 @@ const JobFill = (props: Props) => {
       </label>
 
       <button className={`btn btn-primary`} onClick={handleJob} disabled={loading}>
-        {props.type === "edit" ? "Edit Job" : "Add Job"}
+        {type === "edit" ? "Edit Job" : "Add Job"}
       </button>
       {modalOpen && <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} />}
     </div>

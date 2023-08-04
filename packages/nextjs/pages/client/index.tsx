@@ -18,7 +18,6 @@ const client: NextPage = () => {
   const activeTab = (e: any) => {
     const id = e.target.id;
     if (id === "1") {
-      setJobInfo(() => {});
       setActive(true);
     } else {
       setActive(false);
