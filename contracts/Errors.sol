@@ -9,4 +9,5 @@ library Errors {
     error JobAlreadyDeleted();
     error JobListingLimitExceed();
     error CompanyNotListed();
+    error BountyNotPaid();
 }

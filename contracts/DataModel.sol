@@ -19,7 +19,6 @@ library FrontDoorStructs {
     struct Referee{ //  candidate who is being referred
         address wallet;
         string email;
-        bytes32 emailHash;
         uint256 score;
     }
 
