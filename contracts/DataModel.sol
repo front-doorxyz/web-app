@@ -20,6 +20,7 @@ library FrontDoorStructs {
         address wallet;
         string email;
         uint256 score;
+        bool isHired;
     }
 
     struct Job {
@@ -27,7 +28,8 @@ library FrontDoorStructs {
         uint256 bounty;
         bool isRemoved;
         address creator;
-        bool Issucceed; // is comapny has succesfully hired the candidate
+        bool issucceed; // is comapny has succesfully hired the candidate
+        uint256 numberOfCandidateHired ; // number of candidates hired by the company
     }
 
     struct Referral{

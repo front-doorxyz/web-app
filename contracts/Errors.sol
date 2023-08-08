@@ -10,4 +10,5 @@ library Errors {
     error JobListingLimitExceed();
     error CompanyNotListed();
     error BountyNotPaid();
+    error CandidateNotHiredByCompany();
 }
