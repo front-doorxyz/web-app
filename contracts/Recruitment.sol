@@ -134,7 +134,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      * @notice Register a Candidate with email 
      * @param email email of the candidate
      */
-   function registerCandidate(string memory email) external {
+   function registerCandidate(string memory email)  external {
     FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(msg.sender, email,0,false);
     candidateList[msg.sender] = candidate;
   } 
@@ -143,7 +143,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      * @notice Register a Referrer with email
      * @param email email of the referee
      */
-    function registerReferrer(string memory email) external {
+    function registerReferrer(string memory email)  external {
         FrontDoorStructs.Referrer memory referrer = FrontDoorStructs.Referrer(msg.sender, email,0);
         referrerList[msg.sender] = referrer;
     }
@@ -152,7 +152,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     * @notice Registers a referee with their email
     * @param email The email of the referee to be registered.
   */
-  function registerReferee(string memory email) external {
+  function registerReferee(string memory email)  external {
     FrontDoorStructs.Referee memory referee = FrontDoorStructs.Referee(msg.sender, email, 0,false);
     refereeList[msg.sender] = referee;
   }
@@ -209,7 +209,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
   /**
    * @notice Registers a Company
    */
-  function registerCompany() external {
+  function registerCompany()  external {
     FrontDoorStructs.Company memory company = FrontDoorStructs.Company(msg.sender,0,0,new address[](0));
     companyList[msg.sender] = company;
     companiesAddressList.push(msg.sender);
@@ -220,7 +220,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     * @param jobId The job ID already registered with the contract.
     * @param refereeMail The email of the referee.
   */
-  function registerReferral(uint256 jobId, string memory refereeMail) external {
+  function registerReferral(uint256 jobId, string memory refereeMail) nonReentrant external {
 
     // Simple Checks Of Parameters
     require(jobId > 0 , "Job Id should be greater than 0"); // check if job is registered or not
@@ -240,7 +240,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
   }
 
 
-  function submitReferralScore( uint256 score,address referrerWallet) public checkIfItisACompany(msg.sender) returns  (bytes32) {
+  function submitReferralScore( uint256 score,address referrerWallet) nonReentrant public checkIfItisACompany(msg.sender) returns  (bytes32) {
 
     FrontDoorStructs.ReferralScore memory newReferralScore = FrontDoorStructs.ReferralScore(score, msg.sender);
     
@@ -258,7 +258,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
    * @param score score given to the company
    * @param companyAddress company address 
    */
-   function submitCompanyScore(uint256 score,address companyAddress)  checkIfCandidateHiredByCompany(msg.sender ,companyAddress) public returns (bytes32) {
+   function submitCompanyScore(uint256 score,address companyAddress) nonReentrant  checkIfCandidateHiredByCompany(msg.sender ,companyAddress) public returns (bytes32) {
     require(!hasScoredCompany[msg.sender][companyAddress], "You have already scored this company");
     FrontDoorStructs.CompanyScore[] storage scores = companyScores[companyAddress];
     FrontDoorStructs.CompanyScore memory newScore = FrontDoorStructs.CompanyScore(score, msg.sender);
@@ -281,7 +281,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     uint8 month1RefundPct
     ,uint8 month2RefundPct
     ,uint8 month3RefundPct
-  ) external {
+  ) external nonReentrant {
     require(month1RefundPct >= 0 && month1RefundPct <= 100, "Month 1 percentage between 0 and 100!");
     require(month2RefundPct >= 0 && month2RefundPct <= 100, "Month 2 percentage between 0 and 100!");
     require(month3RefundPct >= 0 && month3RefundPct <= 100, "Month 3 percentage between 0 and 100!");
