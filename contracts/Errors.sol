@@ -12,4 +12,5 @@ library Errors {
     error BountyNotPaid();
     error CandidateNotHiredByCompany();
     error SameCandidateCannotBeReferredTwice();
+    error NotEnoughFundDepositedByCompany();
 }

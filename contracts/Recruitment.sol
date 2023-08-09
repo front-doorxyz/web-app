@@ -18,18 +18,18 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     event ReferralScoreSubmitted(address senderAddress, address referrerWallet, uint256 score); 
     event CompanyScoreSubmitted(address senderAddress, address companyAddress, uint256 score);
     event ReferCandidateSuccess(address indexed sender, address indexed candidateAddress, uint256 indexed jobId);
+    event CandidateHired(address indexed companyAddress, address  candidateAddress, uint256  jobId);
 
 
    // =============    Defining Mapping        ================== 
     mapping(bytes32 => address) public whitelistedTokens;
     mapping(bytes32 => uint8) public whitelistedTokenDecimals;
-    mapping(address =>  uint256) public accountBalances;
+    mapping(address =>  uint256) public companyaccountBalances;
     mapping(address => uint8[3][]) public accountMonthlyRefundPcts;
     mapping(address => uint8[]) public accountCompleteDeposits;
     mapping(address => uint)public balances;
     mapping(address => string[])public referredEmails;
     mapping(address => FrontDoorStructs.Candidate) public candidateList;
-    mapping(address => FrontDoorStructs.Referee) public refereeList;
     mapping(address => FrontDoorStructs.Referrer) public referrerList;
     mapping(address => FrontDoorStructs.Company) public companyList;
     mapping(uint256 => FrontDoorStructs.Job) public jobList;
@@ -113,7 +113,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      * @param email email of the candidate
      */
    function registerCandidate(string memory email)  external {
-    FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(msg.sender, email,0,false,0);
+    FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(msg.sender, email,0,false,0,false);
     candidateList[msg.sender] = candidate;
   } 
   // ============================================================================
@@ -123,19 +123,9 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      * @param email email of the referee
      */
     function registerReferrer(string memory email)  external {
-        FrontDoorStructs.Referrer memory referrer = FrontDoorStructs.Referrer(msg.sender, email,0);
+        FrontDoorStructs.Referrer memory referrer = FrontDoorStructs.Referrer(msg.sender, email,0,0);
         referrerList[msg.sender] = referrer;
     }
-  // ============================================================================
-
-     /**
-    * @notice Registers a referee with their email
-    * @param email The email of the referee to be registered.
-  */
-  function registerReferee(string memory email)  external {
-    FrontDoorStructs.Referee memory referee = FrontDoorStructs.Referee(msg.sender, email, 0,false);
-    refereeList[msg.sender] = referee;
-  }
 
   // ============================================================================
   /**
@@ -160,7 +150,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
       revert Errors.BountyNotPaid();
     }
     
-    accountBalances[msg.sender] += bounty;
+    companyaccountBalances[msg.sender] += bounty;
     emit DepositCompleted(msg.sender , bounty);
 
     return jobId;
@@ -209,13 +199,12 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     require(jobId > 0 , "Job Id should be greater than 0"); // check if job is registered or not
     require(bytes(refereeMail).length > 0  , "Referee Mail should not be empty"); // check if referee mail is empty or not
 
-    FrontDoorStructs.Referee memory referee; // = refereeList[refereeWallet];
+    FrontDoorStructs.Candidate memory candidate;
     FrontDoorStructs.Referrer memory referrer = referrerList[msg.sender];
     FrontDoorStructs.Job memory job = jobList[jobId];
-
     
-    referee.email =  refereeMail;
-    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, referee, job,block.timestamp,0);
+    candidate.email =  refereeMail;
+    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, candidate, job,block.timestamp,0);
 
     referralIndex[msg.sender].push(referralCounter);
     referralList[referralCounter] = referral;
@@ -260,7 +249,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
    * @param _jobId Job id which referr is referring too
    * @notice Refer a candidate to a job
    */
-  function ReferCandidate(address _candidateAddress , uint256 _jobId) nonReentrant public  {
+  function ReferCandidate(address _candidateAddress , uint256 _jobId) nonReentrant external  {
     // --- Simple  Checks
     require(_candidateAddress != address(0) , "Candidate address should not be empty"); // check if candidate address is empty or not
     require(_jobId > 0 , "Job Id should be greater than 0"); // check if job id is greater than 0 or not
@@ -276,10 +265,10 @@ contract Recruitment  is Ownable , ReentrancyGuard {
         }
     }
   // ---- Code logic 
-    FrontDoorStructs.Referee memory referee = refereeList[_candidateAddress];
+    FrontDoorStructs.Candidate memory candidate = candidateList[_candidateAddress];
     FrontDoorStructs.Job memory job = jobList[_jobId];
     FrontDoorStructs.Referrer memory referrer = referrerList[msg.sender];
-    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, referee, job,block.timestamp,0);
+    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, candidate, job,block.timestamp,0);
     referralIndex[msg.sender].push(referralCounter);
     referralList[referralCounter] = referral;
     referralCounter++;
@@ -289,9 +278,27 @@ contract Recruitment  is Ownable , ReentrancyGuard {
   }
   // ============================================================================
 
-  function hireCandidate() external{}
+  /**
+   * @param _candidateAddress Candidate address
+   * @param _jobId job id 
+   * @notice Simply sets isHired to true for the candidate , sets timestamp of hiring and incurease candidate count on that job
+   */
+  function hireCandidate(address _candidateAddress , uint256 _jobId) nonReentrant  checkIfItisACompany(msg.sender) external {
+    // Some Checks 
+    require(candidateList[_candidateAddress].isHired == false , "Candidate is already hired"); // check if candidate is already hired or not
+    require(jobList[_jobId].issucceed == false , "Job is already succeed"); // check if job is already succeed or not
 
+    // Code Logic
+    candidateList[_candidateAddress].isHired = true;
+    candidateList[_candidateAddress].timeOfHiring = block.timestamp;
+    jobList[_jobId].numberOfCandidateHired += 1;
 
+    if((companyaccountBalances[msg.sender]) >= (jobList[_jobId].bounty * jobList[_jobId].numberOfCandidateHired)) {
+        revert Errors.NotEnoughFundDepositedByCompany();
+    }
+
+    emit CandidateHired(msg.sender,_candidateAddress,_jobId); // emit event
+  }
 
   /* *  -----------------------------          Set Data/Var Functions          ----------------------------- */
 
@@ -304,14 +311,13 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     uint8 month1RefundPct
     ,uint8 month2RefundPct
     ,uint8 month3RefundPct
-  ) external nonReentrant {
+  ) external onlyOwner nonReentrant {
     require(month1RefundPct >= 0 && month1RefundPct <= 100, "Month 1 percentage between 0 and 100!");
     require(month2RefundPct >= 0 && month2RefundPct <= 100, "Month 2 percentage between 0 and 100!");
     require(month3RefundPct >= 0 && month3RefundPct <= 100, "Month 3 percentage between 0 and 100!");
 
     // implement check if total percentage is 100 or not
     require(month1RefundPct + month2RefundPct + month3RefundPct == 100, "Total percentage should be 100%!") ;
-    accountMonthlyRefundPcts[msg.sender].push([month1RefundPct, month2RefundPct, month3RefundPct]);
     emit PercentagesCompleted(msg.sender, month1RefundPct, month2RefundPct, month3RefundPct);
   }
 
@@ -339,16 +345,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
   function getReferrer(address wallet) external view returns(FrontDoorStructs.Referrer memory) {
     return referrerList[wallet];
   }
-  // ============================================================================
 
-    /**
-    * @notice Getter function of Referee.
-    * @param wallet The wallet address of a referee to be fetched from the mapping
-    * @return Referee The type of FrontDoorStruct.Referee 
-  */
-  function getReferee(address wallet) external view returns(FrontDoorStructs.Referee memory) {
-    return refereeList[wallet];
-  }
   // ============================================================================
   /**
    * @notice Getter function of referrer score .
