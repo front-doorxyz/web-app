@@ -8,6 +8,7 @@ library FrontDoorStructs {
         string email;
         uint256 score;
         bool isScoreGivenByCompany ; // bool if company gives score to candidate
+        uint256 timeOfHiring; // time at which candidate is hired
     }
 
      struct Referrer{
@@ -29,7 +30,8 @@ library FrontDoorStructs {
         bool isRemoved;
         address creator;
         bool issucceed; // is comapny has succesfully hired the candidate
-        uint256 numberOfCandidateHired ; // number of candidates hired by the company
+        uint256 numberOfCandidateHired; // number of candidates hired by the company
+        uint256 timeAtWhichJobCreated; // indicates time at which job is created job will only be listed for 30 days
     }
 
     struct Referral{

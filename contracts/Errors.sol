@@ -11,4 +11,5 @@ library Errors {
     error CompanyNotListed();
     error BountyNotPaid();
     error CandidateNotHiredByCompany();
+    error SameCandidateCannotBeReferredTwice();
 }
