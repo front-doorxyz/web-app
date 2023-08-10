@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
+import HireModal from "~~/components/HireModal";
 
 const JobCandidates: NextPage = () => {
   const candidatesPerPage = 5;
@@ -21,6 +22,11 @@ const JobCandidates: NextPage = () => {
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+  const [hireModal, setHireModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const confirmHire = () => {};
 
   return (
     <div>
@@ -63,7 +69,12 @@ const JobCandidates: NextPage = () => {
               <button className="px-4 py-1 bg-red-500 text-sm md:text-sm text-white rounded">Reject</button>
             </div>
             <div className="w-[200px] h-[40px] border-2 border-accent flex items-center justify-center">
-              <button className="px-4 py-1 bg-green-500 text-sm md:text-sm text-white rounded">Hire</button>
+              <button
+                className="px-4 py-1 bg-green-500 text-sm md:text-sm text-white rounded"
+                onClick={() => setHireModal(!hireModal)}
+              >
+                Hire
+              </button>
             </div>
           </div>
         ))}
@@ -81,6 +92,7 @@ const JobCandidates: NextPage = () => {
           </button>
         ))}
       </div>
+      {hireModal && <HireModal setHireModal={() => setHireModal(false)} loading={loading} confirmHire={confirmHire} />}
     </div>
   );
 };

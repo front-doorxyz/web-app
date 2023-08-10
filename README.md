@@ -2,13 +2,12 @@
 
 Shout out to you guys for making our work easier :)
 
-
 # Install & Run
 
 ## Webapp
 
-$ npm i --legacy-peer-deps && cd packages/nextjs && npm i --legacy-peer-deps
-$ npm run start (note: you need to be at packages/nextjs directory)
+yarn in the web-app directory
+yarn start from same web-app
 
 ## Smartcontract
 
