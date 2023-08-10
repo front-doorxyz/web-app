@@ -11,13 +11,13 @@ type Props = {
 const TextEditor = (props: Props) => {
   const { handleDescriptionChange } = useContext(GeneralContext);
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Slite
         initialValue={props.initialValue}
         onChange={currentMarkdown => handleDescriptionChange("description", currentMarkdown)}
         readOnly={props.readOnly}
       >
-        ={!props.readOnly && <Toolbar />}
+        {!props.readOnly && <Toolbar />}
         {/* editor text area */}
         <Editor readOnly={props.readOnly} />
       </Slite>

@@ -40,16 +40,19 @@ export const Header = () => {
         <NavLink href="/about-us">About Us</NavLink>
       </li>
       <li>
-        <NavLink href="/">All Jobs</NavLink>
+        <NavLink href="/how-it-works">How it works</NavLink>
       </li>
       <li>
-        <NavLink href="/how-it-works">How it works</NavLink>
+        <NavLink href="/">All Jobs</NavLink>
       </li>
       <li>
         <NavLink href="/client">Client</NavLink>
       </li>
       <li>
         <NavLink href="/profile">Profile</NavLink>
+      </li>
+      <li>
+        <NavLink href="/contactus">Contact us</NavLink>
       </li>
       {/* <li>
         <NavLink href="/debug">
@@ -102,7 +105,7 @@ export const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Front-Door</span>
-            <span className="text-xs">Open Referrals Network</span>
+            <span className="text-xs flex">Open Referrals Network</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>

@@ -13,7 +13,6 @@ const Description = () => {
     useContext(GeneralContext);
   const { address } = useAccount();
 
-  const [isOwner, setIsOwner] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,27 +21,12 @@ const Description = () => {
     readJobListingById(id)
       .then(jobListing => {
         setJobInfo(jobListing);
-        if (jobListing.owner === address) {
-          setIsOwner(true);
-        }
       })
       .catch(error => {
         // Handle the error appropriately
       });
   }, []);
 
-  const { writeAsync, isLoading } = useScaffoldContractWrite({
-    contractName: "Recruitment",
-    functionName: "deleteJob",
-    args: [0x03],
-    onBlockConfirmation: txnReceipt => {
-      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-    },
-  });
-
-  const handleEditJob = () => {
-    router.push(`/client/editJob/${id}`);
-  };
   return (
     <div className="flex flex-col items-center">
       <div className="w-[90vw]  md:w-[50vw]  border-neutral border-[0.7px] text-neutral rounded-md transition-all duration-300 mt-[2%]">
@@ -52,14 +36,6 @@ const Description = () => {
               <div className="text-sm md:text-xl">{jobInfo.companyName}</div>
               <StarRating score={4.5} />
             </div>
-            {isOwner && (
-              <div className="flex gap-2 mr-[2%]">
-                <PencilSquareIcon className="h-[30px] w-[30px] hover:cursor-pointer" onClick={handleEditJob} />
-                <button disabled={isLoading} onClick={writeAsync}>
-                  <TrashIcon className="h-[30px] w-[30px] hover:cursor-pointer  " />
-                </button>
-              </div>
-            )}
           </div>
           <div className="p-2 pt-0 h-[60%]">
             <div className="flex flex-col gap-2 text-sm md:text-lg">

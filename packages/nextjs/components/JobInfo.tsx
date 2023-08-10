@@ -1,64 +1,65 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import JobModal from "./JobModal";
 import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { createJobListing, db, updateJobListing } from "~~/services/polybase/database";
+import { createJobListing, db, readJobListingById, updateJobListing } from "~~/services/polybase/database";
 import { notification } from "~~/utils/scaffold-eth";
 
 type Props = {
   type: "edit" | "add";
 };
 
-const JobFill = (props: Props) => {
-  const { data: signer } = useSigner();
+const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
-  const { jobInfo, handleChange, handleDescriptionChange, registerJob, setJobInfo, id, loading } =
-    useContext(GeneralContext);
-
+  const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
+  const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
-    if (props.type === "add") {
-      setJobInfo({
-        id: 0,
-        roleTitle: "Role Title",
-        description: "Describe the Role",
-        companyName: "Company name",
-        location: "Location",
-        maxSalary: "",
-        bounty: "",
-        minSalary: "",
-      });
+    if (type === "edit") {
+      readJobListingById(id).then(job => setJobInfo(job));
     }
-  }, []);
+  }, [type, id]);
 
   db.signer(async (data: string) => {
-    // A permission dialog will be presented to the user
     const account = address;
     const sig = await eth.sign(data, account);
     return { h: "eth-personal-sign", sig };
   });
 
-  const handleJob = async () => {
-    if (props.type === "add") {
-      let jobId = await registerJob(Number(jobInfo.bounty));
+  const confirmJob = async () => {
+    let jobId = await registerJob(Number(jobInfo.bounty));
+    if (!jobId) alert("Error in smart contract transaction: registerJob");
+    console.log("jobId", jobId);
+    jobInfo.id = jobId;
+    const jobData = [
+      jobInfo.id,
+      jobInfo.roleTitle,
+      jobInfo.description,
+      jobInfo.location,
+      jobInfo.maxSalary,
+      jobInfo.minSalary,
+      jobInfo.bounty,
+      jobInfo.companyName,
+    ];
+    console.log([jobData]);
+    await createJobListing(jobData);
+  };
 
-      if (!jobId) alert("Error in smartcontract transaction: registerJob");
-      console.log("jobId", jobId);
-      jobInfo.id = jobId;
-      const jobData = [
-        jobInfo.id,
-        jobInfo.roleTitle,
-        jobInfo.description,
-        jobInfo.location,
-        jobInfo.maxSalary,
-        jobInfo.minSalary,
-        jobInfo.bounty,
-        jobInfo.companyName,
-      ];
-      console.log([jobData]);
-      await createJobListing(jobData);
+  const handleJob = async () => {
+    const requiredFields = ["companyName", "description", "roleTitle", "bounty", "maxSalary", "minSalary"];
+    const isMissingFields = requiredFields.some(field => !jobInfo[field]);
+
+    if (isMissingFields) {
+      notification.warning("Please fill in all the required fields.");
+      return;
+    }
+
+    if (type === "add") {
+      setModalOpen(true);
     } else {
       const jobData = [
         jobInfo.roleTitle,
@@ -73,78 +74,73 @@ const JobFill = (props: Props) => {
       if (jobUpdated.id !== "") {
         notification.success("Job Updated");
         router.push("/");
-        return;
+      } else {
+        notification.error("Error while updating job");
       }
-      notification.error("Error while updating job");
     }
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      Company Name
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="companyName"
-        value={jobInfo.companyName}
-      />
-      Description
-      <TextEditor readOnly={false} initialValue={jobInfo.description} />
-      Location
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="location"
-        value={jobInfo.location}
-      />
-      Role Title
-      <input
-        type="text"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="roleTitle"
-        value={jobInfo.roleTitle}
-      />
-      Bounty
-      <input
-        type="number"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="bounty"
-        value={jobInfo.bounty}
-      />
-      Max Salary
-      <input
-        type="number"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="maxSalary"
-        value={jobInfo.maxSalary}
-      />
-      Min Salary
-      <input
-        type="number"
-        placeholder="Type here"
-        className="input input-bordered w-[50vw]"
-        onChange={handleChange}
-        name="minSalary"
-        value={jobInfo.minSalary}
-      />
-      <button
-        className={`btn btn-primary `}
-        onClick={handleJob}
-        disabled={loading}
-        // onClick={() => createJobListing(jobInfo)}
-      >
-        {props.type === "edit" ? "Edit Job" : "Add Job"}
+    <div className="shadow-2xl flex flex-col justify-center gap-4 p-4">
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Company Name</span>
+        <input
+          type="text"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="companyName"
+        />
+      </label>
+      <label className="join flex flex-col gap-2 mb-[-2%]">
+        <span className="indicator-item badge badge-primary"> Description</span>
+      </label>
+      <TextEditor readOnly={false} initialValue={""} />
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Role Title</span>
+        <input
+          type="text"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="roleTitle"
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary"> Bounty</span>
+        <input
+          type="number"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="bounty"
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary"> Max Salary</span>
+        <input
+          type="number"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="maxSalary"
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Min Salary</span>
+        <input
+          type="number"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="minSalary"
+        />
+      </label>
+
+      <button className={`btn btn-primary`} onClick={handleJob} disabled={loading}>
+        {type === "edit" ? "Edit Job" : "Add Job"}
       </button>
+      {modalOpen && <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} />}
     </div>
   );
 };

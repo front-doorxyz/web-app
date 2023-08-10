@@ -1,20 +1,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@font-face{
-	font-family: "Bigmom";
-	src:  url(../fonts/Bigmom.ttf)  format("truetype"), /* Safari, Android, iOS */
-        url(../fonts/Bigmom.woff) format("woff");
-}
-
-@font-face{
-	font-family: "vga";
-	src:  url(../fonts/vga.ttf)  format("truetype"), /* Safari, Android, iOS */
-        url(../fonts/vga.woff) format("woff");
-}
-html body * {
-  font-family: "vga";
-}
 
 
 :root,

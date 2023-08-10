@@ -1,31 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import Job from "./Job";
-import { all } from "axios";
-import { type } from "os";
-import { useAccount, useConnect } from "wagmi";
-import { GeneralContext } from "~~/providers/GeneralContext";
 import { readAllJobListings, readAllJobListingsForClient } from "~~/services/polybase/database";
 
-type Props = {
-  type: "all" | "client";
-};
-
-const Jobs = (props: Props) => {
+const Jobs = () => {
   const [jobArr, setJobArr] = useState<any>([]);
-  const { address } = useAccount();
 
   useEffect(() => {
-    if (props.type === "all") {
-      readAllJobListings()
-        .then(jobListings => setJobArr(jobListings))
-        .catch(error => {
-          // Handle the error appropriately
-        });
-    }
-    if (props.type === "client") {
-      readAllJobListingsForClient(address).then(jobListing => setJobArr([...jobListing]));
-    }
-  }, [props.type]);
+    readAllJobListings()
+      .then(jobListings => setJobArr(jobListings))
+      .catch(error => {
+        // Handle the error appropriately
+      });
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center">

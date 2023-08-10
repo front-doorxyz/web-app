@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import type { NextPage } from "next";
+import { useAccount } from "wagmi";
+import howitworks from "~~/assets/howitworks.png";
+import ClientJobs from "~~/components/ClientJobs";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import AddJob from "~~/components/JobInfo";
 import Jobs from "~~/components/Jobs";
+import { GeneralContext } from "~~/providers/GeneralContext";
 
 // Import the CSS for styling
 
 const client: NextPage = () => {
+  const { setJobInfo } = useContext(GeneralContext);
   const [active, setActive] = useState<boolean>(true);
-
+  const { address } = useAccount();
   const activeTab = (e: any) => {
     const id = e.target.id;
     if (id === "1") {
-      console.log("hiii");
       setActive(true);
     } else {
       setActive(false);
@@ -21,7 +25,7 @@ const client: NextPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full  mt-[2%]">
+    <div className="flex flex-col  justify-center w-full  mt-[2%]">
       <div className="tabs tabs-boxed flex justify-center items-center">
         <a id="1" className={`tab tab-lg tab-lifted ${active ? "tab-active" : ""}`} onClick={activeTab}>
           Add a job
@@ -31,16 +35,11 @@ const client: NextPage = () => {
         </a>
       </div>
       {active ? (
-        <>
-          <div className="px-5 mt-[2%]">
-            <h1 className="text-center mb-8">
-              <span className="block text-4xl font-bold">Add a Job</span>
-            </h1>
-          </div>
-          <AddJob type="add" />
-        </>
+        <div className="flex items-center justify-center">
+          <AddJob key="add" type="add" />
+        </div>
       ) : (
-        <Jobs type="client" />
+        <>{address ? <ClientJobs /> : "Login to see your jobs"}</>
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { db, readAllJobListings } from "../services/polybase/database";
 import type { NextPage } from "next";
 import { useAccount, useSigner } from "wagmi";
+import Banner from "~~/components/Banner";
 import Jobs from "~~/components/Jobs";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
@@ -37,8 +38,8 @@ const AllJobs: NextPage = () => {
 
   return (
     <>
-      {/* {jobs ? jobs[0]["bounty"].toString() : "Loading......"} */}
-      <Jobs type="all" />
+      <Banner />
+      <Jobs />
     </>
   );
 };
