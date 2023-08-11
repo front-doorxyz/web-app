@@ -37,6 +37,8 @@ library FrontDoorStructs {
         Job job;
         uint256 timeAtWhichReferralStarted; // indicates time at which referral is made 
         uint256 timeAtWhichReferralEnded; // indicates time at which referral is end 
+        bool isConfirmed; // set by candidate if we wants to confirm the referral
+        uint256 referralEnd; // indicates time at which referral is ending  ** Referral should end after 1 day
     }
 
 

@@ -19,6 +19,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     event CompanyScoreSubmitted(address senderAddress, address companyAddress, uint256 score);
     event ReferCandidateSuccess(address indexed sender, address indexed candidateAddress, uint256 indexed jobId);
     event CandidateHired(address indexed companyAddress, address  candidateAddress, uint256  jobId);
+    event ReferralConfirmed(address indexed candidateAddress , uint256 indexed referralId , uint256 indexed jobId);
 
 
    // =============    Defining Mapping        ================== 
@@ -204,7 +205,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     FrontDoorStructs.Job memory job = jobList[jobId];
     
     candidate.email =  refereeMail;
-    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, candidate, job,block.timestamp,0);
+    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, candidate, job,block.timestamp,0,false,block.timestamp + 1 days);
 
     referralIndex[msg.sender].push(referralCounter);
     referralList[referralCounter] = referral;
@@ -265,17 +266,40 @@ contract Recruitment  is Ownable , ReentrancyGuard {
         }
     }
   // ---- Code logic 
-    FrontDoorStructs.Candidate memory candidate = candidateList[_candidateAddress];
-    FrontDoorStructs.Job memory job = jobList[_jobId];
-    FrontDoorStructs.Referrer memory referrer = referrerList[msg.sender];
-    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, candidate, job,block.timestamp,0);
-    referralIndex[msg.sender].push(referralCounter);
-    referralList[referralCounter] = referral;
-    referralCounter++;
-
-    emit ReferCandidateSuccess(msg.sender,_candidateAddress,_jobId); // emit event
+      FrontDoorStructs.Candidate memory candidate = candidateList[_candidateAddress];
+      FrontDoorStructs.Job memory job = jobList[_jobId];
+      FrontDoorStructs.Referrer memory referrer = referrerList[msg.sender];
+      FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(referralCounter, false, referrer, candidate, job,block.timestamp,0,false,block.timestamp + 1 days);
+      referralIndex[msg.sender].push(referralCounter);
+      referralList[referralCounter] = referral;
+      referralCounter++;
+      emit ReferCandidateSuccess(msg.sender,_candidateAddress,_jobId); // emit event
 
   }
+
+  // ============================================================================
+  function confirmReferral(uint256 _referralCounter , uint256 _jobId) external nonReentrant{
+    // Some Checks 
+    require(referralList[_referralCounter].isConfirmed == false , "Referral is already confirmed"); // check if referral is already confirmed or not
+    require(referralList[_referralCounter].job.issucceed == false , "Job is already succeed"); // check if job is already succeed or not
+    require(referralList[_referralCounter].job.timeAtWhichJobCreated + 30 days > block.timestamp , "Job is expired"); // check if job is expired or not
+    require(referralList[_referralCounter].candidate.wallet == msg.sender , "Candidate is already hired"); // check if candidate is calling this function or 
+    require(referralList[_referralCounter].referralEnd > block.timestamp , "Referral is expired"); // check if referral is expired or not
+
+    // Code Logic
+    referralList[_referralCounter].isConfirmed = true;
+    emit ReferralConfirmed(msg.sender , _referralCounter , _jobId); // emit event
+  }
+
+  // ============================================================================
+  
+
+
+
+  // do confirm referral function by candidate , mappend that refrral id to referrer  address , job id to job , 
+  // loopholes ,, anyone can call the confirm referrl function as paramters are public 
+
+
   // ============================================================================
 
   /**
