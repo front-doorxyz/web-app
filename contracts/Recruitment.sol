@@ -9,27 +9,15 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 import { FrontDoorStructs } from "./DataModel.sol";
 import { Errors } from "./Errors.sol";
+import {Event} from "./Events.sol";
 
 contract Recruitment  is Ownable , ReentrancyGuard {
 
-   // -==============     Events        ==========================
-    event PercentagesCompleted(address indexed sender, uint8 month1RefundPct, uint8 month2RefundPct, uint8 month3RefundPct);
-    event DepositCompleted(address indexed sender, uint256 amount);
-    event ReferralScoreSubmitted(address senderAddress, address referrerWallet, uint256 score); 
-    event CompanyScoreSubmitted(address senderAddress, address companyAddress, uint256 score);
-    event ReferCandidateSuccess(address indexed sender, address indexed candidateAddress, uint256 indexed jobId);
-    event CandidateHired(address indexed companyAddress, address  candidateAddress, uint256  jobId);
-    event ReferralConfirmed(address indexed candidateAddress , uint256 indexed referralId , uint256 indexed jobId);
-
-
    // =============    Defining Mapping        ================== 
-    mapping(bytes32 => address) public whitelistedTokens;
-    mapping(bytes32 => uint8) public whitelistedTokenDecimals;
     mapping(address =>  uint256) public companyaccountBalances;
     mapping(address => uint8[3][]) public accountMonthlyRefundPcts;
     mapping(address => uint8[]) public accountCompleteDeposits;
     mapping(address => uint)public balances;
-    mapping(address => string[])public referredEmails;
     mapping(address => FrontDoorStructs.Candidate) public candidateList;
     mapping(address => FrontDoorStructs.Referrer) public referrerList;
     mapping(address => FrontDoorStructs.Company) public companyList;
@@ -40,7 +28,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     address[] public companiesAddressList; // list of address of company
     mapping(address => FrontDoorStructs.CompanyScore[]) public companyScores;
     mapping(address => mapping(address => bool)) public hasScoredCompany; //allows only to score once
-
 
     address acceptedTokenAddress;
    
@@ -57,15 +44,11 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      // =============        Defininf Counters    ================= 
     uint256  private jobIdCounter;
     uint256  private referralCounter;
-    uint256 jobListingLimit = 50;
-    uint256 initialAmountUSD = 1000;
 
-
-   // Defininf Constructor
+   // Defining Constructor
     constructor(address _acceptedTokenAddress) {
       acceptedTokenAddress = _acceptedTokenAddress;
     }
-    
 
     /** ==============          Modifiers          ===================== */
 
@@ -152,7 +135,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     }
     
     companyaccountBalances[msg.sender] += bounty;
-    emit DepositCompleted(msg.sender , bounty);
+    emit Event.DepositCompleted(msg.sender , bounty);
 
     return jobId;
   }
@@ -173,7 +156,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     require(job.issucceed == true , "Job is not succeed yet"); // check if job is succeed or not
 
     job.isRemoved = true;
-    jobList[jobId] = job;
+    delete jobList[jobId]; // deleting a job from jobList
   }
 
   // ============================================================================
@@ -219,7 +202,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     FrontDoorStructs.ReferralScore memory newReferralScore = FrontDoorStructs.ReferralScore(score, msg.sender);
     
     referralScores[referrerWallet].push(newReferralScore);
-    emit ReferralScoreSubmitted(msg.sender, referrerWallet, score);
+    emit Event.ReferralScoreSubmitted(msg.sender, referrerWallet, score);
 
     companyAddressToCandidateScore[msg.sender][referrerWallet] = score;
     
@@ -239,7 +222,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     scores.push(newScore);
     hasScoredCompany[msg.sender][companyAddress] = true;
     companyaddressToScore[companyAddress][msg.sender] = score; // mapping of company address to score given by candidate
-    emit CompanyScoreSubmitted(msg.sender, companyAddress, score);
+    emit Event.CompanyScoreSubmitted(msg.sender, companyAddress, score);
     return keccak256(abi.encodePacked(score, msg.sender, companyAddress));
   }
 
@@ -273,11 +256,12 @@ contract Recruitment  is Ownable , ReentrancyGuard {
       referralIndex[msg.sender].push(referralCounter);
       referralList[referralCounter] = referral;
       referralCounter++;
-      emit ReferCandidateSuccess(msg.sender,_candidateAddress,_jobId); // emit event
+      emit Event.ReferCandidateSuccess(msg.sender,_candidateAddress,_jobId); // emit event
 
   }
 
   // ============================================================================
+
   function confirmReferral(uint256 _referralCounter , uint256 _jobId) external nonReentrant{
     // Some Checks 
     require(referralList[_referralCounter].isConfirmed == false , "Referral is already confirmed"); // check if referral is already confirmed or not
@@ -288,11 +272,10 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
     // Code Logic
     referralList[_referralCounter].isConfirmed = true;
-    emit ReferralConfirmed(msg.sender , _referralCounter , _jobId); // emit event
+    emit Event.ReferralConfirmed(msg.sender , _referralCounter , _jobId); // emit event
   }
 
   // ============================================================================
-  
 
 
 
@@ -321,7 +304,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
         revert Errors.NotEnoughFundDepositedByCompany();
     }
 
-    emit CandidateHired(msg.sender,_candidateAddress,_jobId); // emit event
+    emit Event.CandidateHired(msg.sender,_candidateAddress,_jobId); // emit event
   }
 
   /* *  -----------------------------          Set Data/Var Functions          ----------------------------- */
@@ -342,11 +325,10 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
     // implement check if total percentage is 100 or not
     require(month1RefundPct + month2RefundPct + month3RefundPct == 100, "Total percentage should be 100%!") ;
-    emit PercentagesCompleted(msg.sender, month1RefundPct, month2RefundPct, month3RefundPct);
+    emit Event.PercentagesCompleted(msg.sender, month1RefundPct, month2RefundPct, month3RefundPct);
   }
 
   // ============================================================================
-
 
   /** =============    View/Pure/Returns Functions       ============================= */
 
@@ -405,13 +387,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
           jobsFetched++;
         }
       }
-      if (jobsFetched >= jobListingLimit) {
-        return jobArray;
-      }
     }
     return jobArray;
   }
-
-
-
  }
