@@ -10,6 +10,7 @@ library FrontDoorStructs {
         bool isScoreGivenByCompany ; // bool if company gives score to candidate
         uint256 timeOfHiring; // time at which candidate is hired
         bool isHired;
+        bool jobConfirmed; // bool if candidate confirms the job
     }
 
      struct Referrer{
@@ -28,6 +29,7 @@ library FrontDoorStructs {
         uint256 numberOfCandidateHired; // number of candidates hired by the company
         uint256 timeAtWhichJobCreated; // indicates time at which job is created job will only be listed for 30 days
     }
+    
 
     struct Referral{
         uint256 id;

@@ -11,5 +11,5 @@ library Event {
     event CandidateHired(address indexed companyAddress, address  candidateAddress, uint256  jobId);
     event ReferralConfirmed(address indexed candidateAddress , uint256 indexed referralId , uint256 indexed jobId);
     event ReferralRejected(address indexed candidateAddress , uint256 indexed referralId , uint256 indexed jobId);
-
+    event CandidateHiredSuccesfullyAfter90Days(address indexed companyAddress, address  candidateAddress, uint256  jobId);
 }

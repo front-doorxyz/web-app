@@ -97,7 +97,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      * @param email email of the candidate
      */
    function registerCandidate(string memory email)  external {
-    FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(msg.sender, email,0,false,0,false);
+    FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(msg.sender, email,0,false,0,false,false);
     candidateList[msg.sender] = candidate;
   } 
   // ============================================================================
@@ -226,6 +226,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     return keccak256(abi.encodePacked(score, msg.sender, companyAddress));
   }
 
+
 // ==========================================================================================================
 
   /**
@@ -284,7 +285,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
 
   // ============================================================================
-
   /**
    * @param _candidateAddress Candidate address
    * @param _jobId job id 
@@ -305,6 +305,32 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     }
 
     emit Event.CandidateHired(msg.sender,_candidateAddress,_jobId); // emit event
+  }
+
+  // ============================================================================
+    /**
+   * @param _candidateAddress Candidate address
+   * @param _jobId job id 
+   * @notice sets jobConfirmed to true for the candidate
+   * sets candidate score and company score , check everything should happen after 90 days of hiring
+   */
+  function hireCandidateSuccefullyAfter90Days(address _candidateAddress , uint256 _jobId) nonReentrant  checkIfItisACompany(msg.sender) external {
+    // Some Checks 
+    require(candidateList[_candidateAddress].isHired == true , "Candidate is already hired"); // check if candidate is already hired or not
+    require(jobList[_jobId].issucceed == false , "Job is already succeed"); // check if job is already succeed or not
+    require(candidateList[_candidateAddress].timeOfHiring + 90 days >  block.timestamp , "90 days are not passed yet"); // check if 90 days are passed or not
+
+    // Code Logic
+    candidateList[_candidateAddress].isHired = true;
+    candidateList[_candidateAddress].timeOfHiring = block.timestamp;
+    jobList[_jobId].numberOfCandidateHired += 1;
+    candidateList[_candidateAddress].jobConfirmed = true;
+
+    if((companyaccountBalances[msg.sender]) >= (jobList[_jobId].bounty * jobList[_jobId].numberOfCandidateHired)) {
+        revert Errors.NotEnoughFundDepositedByCompany();
+    }
+
+    emit Event.CandidateHiredSuccesfullyAfter90Days(msg.sender,_candidateAddress,_jobId); // emit event
   }
 
   /* *  -----------------------------          Set Data/Var Functions          ----------------------------- */
