@@ -26,6 +26,7 @@ export const GeneralProvider = ({ children }) => {
     maxSalary: "Max Salary",
     bounty: "Bounty",
     minSalary: "Min Salary",
+    type: "Internship",
   });
 
   const handleChange = e => {

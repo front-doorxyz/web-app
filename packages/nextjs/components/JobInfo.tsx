@@ -14,13 +14,16 @@ type Props = {
 
 const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
-  const { jobInfo, handleChange, registerJob, setJobInfo, id, loading } = useContext(GeneralContext);
+  const { handleChange, registerJob, id, loading } = useContext(GeneralContext);
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
+  const [jobInfo, setJobInfo] = useState<any>({});
 
   useEffect(() => {
     if (type === "edit") {
-      readJobListingById(id).then(job => setJobInfo(job));
+      readJobListingById(id).then(job => {
+        setJobInfo(job);
+      });
     }
   }, [type, id]);
 
@@ -40,9 +43,12 @@ const JobFill = ({ type }: Props) => {
   };
 
   const confirmJob = async () => {
-    // let jobId = await registerJob(Number(jobInfo.bounty));
-    let jobId = 1;
-    if (!jobId) alert("Error in smart contract transaction: registerJob");
+    let jobId = await registerJob(Number(jobInfo.bounty));
+
+    if (!jobId) {
+      notification.error("Error in smart contract transaction: registerJob");
+      return;
+    }
     console.log("jobId", jobId);
     jobInfo.id = jobId;
     const date = getDate();
@@ -55,10 +61,11 @@ const JobFill = ({ type }: Props) => {
       jobInfo.minSalary,
       jobInfo.bounty,
       jobInfo.companyName,
+      jobInfo.type,
       date,
     ];
     console.log([jobData]);
-    // await createJobListing(jobData);
+    await createJobListing(jobData);
   };
 
   const handleJob = async () => {
@@ -82,6 +89,7 @@ const JobFill = ({ type }: Props) => {
         jobInfo.minSalary,
         jobInfo.bounty,
         jobInfo.companyName,
+        jobInfo.type,
         date,
       ];
       const jobUpdated = await updateJobListing(jobInfo.id, jobData);
@@ -104,12 +112,13 @@ const JobFill = ({ type }: Props) => {
           className="input input-bordered w-[50vw]"
           onChange={handleChange}
           name="companyName"
+          value={jobInfo.companyName}
         />
       </label>
       <label className="join flex flex-col gap-2 mb-[-2%]">
         <span className="indicator-item badge badge-primary"> Description</span>
       </label>
-      <TextEditor readOnly={false} initialValue={""} />
+      <TextEditor readOnly={false} initialValue={jobInfo.description} />
       <label className="join flex flex-col gap-2">
         <span className="indicator-item badge badge-primary">Role Title</span>
         <input
@@ -118,6 +127,7 @@ const JobFill = ({ type }: Props) => {
           className="input input-bordered w-[50vw]"
           onChange={handleChange}
           name="roleTitle"
+          value={jobInfo.roleTitle}
         />
       </label>
       <label className="join flex flex-col gap-2">
@@ -128,6 +138,7 @@ const JobFill = ({ type }: Props) => {
           className="input input-bordered w-[50vw]"
           onChange={handleChange}
           name="bounty"
+          value={jobInfo.bounty}
         />
       </label>
       <label className="join flex flex-col gap-2">
@@ -138,6 +149,7 @@ const JobFill = ({ type }: Props) => {
           className="input input-bordered w-[50vw]"
           onChange={handleChange}
           name="maxSalary"
+          value={jobInfo.maxSalary}
         />
       </label>
       <label className="join flex flex-col gap-2">
@@ -148,6 +160,18 @@ const JobFill = ({ type }: Props) => {
           className="input input-bordered w-[50vw]"
           onChange={handleChange}
           name="minSalary"
+          value={jobInfo.minSalary}
+        />
+      </label>
+      <label className="join flex flex-col gap-2">
+        <span className="indicator-item badge badge-primary">Type of job</span>
+        <input
+          type="text"
+          placeholder="Type here"
+          className="input input-bordered w-[50vw]"
+          onChange={handleChange}
+          name="type"
+          value={jobInfo.type}
         />
       </label>
 

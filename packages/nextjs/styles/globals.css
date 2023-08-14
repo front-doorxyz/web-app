@@ -7,6 +7,10 @@
 [data-theme] {
   background: hsl(var(--b2));
 }
+* ::-webkit-scrollbar {
+  display: none;
+}
+
 
 body {
   min-height: 100vh;
@@ -31,3 +35,4 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
