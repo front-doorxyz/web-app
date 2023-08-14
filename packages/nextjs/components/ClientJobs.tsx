@@ -14,6 +14,7 @@ type Job = {
   minSalary: string;
   roleTitle: string;
   status?: boolean;
+  date: string;
 };
 
 type Chip = {
@@ -27,7 +28,7 @@ const Chip = (props: Chip) => {
 };
 
 const ClientJob = (props: Job) => {
-  const { id, location, bounty, description, maxSalary, minSalary, roleTitle, status } = props;
+  const { id, location, bounty, description, maxSalary, minSalary, roleTitle, status, date } = props;
   const router = useRouter();
   const viewCandidates = () => {
     router.push(`/jobCandidates/${id}`);
@@ -37,7 +38,7 @@ const ClientJob = (props: Job) => {
     router.push(`/client/editJob/${id}`);
   };
 
-  const truncateDescription = (text, maxWords) => {
+  const truncateDescription = (text: string, maxWords: number): string => {
     const words = text.split(" ");
     if (words.length > maxWords) {
       return words.slice(0, maxWords).join(" ") + "...";
@@ -61,7 +62,7 @@ const ClientJob = (props: Job) => {
             <MapPinIcon className="h-5 w-5" />
             <div>{location}</div>
           </div>
-          <div>Posted 5 mins ago</div>
+          <div>{date}</div>
         </div>
       </div>
       <div className="flex justify-between items-center pb-4">{truncateDescription(description, 20)}</div>
@@ -101,6 +102,7 @@ const ClientJobs = () => {
               roleTitle={job.roleTitle}
               bounty={job.bounty}
               description={job.description}
+              date={job.date}
             />
           ))}
         </div>

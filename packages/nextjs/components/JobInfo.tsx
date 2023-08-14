@@ -30,11 +30,22 @@ const JobFill = ({ type }: Props) => {
     return { h: "eth-personal-sign", sig };
   });
 
+  const getDate = () => {
+    let currentDate = new Date();
+    let cDay = currentDate.getDate();
+    let cMonth = currentDate.getMonth() + 1;
+    let cYear = currentDate.getFullYear();
+    let date = cDay + "/" + cMonth + "/" + cYear;
+    return date;
+  };
+
   const confirmJob = async () => {
-    let jobId = await registerJob(Number(jobInfo.bounty));
+    // let jobId = await registerJob(Number(jobInfo.bounty));
+    let jobId = 1;
     if (!jobId) alert("Error in smart contract transaction: registerJob");
     console.log("jobId", jobId);
     jobInfo.id = jobId;
+    const date = getDate();
     const jobData = [
       jobInfo.id,
       jobInfo.roleTitle,
@@ -44,9 +55,10 @@ const JobFill = ({ type }: Props) => {
       jobInfo.minSalary,
       jobInfo.bounty,
       jobInfo.companyName,
+      date,
     ];
     console.log([jobData]);
-    await createJobListing(jobData);
+    // await createJobListing(jobData);
   };
 
   const handleJob = async () => {
@@ -61,6 +73,7 @@ const JobFill = ({ type }: Props) => {
     if (type === "add") {
       setModalOpen(true);
     } else {
+      const date = getDate();
       const jobData = [
         jobInfo.roleTitle,
         jobInfo.description,
@@ -69,6 +82,7 @@ const JobFill = ({ type }: Props) => {
         jobInfo.minSalary,
         jobInfo.bounty,
         jobInfo.companyName,
+        date,
       ];
       const jobUpdated = await updateJobListing(jobInfo.id, jobData);
       if (jobUpdated.id !== "") {
