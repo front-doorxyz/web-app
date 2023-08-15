@@ -19,6 +19,7 @@ const Jobs = () => {
         <div className="flex flex-wrap items-center justify-center gap-8 mt-[2%]">
           {jobArr.map((job: any) => (
             <Job
+              key={job.id}
               id={job.id}
               companyName={job.companyName}
               roleTitle={job.roleTitle}
