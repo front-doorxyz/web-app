@@ -7,6 +7,7 @@ import StarRating from "~~/components/StarRating";
 import TextEditor from "~~/components/TextEditor";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
+import ErrorHandler from "~~/components/ErrorHandler";
 
 const Description = () => {
   const { jobInfo, deleteJob, setJobInfo, registerReferral, email, setEmail, id, setId, loading } =
@@ -14,6 +15,8 @@ const Description = () => {
   const { address } = useAccount();
 
   const router = useRouter();
+  const [showError,setShowError] = useState<boolean>(false);
+  const [errorMsg,setErrorMsg] = useState<string>("");
 
   useEffect(() => {
     const { id } = router.query;
@@ -24,11 +27,15 @@ const Description = () => {
       })
       .catch(error => {
         // Handle the error appropriately
+        setShowError(true);
+        setErrorMsg(error);
+        console.log(error);
       });
   }, []);
 
   return (
     <div className="flex flex-col items-center">
+      <ErrorHandler showError={showError} errorMsg={errorMsg} />
       <div className="w-[90vw]  md:w-[50vw]  border-neutral border-[0.7px] text-neutral rounded-md transition-all duration-300 mt-[2%]">
         <div className="flex flex-col justify-between h-[100%]">
           <div className="bg-accent h-[50px] flex items-center justify-between  gap-2">
@@ -69,9 +76,9 @@ const Description = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center h-[20%] gap-2 mt-6">
+          <div className="flex items-center justify-center h-[20%] gap-2 mt-6 mb-2">
             <button
-              className="px-2 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded"
+              className="px-5 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded  hover:bg-blue-700 hover:scale-110"
               disabled={loading}
               onClick={() => registerReferral("0x01", email)}
             >
