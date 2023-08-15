@@ -53,10 +53,16 @@ const Job = (props: Props) => {
           </div>
         </div>
         <div className="flex items-center justify-center h-[20%] gap-2">
-          <button className="px-4 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded" onClick={handleJobClick}>
+          <button
+            className="px-5 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded hover:bg-blue-700 hover:scale-110"
+            onClick={handleJobClick}
+          >
             Refer
           </button>
-          <button className="px-4 py-2 bg-green-500 text-sm md:text-lg text-white rounded" onClick={handleJobClick}>
+          <button
+            className="px-5 py-2 bg-green-500 text-sm md:text-lg text-white rounded hover:bg-green-700 hover:scale-110"
+            onClick={handleJobClick}
+          >
             Apply
           </button>
         </div>
