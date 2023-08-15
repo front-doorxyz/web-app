@@ -15,6 +15,7 @@ const Jobs = () => {
         // Handle the error appropriately
         setShowError(true);
         setErrorMsg(error);
+        console.log(error);
       });
   }, []);
 
