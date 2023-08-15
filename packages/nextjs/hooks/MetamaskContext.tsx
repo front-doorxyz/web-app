@@ -1,13 +1,6 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  Reducer,
-  useEffect,
-  useReducer,
-} from 'react';
-import { Snap } from '../types';
-import { isFlask, getSnap } from '../utils';
+import { Dispatch, ReactNode, Reducer, createContext, useEffect, useReducer } from "react";
+import { Snap } from "../types/snap";
+import { getSnap, isFlask } from "../utils/snap";
 
 export type MetamaskState = {
   isFlask: boolean;
@@ -22,9 +15,7 @@ const initialState: MetamaskState = {
 
 type MetamaskDispatch = { type: MetamaskActions; payload: any };
 
-export const MetaMaskContext = createContext<
-  [MetamaskState, Dispatch<MetamaskDispatch>]
->([
+export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([
   initialState,
   () => {
     /* no op */
@@ -32,9 +23,9 @@ export const MetaMaskContext = createContext<
 ]);
 
 export enum MetamaskActions {
-  SetInstalled = 'SetInstalled',
-  SetFlaskDetected = 'SetFlaskDetected',
-  SetError = 'SetError',
+  SetInstalled = "SetInstalled",
+  SetFlaskDetected = "SetFlaskDetected",
+  SetError = "SetError",
 }
 
 const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
@@ -70,7 +61,7 @@ const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
  * @returns JSX.
  */
 export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <>{children}</>;
   }
 
@@ -120,9 +111,5 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [state.error]);
 
-  return (
-    <MetaMaskContext.Provider value={[state, dispatch]}>
-      {children}
-    </MetaMaskContext.Provider>
-  );
+  return <MetaMaskContext.Provider value={[state, dispatch]}>{children}</MetaMaskContext.Provider>;
 };

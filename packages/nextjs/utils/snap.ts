@@ -1,5 +1,5 @@
-import { defaultSnapOrigin } from '../config';
-import { GetSnapsResponse, Snap } from '../types';
+import { defaultSnapOrigin } from "../config/index";
+import { GetSnapsResponse, Snap } from "../types/snap";
 
 /**
  * Get the installed snaps in MetaMask.
@@ -40,10 +40,7 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
   try {
     const snaps = await getSnaps();
 
-    return Object.values(snaps).find(
-      (snap) =>
-        snap.id === defaultSnapOrigin && (!version || snap.version === version),
-    );
+    return Object.values(snaps).find(snap => snap.id === defaultSnapOrigin && (!version || snap.version === version));
   } catch (e) {
     console.log('Failed to obtain installed snap', e);
     return undefined;
