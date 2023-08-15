@@ -9,7 +9,7 @@ const ErrorHandler = ({ showError, errorMsg }: Props) => {
   return (
     <>
       {showError && (
-        <div className="text-white text-center  p-2 font-bold  mx-2 rounded-md bg-red-600 shadow-2xl">
+        <div className="w-3/4 mt-5 mx-2 text-white text-center  p-2 font-bold rounded-md bg-red-600 shadow-2xl">
           <p>{errorMsg}</p>
         </div>
       )}
