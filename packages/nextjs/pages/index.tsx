@@ -4,16 +4,16 @@ import { db, readAllJobListings } from "../services/polybase/database";
 import type { NextPage } from "next";
 import { useAccount, useSigner } from "wagmi";
 import Banner from "~~/components/Banner";
+import ErrorHandler from "~~/components/ErrorHandler";
 import Jobs from "~~/components/Jobs";
 import { MetaMaskContext, MetamaskActions } from "~~/hooks/MetamaskContext";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
 import { connectSnap, getSnap } from "~~/utils/snap";
-import ErrorHandler from "~~/components/ErrorHandler";
 
 const AllJobs: NextPage = () => {
   const [state, dispatch] = useContext(MetaMaskContext);
-  const [showError,setShowError] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const { data: signer } = useSigner();
   const { address } = useAccount();
@@ -32,7 +32,6 @@ const AllJobs: NextPage = () => {
 
   useEffect(() => {
     if (signer) {
-      setShowError(false);
       (async () => {
         try {
           await connectSnap();
@@ -49,8 +48,9 @@ const AllJobs: NextPage = () => {
         }
       })();
       getAllJobs();
+      setShowError(false);
     }
-  }, [signer,dispatch]);
+  }, [signer, dispatch]);
 
   const { data: jobs, isLoading: isJobsLoading } = useScaffoldContractRead({
     contractName: "Recruitment",
