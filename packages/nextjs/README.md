@@ -1,8 +1,10 @@
 # FRONT DOOR Web App
 
 ## Install & Run
-$ yarn
-$ yarn start
+```
+yarn
+yarn start
+```
 
 ###s Requirements
 
