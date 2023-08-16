@@ -40,11 +40,10 @@ const ContactUs: NextPage = () => {
       isValid = false;
     }
     setErrors(tempErrors);
-    if(!isValid){
+    if (!isValid) {
       console.log(tempErrors);
     }
     return isValid;
-    
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
