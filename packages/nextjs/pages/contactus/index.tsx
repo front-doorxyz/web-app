@@ -14,15 +14,15 @@ const ContactUs: NextPage = () => {
   const [errors, setErrors] = useState<IErrors>({ fullname: false, email: false, message: false });
 
   //   Setting submit button status
-  const [buttonText, setButtonText] = useState<string>("Submit");
+  const [submitButtonText, setSubmitButtonText] = useState<string>("Submit");
   const [enableSubmit, setEnableSubmit] = useState<boolean>(true);
 
   // success or failure messages
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const [showFailureMessage, setShowFailureMessage] = useState<boolean>(false);
 
+  // form validation
   const isEmail = (email: string): boolean => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-
   const handleValidation = (): boolean => {
     const tempErrors: IErrors = { fullname: false, email: false, message: false };
     let isValid = true;
@@ -34,12 +34,44 @@ const ContactUs: NextPage = () => {
       tempErrors.email = true;
       isValid = false;
     }
-    if (message.length == 0){
+    if (message.length == 0) {
       tempErrors.message = true;
       isValid = false;
     }
     setErrors(tempErrors);
     return isValid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const isFormValid = handleValidation();
+    if (isFormValid) {
+      setSubmitButtonText("Submit");
+      setEnableSubmit(false);
+      const res = await fetch("/api/sendgrid", {
+        body: JSON.stringify({
+          email: email,
+          fullname: fullname,
+          subject: "New message to Front Door",
+          message: message,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+
+      const { error } = await res.json();
+      if (error) {
+        setShowFailureMessage(true);
+        setShowSuccessMessage(false);
+        return;
+      }
+      setShowFailureMessage(false);
+      setShowSuccessMessage(true);
+      setSubmitButtonText("Submit");
+      setEnableSubmit(true);
+    }
   };
 
   return (
@@ -59,9 +91,14 @@ const ContactUs: NextPage = () => {
         <input type="text" placeholder="Enter your email" className="input input-bordered w-[200px] md:w-[20vw] " />
         <textarea
           placeholder="Enter your message"
-          className="peer h-3/4 min-h-[100px]  w-[200px] md:w-[20vw] input input-bordered"
+          className="peer h-3/4 min-h-[100px] w-[200px] md:w-[20vw] input input-bordered p-3"
         />
-        <button className="btn btn-primary w-[200px] md:w-[20vw] hover:scale-110">Submit</button>
+        <button
+          disabled={enableSubmit ? false : true}
+          className="btn btn-primary w-[200px] md:w-[20vw] hover:scale-110"
+        >
+          {submitButtonText}
+        </button>
       </div>
     </div>
   );
