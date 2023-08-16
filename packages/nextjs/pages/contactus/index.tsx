@@ -14,6 +14,9 @@ interface IErrors {
 const errorTemplate: IErrors = { fullname: false, email: false, message: false, captcha: false };
 
 const ContactUs: NextPage = () => {
+  const captchaKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
+  const emailjsKey = process.env.NEXT_PUBLIC_EMAILJS_KEY;
+
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -64,7 +67,7 @@ const ContactUs: NextPage = () => {
       setSubmitButtonText("Submit");
       setEnableSubmit(false);
       try {
-        emailjs.sendForm("service_gb5wvzu", "template_ykzhb1p", e.target, "vmYs4tBmmwGXZk563").then(
+        emailjs.sendForm("service_gb5wvzu", "template_ykzhb1p", e.currentTarget, emailjsKey).then(
           (result: { text: any }) => {
             setShowSuccessMessage(true);
             setShowFailureMessage(false);
@@ -126,7 +129,7 @@ const ContactUs: NextPage = () => {
             className="peer h-3/4 min-h-[100px] w-[200px] md:w-[20vw] input input-bordered p-3"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.currentTarget.value)}
           />
-          <ReCAPTCHA sitekey="6LdvD7AnAAAAAOQExr-wSYRsntfvj17nrU1wuKTZ" onChange={onRecaptchaChange} />
+          <ReCAPTCHA sitekey={captchaKey} onChange={onRecaptchaChange} />
           <button
             disabled={enableSubmit ? false : true}
             className={
