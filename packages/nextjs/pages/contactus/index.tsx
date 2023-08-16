@@ -1,7 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 
+interface IErrors {
+  fullname: boolean;
+  email: boolean;
+  message: boolean;
+}
+
 const ContactUs: NextPage = () => {
+  const [fullname, setFullname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [errors, setErrors] = useState<IErrors>({ fullname: false, email: false, message: false });
+
+  //   Setting submit button status
+  const [buttonText, setButtonText] = useState<string>("Submit");
+  const [enableSubmit, setEnableSubmit] = useState<boolean>(true);
+
+  // success or failure messages
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [showFailureMessage, setShowFailureMessage] = useState<boolean>(false);
+
+  const isEmail = (email: string): boolean => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
+  const handleValidation = (): boolean => {
+    const tempErrors: IErrors = { fullname: false, email: false, message: false };
+    let isValid = true;
+    if (fullname.length == 0) {
+      tempErrors.fullname = true;
+      isValid = false;
+    }
+    if (!isEmail(email)) {
+      tempErrors.email = true;
+      isValid = false;
+    }
+    if (message.length == 0){
+      tempErrors.message = true;
+      isValid = false;
+    }
+    setErrors(tempErrors);
+    return isValid;
+  };
+
   return (
     <div className="flex flex-col items-center  mt-[2%]">
       <div id="info" className="flex flex-col items-center justify-center gap-2">
