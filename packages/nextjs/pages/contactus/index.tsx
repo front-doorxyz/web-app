@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
+import ReCAPTCHA from "react-google-recaptcha";
 import ErrorHandler from "~~/components/ErrorHandler";
 
 interface IErrors {
   fullname: boolean;
   email: boolean;
   message: boolean;
+  captcha: boolean;
 }
 
 const ContactUs: NextPage = () => {
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [errors, setErrors] = useState<IErrors>({ fullname: false, email: false, message: false });
+  const [errors, setErrors] = useState<IErrors>({ fullname: false, email: false, message: false, captcha: false });
+  const [captchaToken, setCaptchaToken] = useState<string>("");
 
   //   Setting submit button status
   const [submitButtonText, setSubmitButtonText] = useState<string>("Submit");
@@ -39,12 +42,20 @@ const ContactUs: NextPage = () => {
       tempErrors.message = true;
       isValid = false;
     }
+    if (captchaToken.length == 0) {
+      tempErrors.captcha = true;
+      isValid = false;
+    }
     setErrors(tempErrors);
     if (!isValid) {
       console.log(tempErrors);
     }
     return isValid;
   };
+
+  function onRecaptchaChange(value: string) {
+    setCaptchaToken(value);
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,18 +94,19 @@ const ContactUs: NextPage = () => {
       <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
         <div id="info" className="flex flex-col items-center justify-center gap-2">
           <h3 className="text-sm md:text-xl">Get in touch</h3>
-          <h1 className="text-xl md:text-5xl font-bold font-bai-jamjuree text-black dark:text-gray-500">
+          <h1 className="text-xl md:text-5xl font-bold font-bai-jamjuree text-black dark:text-gray-300">
             We&apos;d love to hear from you
           </h1>
         </div>
         <div
           id="form"
-          className="w-[300px] mx-auto md:w-[30vw] bg-white rounded-[2%] p-10 mt-[4%] flex flex-col items-center justify-center gap-5 "
+          className="shadow-2xl w-[300px] mx-auto md:w-[30vw] bg-white rounded-[2%] p-10 mt-[4%] flex flex-col items-center justify-center gap-5 "
         >
           <h3 className="text-sm md:text-xl  text-black ">Feel free to reach out</h3>
           {errors.fullname && <ErrorHandler showError={errors.fullname} errorMsg="Name cannot be empty." />}
           {errors.email && <ErrorHandler showError={errors.email} errorMsg="Invalid email." />}
           {errors.message && <ErrorHandler showError={errors.message} errorMsg="Message cannot be empty." />}
+          {errors.captcha && <ErrorHandler showError={errors.captcha} errorMsg="Please complet the captcha." />}
           <input
             type="text"
             placeholder="Enter your name"
@@ -112,6 +124,7 @@ const ContactUs: NextPage = () => {
             className="peer h-3/4 min-h-[100px] w-[200px] md:w-[20vw] input input-bordered p-3"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.currentTarget.value)}
           />
+          <ReCAPTCHA sitekey="6LdvD7AnAAAAAOQExr-wSYRsntfvj17nrU1wuKTZ" onChange={onRecaptchaChange} />
           <button
             disabled={enableSubmit ? false : true}
             className={
