@@ -42,7 +42,7 @@ const ContactUs: NextPage = () => {
     return isValid;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const isFormValid = handleValidation();
     if (isFormValid) {
@@ -84,7 +84,7 @@ const ContactUs: NextPage = () => {
       </div>
       <div
         id="form"
-        className="w-[300px] md:w-[30vw] bg-[#ade8f4] rounded-[2%] p-10 mt-[4%] flex flex-col items-center justify-center gap-5 "
+        className="w-[300px] md:w-[30vw] bg-white rounded-[2%] p-10 mt-[4%] flex flex-col items-center justify-center gap-5 "
       >
         <h3 className="text-sm md:text-xl  text-black ">Feel free to reach out</h3>
         <input type="text" placeholder="Enter your name" className="input input-bordered  w-[200px] md:w-[20vw] " />
@@ -95,11 +95,20 @@ const ContactUs: NextPage = () => {
         />
         <button
           disabled={enableSubmit ? false : true}
-          className="btn btn-primary w-[200px] md:w-[20vw] hover:scale-110"
+          className={
+            enableSubmit
+              ? "px-8 py-3 btn btn-primary text-white rounded focus:outline-none w-[200px] md:w-[20vw] hover:scale-110 "
+              : "px-8 py-3 bg-slate-500 text-white rounded focus:outline-none w-[200px] md:w-[20vw]"
+          }
         >
           {submitButtonText}
         </button>
       </div>
+      {showSuccessMessage && (
+        <p className="text-green-500 font-semibold text-sm my-2">Thank you! Your Message has been delivered.</p>
+      )}
+
+      {showFailureMessage && <p className="text-red-500">Oops! Something went wrong, please try again.</p>}
     </div>
   );
 };
