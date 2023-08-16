@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import emailjs from "emailjs-com";
 import { NextPage } from "next";
 import ReCAPTCHA from "react-google-recaptcha";
 import ErrorHandler from "~~/components/ErrorHandler";
@@ -10,11 +11,13 @@ interface IErrors {
   captcha: boolean;
 }
 
+const errorTemplate: IErrors = { fullname: false, email: false, message: false, captcha: false };
+
 const ContactUs: NextPage = () => {
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  const [errors, setErrors] = useState<IErrors>({ fullname: false, email: false, message: false, captcha: false });
+  const [errors, setErrors] = useState<IErrors>(errorTemplate);
   const [captchaToken, setCaptchaToken] = useState<string>("");
 
   //   Setting submit button status
@@ -28,7 +31,7 @@ const ContactUs: NextPage = () => {
   // form validation
   const isEmail = (email: string): boolean => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
   const handleValidation = (): boolean => {
-    const tempErrors: IErrors = { fullname: false, email: false, message: false };
+    const tempErrors: IErrors = errorTemplate;
     let isValid = true;
     if (fullname.length == 0) {
       tempErrors.fullname = true;
@@ -47,9 +50,6 @@ const ContactUs: NextPage = () => {
       isValid = false;
     }
     setErrors(tempErrors);
-    if (!isValid) {
-      console.log(tempErrors);
-    }
     return isValid;
   };
 
@@ -63,23 +63,22 @@ const ContactUs: NextPage = () => {
     if (isFormValid) {
       setSubmitButtonText("Submit");
       setEnableSubmit(false);
-      const res = await fetch("/api/sendgrid", {
-        body: JSON.stringify({
-          email: email,
-          fullname: fullname,
-          subject: "New message to Front Door",
-          message: message,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-      });
-
-      const { error } = await res.json();
-      if (error) {
+      try {
+        emailjs.sendForm("service_gb5wvzu", "template_ykzhb1p", e.target, "vmYs4tBmmwGXZk563").then(
+          (result: { text: any }) => {
+            setShowSuccessMessage(true);
+            setShowFailureMessage(false);
+            setSubmitButtonText("Submit");
+            setEnableSubmit(true);
+          },
+          (error: { text: any }) => {
+            setShowFailureMessage(false);
+            setSubmitButtonText("Submit");
+            setEnableSubmit(true);
+          },
+        );
+      } catch (e) {
         setShowFailureMessage(true);
-        setShowSuccessMessage(false);
         return;
       }
       setShowFailureMessage(false);
@@ -110,17 +109,20 @@ const ContactUs: NextPage = () => {
           <input
             type="text"
             placeholder="Enter your name"
+            name="name"
             className="input input-bordered  w-[200px] md:w-[20vw]"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFullname(e.currentTarget.value)}
           />
           <input
             type="text"
             placeholder="Enter your email"
+            name="email"
             className="input input-bordered w-[200px] md:w-[20vw]"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)}
           />
           <textarea
             placeholder="Enter your message"
+            name="message"
             className="peer h-3/4 min-h-[100px] w-[200px] md:w-[20vw] input input-bordered p-3"
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.currentTarget.value)}
           />
