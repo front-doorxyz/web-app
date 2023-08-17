@@ -16,6 +16,8 @@ const errorTemplate: IErrors = { fullname: false, email: false, message: false, 
 const ContactUs: NextPage = () => {
   const captchaKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
   const emailjsKey = process.env.NEXT_PUBLIC_EMAILJS_KEY;
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICEID;
+  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE;
 
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -67,7 +69,7 @@ const ContactUs: NextPage = () => {
       setSubmitButtonText("Submit");
       setEnableSubmit(false);
       try {
-        emailjs.sendForm("service_gb5wvzu", "template_ykzhb1p", e.currentTarget, emailjsKey).then(
+        emailjs.sendForm(serviceId as string, templateId as string, e.currentTarget, emailjsKey).then(
           (result: { text: any }) => {
             setShowSuccessMessage(true);
             setShowFailureMessage(false);
