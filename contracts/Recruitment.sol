@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.19;
 
+// Enable the optimizer
+
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";  
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -10,14 +12,14 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import { FrontDoorStructs } from "./DataModel.sol";
 import { Errors } from "./Errors.sol";
 import {Event} from "./Events.sol";
+import {Mapping} from "./Mapping.sol";
+
 
 contract Recruitment  is Ownable , ReentrancyGuard {
 
-   // =============    Defining Mapping        ================== 
+
+ // =============    Defining Mapping        ================== 
     mapping(address =>  uint256) public companyaccountBalances;
-    mapping(address => uint8[3][]) public accountMonthlyRefundPcts;
-    mapping(address => uint8[]) public accountCompleteDeposits;
-    mapping(address => uint)public balances;
     mapping(address => FrontDoorStructs.Candidate) public candidateList;
     mapping(address => FrontDoorStructs.Referrer) public referrerList;
     mapping(address => FrontDoorStructs.Company) public companyList;
@@ -31,29 +33,35 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
     address acceptedTokenAddress;
    
-     // Company address mapped to  candiate address which gives score to the company 
-    mapping(address => mapping(address => uint256)) private companyaddressToScore; 
+    // Company address  to  candiate address  gives score to company 
+    mapping(address => mapping(address => uint256)) public companyaddressToScore; 
   
-   //  Company address mapped to address of candidate to score giving By company 
-    mapping(address => mapping(address => uint256)) private  companyAddressToCandidateScore;
+   //  Company address  to candidate address  to score giving By company 
+    mapping(address => mapping(address => uint256)) public  companyAddressToCandidateScore;
   
-   // Company address mapped to address of candidate hired by company
-    mapping(address => address[]) private companyAddressToHiredCandidateAddress;
-
+   // Company address  to candidate address  hired by company
+    mapping(address => address[]) public companyAddressToHiredCandidateAddress;  
     
-     // =============        Defininf Counters    ================= 
+     //  Counters
     uint256  private jobIdCounter;
     uint256  private referralCounter;
+    uint256 month1;
+    uint256 month2;
+    uint256 month3;
 
-   // Defining Constructor
-    constructor(address _acceptedTokenAddress) {
+
+
+
+   // Constructor
+    constructor(address _acceptedTokenAddress , uint256 _month1 , uint256 _month2 , uint256 _month3) {
       acceptedTokenAddress = _acceptedTokenAddress;
+      month1 = _month1;
+      month2 = _month2;
+      month3 = _month3;
     }
 
-    /** ==============          Modifiers          ===================== */
-
-    /**
-     * @param _address address of the company
+  /**
+     * @param _address company address
      * @dev Checks whether the address of Company is in CompanyList or not
      */
     modifier  checkIfItisACompany(address _address) {
@@ -88,10 +96,8 @@ contract Recruitment  is Ownable , ReentrancyGuard {
       _;
     }
     
-     // ============    Register Functions       ========================
-
-
-  // ============================================================================
+     //   Register Functions 
+ 
     /**
      * @notice Register a Candidate with email 
      * @param email email of the candidate
@@ -100,8 +106,8 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(msg.sender, email,0,false,0,false,false);
     candidateList[msg.sender] = candidate;
   } 
-  // ============================================================================
-    
+
+
     /**
      * @notice Register a Referrer with email
      * @param email email of the referee
@@ -110,8 +116,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
         FrontDoorStructs.Referrer memory referrer = FrontDoorStructs.Referrer(msg.sender, email,0,0);
         referrerList[msg.sender] = referrer;
     }
-
-  // ============================================================================
+ 
   /**
    * @param bounty amount paid by compnay to hire candidate 
    */
@@ -125,8 +130,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     
     // implement  company to pay the bounty upfront
     ERC20(acceptedTokenAddress).approve( address(this) , bounty); // asking user for approval to transfer bounty
-
-    require(ERC20(acceptedTokenAddress).allowance(msg.sender, address(this)) >= bounty , "Bounty not approved"); // check if bounty is approved or not
     
     bool success =  ERC20(acceptedTokenAddress).transferFrom(msg.sender, address(this), bounty);
 
@@ -135,12 +138,10 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     }
     
     companyaccountBalances[msg.sender] += bounty;
-    emit Event.DepositCompleted(msg.sender , bounty);
+    emit Event.DepositCompleted(msg.sender , bounty , jobId);
 
     return jobId;
   }
-
-  // ============================================================================
 
  /**
     * @notice Flags a job as deleted. Sets the status of a job from `true` to `false`
@@ -159,8 +160,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     delete jobList[jobId]; // deleting a job from jobList
   }
 
-  // ============================================================================
-
   /**
    * @notice Registers a Company
    */
@@ -169,8 +168,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     companyList[msg.sender] = company;
     companiesAddressList.push(msg.sender);
   }
-
-  // ============================================================================
 
    /**
     * @notice Registers a referral
@@ -195,10 +192,8 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     referralCounter++;
   }
 
-  // ============================================================================
 
-  function submitReferralScore( uint256 score,address referrerWallet) nonReentrant public checkIfItisACompany(msg.sender) returns  (bytes32) {
-
+  function submitReferralScore( uint256 score,address referrerWallet) nonReentrant public  checkIfItisACompany(msg.sender) returns  (bytes32) {
     FrontDoorStructs.ReferralScore memory newReferralScore = FrontDoorStructs.ReferralScore(score, msg.sender);
     
     referralScores[referrerWallet].push(newReferralScore);
@@ -208,8 +203,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     
     return keccak256(abi.encodePacked(score, msg.sender, referrerWallet));
   }
-
-  // ============================================================================
 
   /**
    * @param score score given to the company
@@ -225,9 +218,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     emit Event.CompanyScoreSubmitted(msg.sender, companyAddress, score);
     return keccak256(abi.encodePacked(score, msg.sender, companyAddress));
   }
-
-
-// ==========================================================================================================
 
   /**
    * @param _candidateAddress Address of candidate
@@ -261,8 +251,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
   }
 
-  // ============================================================================
-
   function confirmReferral(uint256 _referralCounter , uint256 _jobId) external nonReentrant{
     // Some Checks 
     require(referralList[_referralCounter].isConfirmed == false , "Referral is already confirmed"); // check if referral is already confirmed or not
@@ -276,15 +264,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     emit Event.ReferralConfirmed(msg.sender , _referralCounter , _jobId); // emit event
   }
 
-  // ============================================================================
 
-
-
-  // do confirm referral function by candidate , mappend that refrral id to referrer  address , job id to job , 
-  // loopholes ,, anyone can call the confirm referrl function as paramters are public 
-
-
-  // ============================================================================
   /**
    * @param _candidateAddress Candidate address
    * @param _jobId job id 
@@ -306,9 +286,9 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
     emit Event.CandidateHired(msg.sender,_candidateAddress,_jobId); // emit event
   }
-
-  // ============================================================================
-    /**
+ 
+ 
+ /**
    * @param _candidateAddress Candidate address
    * @param _jobId job id 
    * @notice sets jobConfirmed to true for the candidate
@@ -333,75 +313,26 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     emit Event.CandidateHiredSuccesfullyAfter90Days(msg.sender,_candidateAddress,_jobId); // emit event
   }
 
-  /* *  -----------------------------          Set Data/Var Functions          ----------------------------- */
+  /**  View/Pure/Returns Functions*/
+    
 
-  // ============================================================================
-  /**
-   * @notice set the percentages for monthy refund pact 
-   * @dev Got getting this function to work?
-   */
-    function setPercentages(
-    uint8 month1RefundPct
-    ,uint8 month2RefundPct
-    ,uint8 month3RefundPct
-  ) external onlyOwner nonReentrant {
-    require(month1RefundPct >= 0 && month1RefundPct <= 100, "Month 1 percentage between 0 and 100!");
-    require(month2RefundPct >= 0 && month2RefundPct <= 100, "Month 2 percentage between 0 and 100!");
-    require(month3RefundPct >= 0 && month3RefundPct <= 100, "Month 3 percentage between 0 and 100!");
-
-    // implement check if total percentage is 100 or not
-    require(month1RefundPct + month2RefundPct + month3RefundPct == 100, "Total percentage should be 100%!") ;
-    emit Event.PercentagesCompleted(msg.sender, month1RefundPct, month2RefundPct, month3RefundPct);
-  }
-
-  // ============================================================================
-
-  /** =============    View/Pure/Returns Functions       ============================= */
-
-     // ============================================================================
-    /**
-    * @notice Getter function of Candidate.
-    * @param wallet The wallet address of a candidate to be fetched from the mapping
-    * @return Candidate The type of FrontDoorStruct.Candidate 
-  */  
   function getCandidate(address wallet) external view returns(FrontDoorStructs.Candidate memory) {
     return candidateList[wallet];
   }
 
-  // ============================================================================
-  /**
-    * @notice Getter function of Referrer.
-    * @param wallet The wallet address of a referrer to be fetched from the mapping
-    * @return Referrer The type of FrontDoorStruct.Referrer 
-  */
+ 
   function getReferrer(address wallet) external view returns(FrontDoorStructs.Referrer memory) {
     return referrerList[wallet];
   }
 
-  // ============================================================================
-  /**
-   * @notice Getter function of referrer score .
-   * @param referrerWallet address of the referrer
-   */
   function getReferralScores(address referrerWallet) public view returns (FrontDoorStructs.ReferralScore[] memory) {
     return referralScores[referrerWallet];
   }
-  // ============================================================================
-    /**
-   * @notice Getter function of company score .
-   * @param companyAddress address of the company
-   */
+
   function getCompanyScores(address companyAddress) public view returns (FrontDoorStructs.CompanyScore[] memory) {
     return companyScores[companyAddress];
   }
-  // ============================================================================
 
-   /**
-    * @notice Gets all the jobs created by a Company(starting from an ID upto the limit)
-    * @param startId The offset id of job to be fetched from the array.
-    * @param companyWallet The wallet address of the company
-    * @return FrontDoorStructs.Job[] an Array of Job struct
-  */
   function getAllJobsOfCompany(uint256 startId, address companyWallet) external view returns (FrontDoorStructs.Job[] memory) {
     if (startId > jobIdCounter) revert Errors.JobListingLimitExceed();
     uint256 jobsFetched = 0;
@@ -416,4 +347,4 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     }
     return jobArray;
   }
- }
+ }  
