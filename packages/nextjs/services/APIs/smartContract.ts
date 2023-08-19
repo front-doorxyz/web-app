@@ -1,9 +1,10 @@
 import { ethers } from "ethers";
 import { Address } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
-import Recruitment from "../../generated/recruitment.json";
+import contracts from "~~/generated/deployedContracts";
 
-const contractAddress = "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298";
+const RecruitmentContractAddress = contracts[59140][0].contracts.Recruitment.address;
+const RecruitmentAbi = contracts[59140][0].contracts.Recruitment.abi
 
 let provider,signer
 if (typeof window !== "undefined") {
@@ -12,7 +13,7 @@ signer =  provider.getSigner()
 
 }
 
-const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
+const deployedContract = new ethers.Contract(RecruitmentContractAddress, RecruitmentAbi, signer);
 export const registerCandidate = async(email:string) =>{
   try{
     const tx = await deployedContract.registerCandidate(email);
@@ -26,7 +27,7 @@ export const registerCandidate = async(email:string) =>{
   }
 }
 
-export const registerCompany = async()=>{
+export const registerCompany = async() => {
     try{
         const tx = await deployedContract.registerCompany();
         const receipt = await tx.wait();
@@ -54,8 +55,8 @@ export const registerReferrer = async(email:string) =>{
 
   export const registerJob = async (bounty:number) => {
     try {
-      if (isNaN(bounty)) return undefined;
-      const tx = await deployedContract.registerJob(Number(bounty));
+      
+      const tx = await deployedContract.registerJob(bounty);
       const receipt = await tx.wait();
       console.log("Success! Transaction hash:", receipt.transactionHash);
       notification.success("Job registered successfully");
@@ -246,6 +247,7 @@ export const registerReferrer = async(email:string) =>{
 
   export const getAllJobsOfCompany = async(jobStartId:number,companyAddress:Address) =>{
     try{
+        console.log(jobStartId,companyAddress)
         const tx = await deployedContract.getAllJobsOfCompany(jobStartId,companyAddress);
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);

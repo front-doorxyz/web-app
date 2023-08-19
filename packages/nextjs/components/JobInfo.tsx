@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import JobModal from "./JobModal";
 import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
-import { useAccount } from "wagmi";
+import { Address, useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { createJobListing, db, readJobListingById, updateJobListing } from "~~/services/APIs/database";
+import { createJobListing, db, readCompanyById, readJobListingById, updateJobListing } from "~~/services/APIs/database";
 import { registerJob } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -51,9 +51,19 @@ const JobFill = ({ type }: Props) => {
     });
   };
 
+  const getCompanyData = async (address: Address) => {
+    const data = await readCompanyById(address);
+    setJobInfo({
+      ...jobInfo,
+      companyName: data.companyName,
+    });
+  };
+
   useEffect(() => {
-    console.log(jobInfo);
-  }, [jobInfo]);
+    if (address && type !== "edit") {
+      getCompanyData(address);
+    }
+  }, [address, type]);
 
   useEffect(() => {
     if (type === "edit") {
@@ -80,7 +90,7 @@ const JobFill = ({ type }: Props) => {
 
   const confirmJob = async () => {
     try {
-      let jobId = await registerJob(1200);
+      let jobId = await registerJob(jobInfo.bounty);
       console.log(jobId);
 
       if (!jobId) {
@@ -99,6 +109,7 @@ const JobFill = ({ type }: Props) => {
         jobInfo.minSalary,
         jobInfo.bounty,
         jobInfo.companyName,
+        address,
         jobInfo.type,
         date,
       ];
@@ -146,18 +157,18 @@ const JobFill = ({ type }: Props) => {
   return (
     <div className="shadow-2xl flex flex-col justify-center gap-4 p-4">
       <label className="join flex flex-col gap-2">
-        <span className="indicator-item badge badge-primary">Company Name</span>
+        <span className="indicator-item badge badge-primary">Location</span>
         <input
           type="text"
           placeholder="Type here"
           className="input input-bordered w-[50vw]"
           onChange={handleChange}
-          name="companyName"
-          value={jobInfo.companyName}
+          name="location"
+          value={jobInfo.location}
         />
       </label>
       <label className="join flex flex-col gap-2 mb-[-2%]">
-        <span className="indicator-item badge badge-primary"> Description</span>
+        <span className="indicator-item badge badge-primary">Job Description</span>
       </label>
       <TextEditor
         readOnly={false}

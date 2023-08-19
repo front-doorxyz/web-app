@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Chip from "../../components/Chip";
-import { readJobListingById } from "../../services/APIs/database";
+import { readCompanyById, readJobListingById } from "../../services/APIs/database";
+import { Address, useAccount } from "wagmi";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import StarRating from "~~/components/StarRating";
 import TextEditor from "~~/components/TextEditor";
@@ -12,11 +13,12 @@ const Description = () => {
   const { deleteJob, registerReferral, email, setEmail, id, setId } = useContext(GeneralContext);
   const [loading, setLoading] = useState<boolean>(true);
   const [jobInfo, setJobInfo] = useState<any>({});
-
+  const [companyInfo, setCompanyInfo] = useState<any>({});
+  const { address } = useAccount();
   const router = useRouter();
 
   useEffect(() => {
-    if (jobInfo?.description) {
+    if (jobInfo?.description && companyInfo?.companyName) {
       setLoading(false);
     }
   }, [jobInfo]);
@@ -34,6 +36,17 @@ const Description = () => {
         // Handle the error appropriately
       });
   }, [router]);
+
+  const getCompanyData = async (address: Address) => {
+    const data = await readCompanyById(address);
+    setCompanyInfo(data);
+  };
+
+  useEffect(() => {
+    if (address) {
+      getCompanyData(address);
+    }
+  }, [address]);
 
   return (
     <>
@@ -108,21 +121,13 @@ const Description = () => {
                 <button className="px-10 py-3 bg-blue-500 text-white text-sm md:text-md rounded">Refer</button>
               </div>
             </div>
-            <div className="flex flex-col w-[40vw] h-[150px] bg-primary p-4 rounded-lg shadow-md mt-[2%]  ">
+            <div className="flex flex-col w-[40vw] h-[200px] bg-primary p-4 rounded-lg shadow-md mt-[2%]  ">
               <div className="text-[10px]"> Organization Details</div>
               <div className="flex items-center justify-between">
-                <div className="text-xl"> {jobInfo.companyName}</div> <StarRating score={4.5} />
+                <div className="text-xl"> {companyInfo.companyName}</div> <StarRating score={4.5} />
               </div>
-              <div>
-                {truncateDescription(
-                  ` Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum`,
-                  30,
-                )}
-              </div>
+              <div>{truncateDescription(companyInfo.description, 30)}</div>
+              <a>{companyInfo.companySite}</a>
             </div>
             <div className="flex flex-col w-[40vw] h-[150px] bg-primary p-4 rounded-lg shadow-md mt-[2%]  ">
               <div className="text-[10px]">Tags</div>

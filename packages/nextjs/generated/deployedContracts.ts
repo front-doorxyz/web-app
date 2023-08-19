@@ -365,7 +365,7 @@ const contracts = {
           ],
         },
         Recruitment: {
-          address: "0x6535cef02f696FD01789124d63D0EaDd79f795f2",
+          address: "0x2b8913aCCf8AC4008DE75C440fA499281C4102f1",
           abi: [
             {
               inputs: [
@@ -386,11 +386,6 @@ const contracts = {
             {
               inputs: [],
               name: "JobAlreadyDeleted",
-              type: "error",
-            },
-            {
-              inputs: [],
-              name: "JobListingLimitExceed",
               type: "error",
             },
             {
@@ -747,7 +742,7 @@ const contracts = {
                     },
                   ],
                   internalType: "struct FrontDoorStructs.Job[]",
-                  name: "",
+                  name: "jobArray",
                   type: "tuple[]",
                 },
               ],

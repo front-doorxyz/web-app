@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
 import { registerCompany } from "~~/services/APIs/database";
+import { registerCompany as registerCompanySC } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
 const CompanyRegister = () => {
@@ -33,6 +34,7 @@ const CompanyRegister = () => {
 
     const companyData = [address, companyName, companyDescription, companySite];
 
+    await registerCompanySC();
     const company = await registerCompany(companyData);
     if (company.id) {
       setRegistered(true);
