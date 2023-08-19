@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.17;
-
-/**
- * @title Errors (Library)
- * @author Zeeshan Jan
- */
+pragma solidity 0.8.17;
 
 library Errors {
     error OnlyRefererAllowed();
@@ -13,4 +8,9 @@ library Errors {
     error OnlyJobCreatorAllowedToDelete(); 
     error JobAlreadyDeleted();
     error JobListingLimitExceed();
+    error CompanyNotListed();
+    error BountyNotPaid();
+    error CandidateNotHiredByCompany();
+    error SameCandidateCannotBeReferredTwice();
+    error NotEnoughFundDepositedByCompany();
 }
