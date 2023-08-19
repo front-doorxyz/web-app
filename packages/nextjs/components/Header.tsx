@@ -7,7 +7,7 @@ import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroi
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/polybase/database";
+import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const router = useRouter();

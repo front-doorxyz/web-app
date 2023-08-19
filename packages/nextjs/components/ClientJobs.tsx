@@ -4,7 +4,7 @@ import Chip from "./Chip";
 import { useAccount } from "wagmi";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { truncateDescription } from "~~/helpers";
-import { readAllJobListingsForClient } from "~~/services/polybase/database";
+import { readAllJobListingsForClient } from "~~/services/APIs/database";
 import { Job } from "~~/types/general";
 
 const ClientJob = (props: Job) => {

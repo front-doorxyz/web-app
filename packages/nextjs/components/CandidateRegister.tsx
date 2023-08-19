@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import * as eth from "@polybase/eth";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { db, registerCandidate } from "~~/services/polybase/database";
+import { db, registerCandidate } from "~~/services/APIs/database";
 import { notification } from "~~/utils/scaffold-eth";
 
 const CandidateRegister = () => {
@@ -11,7 +11,7 @@ const CandidateRegister = () => {
   const { address } = useAccount();
   const router = useRouter();
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
   const [portfolio, setPortfolio] = useState("");
   db.signer(async (data: string) => {
     const sig = await eth.sign(data, address);
@@ -22,8 +22,8 @@ const CandidateRegister = () => {
     setName(event.target.value);
   };
 
-  const handleDescriptionChange = event => {
-    setDescription(event.target.value);
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
   };
 
   const handlePortfolioChange = event => {
@@ -35,7 +35,7 @@ const CandidateRegister = () => {
       notification.error("Pls enter a proper url ");
       return;
     }
-    const candidateData = [address, name, description, portfolio];
+    const candidateData = [address, name, email, portfolio];
 
     const candidate = await registerCandidate(candidateData);
     if (candidate.id) {
@@ -72,7 +72,12 @@ const CandidateRegister = () => {
         </div>
         <div className="flex flex-col gap-2">
           <span className="indicator-item badge badge-primary">Description</span>
-          <textarea value={description} onChange={handleDescriptionChange} className="textarea w-[200px] md:w-[20vw]" />
+          <input
+            type="text"
+            value={email}
+            onChange={handleEmailChange}
+            className="input input-bordered w-[200px] md:w-[20vw]"
+          />
         </div>
         <div className="flex flex-col gap-2">
           <span className="indicator-item badge badge-primary">Portfolio / Socials</span>

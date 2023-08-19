@@ -6,15 +6,15 @@ type Props = {
   initialValue: string;
   title?: string;
   readOnly: boolean;
+  handleDescriptionChange: (fieldName: string, e: string) => void;
 };
 
 const TextEditor = (props: Props) => {
-  const { handleDescriptionChange } = useContext(GeneralContext);
   return (
     <div>
       <Slite
         initialValue={props.initialValue}
-        onChange={currentMarkdown => handleDescriptionChange("description", currentMarkdown)}
+        onChange={currentMarkdown => props?.handleDescriptionChange("description", currentMarkdown)}
         readOnly={props.readOnly}
       >
         {props.title && <div className="p-2 bg-primary text-neutral">{props?.title}</div>}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { db, readAllJobListings } from "../services/polybase/database";
+import { db, readAllJobListings } from "../services/APIs/database";
 import type { NextPage } from "next";
 import { useAccount, useSigner } from "wagmi";
 import Banner from "~~/components/Banner";

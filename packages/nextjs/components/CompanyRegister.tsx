@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { registerCompany } from "~~/services/polybase/database";
+import { registerCompany } from "~~/services/APIs/database";
 import { notification } from "~~/utils/scaffold-eth";
 
 const CompanyRegister = () => {

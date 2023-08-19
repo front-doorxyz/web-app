@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Chip from "../../components/Chip";
-import { readJobListingById } from "../../services/polybase/database";
+import { readJobListingById } from "../../services/APIs/database";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import StarRating from "~~/components/StarRating";
 import TextEditor from "~~/components/TextEditor";

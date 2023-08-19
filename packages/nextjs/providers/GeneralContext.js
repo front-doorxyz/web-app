@@ -5,7 +5,7 @@ import { notification } from "../utils/scaffold-eth/notification";
 import axios from "axios";
 import { ethers } from "ethers";
 import { useAccount, useSigner } from "wagmi";
-import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/polybase/database";
+import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
 
 export const GeneralContext = React.createContext();
 export const GeneralProvider = ({ children }) => {
@@ -79,9 +79,12 @@ export const GeneralProvider = ({ children }) => {
   const registerJob = async bounty => {
     setLoading(true);
     try {
-      if (isNaN(bounty)) return undefined;
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const tx = await deployedContract.registerJob(Number(bounty));
+      console.log(typeof bounty);
+
+      const tx = await deployedContract.registerJob(bounty);
+
+      console.log(tx);
       const receipt = await tx.wait();
       console.log("Success! Transaction hash:", receipt.transactionHash);
       notification.success("Job registered successfully");

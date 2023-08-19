@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Job from "./Job";
-import { readAllJobListings, readAllJobListingsForClient } from "~~/services/polybase/database";
+import { readAllJobListings, readAllJobListingsForClient } from "~~/services/APIs/database";
 
 const Jobs = () => {
   const [jobArr, setJobArr] = useState<any>([]);

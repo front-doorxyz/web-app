@@ -5,7 +5,8 @@ import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { createJobListing, db, readJobListingById, updateJobListing } from "~~/services/polybase/database";
+import { createJobListing, db, readJobListingById, updateJobListing } from "~~/services/APIs/database";
+import { registerJob } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
 type Props = {
@@ -14,10 +15,45 @@ type Props = {
 
 const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
-  const { handleChange, registerJob, id, loading } = useContext(GeneralContext);
+  const { id, loading } = useContext(GeneralContext);
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
-  const [jobInfo, setJobInfo] = useState<any>({});
+  const [jobInfo, setJobInfo] = useState<any>({
+    companyName: "",
+    description: "",
+    location: "",
+    roleTitle: "",
+    bounty: 0,
+    maxSalary: 0,
+    minSalary: 0,
+    type: "",
+  });
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    let parsedValue = value; // Initialize parsedValue with the original value
+
+    if (name === "minSalary" || name === "maxSalary" || name === "bounty") {
+      parsedValue = parseInt(value); // Convert value to an integer
+      // If you want to allow decimal values, use parseFloat instead:
+      // parsedValue = parseFloat(value);
+    }
+    setJobInfo({
+      ...jobInfo,
+      [name]: parsedValue,
+    });
+  };
+
+  const handleDescriptionChange = (key, value) => {
+    setJobInfo({
+      ...jobInfo,
+      [key]: value,
+    });
+  };
+
+  useEffect(() => {
+    console.log(jobInfo);
+  }, [jobInfo]);
 
   useEffect(() => {
     if (type === "edit") {
@@ -43,29 +79,34 @@ const JobFill = ({ type }: Props) => {
   };
 
   const confirmJob = async () => {
-    let jobId = await registerJob(Number(jobInfo.bounty));
+    try {
+      let jobId = await registerJob(1200);
+      console.log(jobId);
 
-    if (!jobId) {
-      notification.error("Error in smart contract transaction: registerJob");
-      return;
+      if (!jobId) {
+        notification.error("Error in smart contract transaction: registerJob");
+        return;
+      }
+      console.log("jobId", jobId);
+      jobInfo.id = jobId;
+      const date = getDate();
+      const jobData = [
+        jobInfo.id,
+        jobInfo.roleTitle,
+        jobInfo.description,
+        jobInfo.location,
+        jobInfo.maxSalary,
+        jobInfo.minSalary,
+        jobInfo.bounty,
+        jobInfo.companyName,
+        jobInfo.type,
+        date,
+      ];
+      console.log([jobData]);
+      await createJobListing(jobData);
+    } catch (err) {
+      console.log(err);
     }
-    console.log("jobId", jobId);
-    jobInfo.id = jobId;
-    const date = getDate();
-    const jobData = [
-      jobInfo.id,
-      jobInfo.roleTitle,
-      jobInfo.description,
-      jobInfo.location,
-      jobInfo.maxSalary,
-      jobInfo.minSalary,
-      jobInfo.bounty,
-      jobInfo.companyName,
-      jobInfo.type,
-      date,
-    ];
-    console.log([jobData]);
-    await createJobListing(jobData);
   };
 
   const handleJob = async () => {
@@ -118,7 +159,11 @@ const JobFill = ({ type }: Props) => {
       <label className="join flex flex-col gap-2 mb-[-2%]">
         <span className="indicator-item badge badge-primary"> Description</span>
       </label>
-      <TextEditor readOnly={false} initialValue={jobInfo.description} />
+      <TextEditor
+        readOnly={false}
+        initialValue={jobInfo.description}
+        handleDescriptionChange={handleDescriptionChange}
+      />
       <label className="join flex flex-col gap-2">
         <span className="indicator-item badge badge-primary">Role Title</span>
         <input
@@ -178,7 +223,9 @@ const JobFill = ({ type }: Props) => {
       <button className={`btn btn-primary`} onClick={handleJob} disabled={loading}>
         {type === "edit" ? "Edit Job" : "Add Job"}
       </button>
-      {modalOpen && <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} />}
+      {modalOpen && (
+        <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} jobInfo={jobInfo} />
+      )}
     </div>
   );
 };
