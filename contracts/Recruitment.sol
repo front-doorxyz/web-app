@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
+// Enable the optimizer
 pragma solidity ^0.8.19;
 
-// Enable the optimizer
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";  
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 import { FrontDoorStructs } from "./DataModel.sol";
 import { Errors } from "./Errors.sol";
 import {Event} from "./Events.sol";
-import {Mapping} from "./Mapping.sol";
-
 
 contract Recruitment  is Ownable , ReentrancyGuard {
 
@@ -30,6 +27,8 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     address[] public companiesAddressList; // list of address of company
     mapping(address => FrontDoorStructs.CompanyScore[]) public companyScores;
     mapping(address => mapping(address => bool)) public hasScoredCompany; //allows only to score once
+    mapping(address => bool isCompany) public isCompany; // check if company is registered or not
+
 
     address acceptedTokenAddress;
    
@@ -43,21 +42,18 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     mapping(address => address[]) public companyAddressToHiredCandidateAddress;  
     
      //  Counters
-    uint256  private jobIdCounter;
-    uint256  private referralCounter;
+    uint256  private jobIdCounter = 1;
+    uint256  private referralCounter = 1;
     uint256 month1;
     uint256 month2;
     uint256 month3;
 
-
-
-
    // Constructor
-    constructor(address _acceptedTokenAddress , uint256 _month1 , uint256 _month2 , uint256 _month3) {
+    constructor(address _acceptedTokenAddress) {
       acceptedTokenAddress = _acceptedTokenAddress;
-      month1 = _month1;
-      month2 = _month2;
-      month3 = _month3;
+      // month1 = _month1;
+      // month2 = _month2;
+      // month3 = _month3;
     }
 
   /**
@@ -65,18 +61,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
      * @dev Checks whether the address of Company is in CompanyList or not
      */
     modifier  checkIfItisACompany(address _address) {
-      bool isCompany = false;
-
-        for(uint256 i = 0 ; i < companiesAddressList.length; i++){
-            if(companiesAddressList[i] == _address){
-              isCompany = true;
-              break;         
-            }
-        }
-
-        if(isCompany == false){
-          revert Errors.CompanyNotListed();
-        }
+      require(isCompany[_address] == true , "Company is not registered yet");
         _;
     }
 
@@ -167,6 +152,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     FrontDoorStructs.Company memory company = FrontDoorStructs.Company(msg.sender,0,0,new address[](0));
     companyList[msg.sender] = company;
     companiesAddressList.push(msg.sender);
+    isCompany[msg.sender] = true;
   }
 
    /**
