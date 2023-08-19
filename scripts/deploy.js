@@ -3,12 +3,23 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const lock = await hre.ethers.deployContract("Recruitment", ['0x6d8727B664D3f877de683F836E75EB2de47FD197' , 20,30,50]);
-
-  await lock.waitForDeployment();
+  console.log("Deploying contracts... FrontDoorToken");
+  const FrontDoorToken = await hre.ethers.deployContract("FrontDoorToken");
+  await FrontDoorToken.waitForDeployment();
+  console.log("Deploying contracts... FrontDoorToken Ended. Going to deploy Recruitment");
 
   console.log(
-    `Deployed to  ${lock.target}`
+    `FrontDoor Token  Contract Deployed  to  ${FrontDoorToken.target}`
+  );
+
+  
+  console.log("Deploying contracts... Recruitment");
+  const Recruitment = await hre.ethers.deployContract("Recruitment", [FrontDoorToken.target]);
+  await Recruitment.waitForDeployment();
+  console.log("Deploying contracts... Recruitment Ended.");
+
+  console.log(
+    `Recruitment Contract Deployed  to  ${Recruitment.target}`
   );
 
 }
