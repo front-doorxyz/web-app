@@ -4,7 +4,8 @@ import { readAll, write } from "../services/store/playground_store";
 import { notification } from "../utils/scaffold-eth/notification";
 import axios from "axios";
 import { ethers } from "ethers";
-import { useSigner } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
+import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
 
 export const GeneralContext = React.createContext();
 export const GeneralProvider = ({ children }) => {
@@ -17,6 +18,8 @@ export const GeneralProvider = ({ children }) => {
   const contractAddress = "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298";
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [registered, setRegistered] = useState(false);
+  const [candidate, setCandidate] = useState(false);
   const [jobInfo, setJobInfo] = React.useState({
     id: 0,
     roleTitle: "Role Title",
@@ -26,7 +29,30 @@ export const GeneralProvider = ({ children }) => {
     maxSalary: "Max Salary",
     bounty: "Bounty",
     minSalary: "Min Salary",
+    type: "Internship",
   });
+
+  const { address } = useAccount();
+  const checkRegistration = async () => {
+    if (!address) {
+      return;
+    }
+    const candidateExists = await checkCandidateRegistration(address);
+    const companyExists = await checkCompanyRegistration(address);
+    if (candidateExists) {
+      setCandidate(true);
+    }
+    if (candidateExists || companyExists) {
+      setRegistered(true);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    setCandidate(false);
+    setRegistered(false);
+    checkRegistration();
+  }, [address]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -53,9 +79,12 @@ export const GeneralProvider = ({ children }) => {
   const registerJob = async bounty => {
     setLoading(true);
     try {
-      if (isNaN(bounty)) return undefined;
       const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const tx = await deployedContract.registerJob(Number(bounty));
+      console.log(typeof bounty);
+
+      const tx = await deployedContract.registerJob(bounty);
+
+      console.log(tx);
       const receipt = await tx.wait();
       console.log("Success! Transaction hash:", receipt.transactionHash);
       notification.success("Job registered successfully");
@@ -225,6 +254,9 @@ export const GeneralProvider = ({ children }) => {
     handleDescriptionChange,
     search,
     setSearch,
+    registered,
+    setRegistered,
+    setCandidate,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;

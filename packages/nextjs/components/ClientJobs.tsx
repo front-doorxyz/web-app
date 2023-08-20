@@ -1,33 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Chip from "./Chip";
 import { useAccount } from "wagmi";
 import { MapPinIcon } from "@heroicons/react/24/outline";
-import { readAllJobListingsForClient } from "~~/services/polybase/database";
-
-type Job = {
-  bounty: number;
-  companyName?: string;
-  description: string;
-  location: string;
-  id: string;
-  maxSalary: string;
-  minSalary: string;
-  roleTitle: string;
-  status?: boolean;
-};
-
-type Chip = {
-  label: string;
-  color: string;
-};
-
-const Chip = (props: Chip) => {
-  const { label, color } = props;
-  return <span className={`px-2 py-1 rounded-full text-white text-xs font-bold bg-${color}-500`}>{label}</span>;
-};
+import { truncateDescription } from "~~/helpers";
+import { readAllJobListingsForClient } from "~~/services/APIs/database";
+import { Job } from "~~/types/general";
 
 const ClientJob = (props: Job) => {
-  const { id, location, bounty, description, maxSalary, minSalary, roleTitle, status } = props;
+  const { id, location, bounty, description, maxSalary, minSalary, roleTitle, status, date, type } = props;
   const router = useRouter();
   const viewCandidates = () => {
     router.push(`/jobCandidates/${id}`);
@@ -35,14 +16,6 @@ const ClientJob = (props: Job) => {
 
   const handleEditJob = () => {
     router.push(`/client/editJob/${id}`);
-  };
-
-  const truncateDescription = (text, maxWords) => {
-    const words = text.split(" ");
-    if (words.length > maxWords) {
-      return words.slice(0, maxWords).join(" ") + "...";
-    }
-    return text;
   };
 
   return (
@@ -61,7 +34,7 @@ const ClientJob = (props: Job) => {
             <MapPinIcon className="h-5 w-5" />
             <div>{location}</div>
           </div>
-          <div>Posted 5 mins ago</div>
+          <div>{date}</div>
         </div>
       </div>
       <div className="flex justify-between items-center pb-4">{truncateDescription(description, 20)}</div>
@@ -101,6 +74,7 @@ const ClientJobs = () => {
               roleTitle={job.roleTitle}
               bounty={job.bounty}
               description={job.description}
+              date={job.date}
             />
           ))}
         </div>

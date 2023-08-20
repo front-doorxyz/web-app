@@ -1,10 +1,13 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAccount } from "wagmi";
 import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import { GeneralContext } from "~~/providers/GeneralContext";
+import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const router = useRouter();
@@ -27,7 +30,9 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
  * Site header
  */
 export const Header = () => {
+  const { registered } = useContext(GeneralContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const burgerMenuRef = useRef<HTMLDivElement>(null);
   useOutsideClick(
     burgerMenuRef,
@@ -45,12 +50,21 @@ export const Header = () => {
       <li>
         <NavLink href="/">All Jobs</NavLink>
       </li>
-      <li>
-        <NavLink href="/client">Client</NavLink>
-      </li>
-      <li>
-        <NavLink href="/profile">Profile</NavLink>
-      </li>
+      {registered ? (
+        <>
+          <li>
+            <NavLink href="/client">Client</NavLink>
+          </li>
+          <li>
+            <NavLink href="/profile">Profile</NavLink>
+          </li>
+        </>
+      ) : (
+        <li>
+          <NavLink href="/register">Register</NavLink>
+        </li>
+      )}
+
       <li>
         <NavLink href="/contactus">Contact us</NavLink>
       </li>
@@ -76,7 +90,7 @@ export const Header = () => {
   );
 
   return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary">
+    <div className="sticky top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary">
       <div className="navbar-start w-auto lg:w-1/2">
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <button

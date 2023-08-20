@@ -6,10 +6,11 @@ type Props = {
   setModal: (value: boolean) => void;
   addJob: () => void;
   loading: boolean;
+  jobInfo: any;
 };
 
 const JobModal = (props: Props) => {
-  const { jobInfo } = useContext(GeneralContext);
+  const { jobInfo } = props;
   const [referrerShare, setRefferrerScore] = useState(0);
   const [candidateShare, setCandidateScore] = useState(0);
   const [frontDoorShare, setFrontDoorShare] = useState(0);

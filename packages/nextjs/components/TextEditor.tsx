@@ -4,22 +4,27 @@ import { GeneralContext } from "~~/providers/GeneralContext";
 
 type Props = {
   initialValue: string;
-
+  title?: string;
   readOnly: boolean;
+  handleDescriptionChange: (fieldName: string, e: string) => void;
 };
 
 const TextEditor = (props: Props) => {
-  const { handleDescriptionChange } = useContext(GeneralContext);
   return (
-    <div className="w-full ">
+    <div>
       <Slite
         initialValue={props.initialValue}
-        onChange={currentMarkdown => handleDescriptionChange("description", currentMarkdown)}
+        onChange={currentMarkdown => props?.handleDescriptionChange("description", currentMarkdown)}
         readOnly={props.readOnly}
       >
+        {props.title && <div className="p-2 bg-primary text-neutral">{props?.title}</div>}
         {!props.readOnly && <Toolbar />}
-        {/* editor text area */}
-        <Editor readOnly={props.readOnly} />
+        <div className="min-h-[300px] max-h-[80vh] min-w-[40vw] max-w-[700px] overflow-y-scroll first-letter:">
+          {/* editor text area */}
+          <div className="bg-primary important">
+            <Editor readOnly={props.readOnly} />
+          </div>
+        </div>
       </Slite>
     </div>
   );

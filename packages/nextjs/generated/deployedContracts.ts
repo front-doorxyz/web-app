@@ -1,11 +1,11 @@
 const contracts = {
-  5: [
+  59140: [
     {
-      name: "goerli",
-      chainId: "5",
+      name: "linea",
+      chainId: "59140",
       contracts: {
-        Recruitment: {
-          address: "0xA78230280a91C8EEe78C2B2f0AeB7332544dF298",
+        FrontDoorToken: {
+          address: "0xC542e24CC12C6ee3F73BFD319895CD348aA486e4",
           abi: [
             {
               inputs: [],
@@ -13,67 +13,28 @@ const contracts = {
               type: "constructor",
             },
             {
-              inputs: [],
-              name: "JobAlreadyDeleted",
-              type: "error",
-            },
-            {
-              inputs: [],
-              name: "JobListingLimitExceed",
-              type: "error",
-            },
-            {
-              inputs: [],
-              name: "OnlyJobCreatorAllowedToDelete",
-              type: "error",
-            },
-            {
-              inputs: [],
-              name: "SenderIsNotReferee",
-              type: "error",
-            },
-            {
-              anonymous: false,
-              inputs: [
-                {
-                  indexed: false,
-                  internalType: "address",
-                  name: "senderAddress",
-                  type: "address",
-                },
-                {
-                  indexed: false,
-                  internalType: "address",
-                  name: "companyAddress",
-                  type: "address",
-                },
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "score",
-                  type: "uint256",
-                },
-              ],
-              name: "CompanyScoreSubmitted",
-              type: "event",
-            },
-            {
               anonymous: false,
               inputs: [
                 {
                   indexed: true,
                   internalType: "address",
-                  name: "sender",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "spender",
                   type: "address",
                 },
                 {
                   indexed: false,
                   internalType: "uint256",
-                  name: "amount",
+                  name: "value",
                   type: "uint256",
                 },
               ],
-              name: "DepositCompleted",
+              name: "Approval",
               type: "event",
             },
             {
@@ -101,150 +62,382 @@ const contracts = {
                 {
                   indexed: true,
                   internalType: "address",
-                  name: "sender",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
                   type: "address",
                 },
                 {
                   indexed: false,
-                  internalType: "uint8",
-                  name: "month1RefundPct",
-                  type: "uint8",
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+              ],
+              name: "Transfer",
+              type: "event",
+            },
+            {
+              stateMutability: "payable",
+              type: "fallback",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
                 },
                 {
-                  indexed: false,
-                  internalType: "uint8",
-                  name: "month2RefundPct",
-                  type: "uint8",
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+              ],
+              name: "allowance",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
                 },
                 {
-                  indexed: false,
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "approve",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "balanceOf",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "decimals",
+              outputs: [
+                {
                   internalType: "uint8",
-                  name: "month3RefundPct",
+                  name: "",
                   type: "uint8",
                 },
               ],
-              name: "PercentagesCompleted",
-              type: "event",
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "subtractedValue",
+                  type: "uint256",
+                },
+              ],
+              name: "decreaseAllowance",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "addedValue",
+                  type: "uint256",
+                },
+              ],
+              name: "increaseAllowance",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "maxTotalSupply",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "name",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "renounceOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "symbol",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "totalSupply",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "transfer",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "transferFrom",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
+                },
+              ],
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "withdraw",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              stateMutability: "payable",
+              type: "receive",
+            },
+          ],
+        },
+        Recruitment: {
+          address: "0x2b8913aCCf8AC4008DE75C440fA499281C4102f1",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_acceptedTokenAddress",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "BountyNotPaid",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "JobAlreadyDeleted",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "NotEnoughFundDepositedByCompany",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "OnlyJobCreatorAllowedToDelete",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "SameCandidateCannotBeReferredTwice",
+              type: "error",
             },
             {
               anonymous: false,
               inputs: [
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "address",
-                  name: "senderAddress",
+                  name: "previousOwner",
                   type: "address",
                 },
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "address",
-                  name: "referrerWallet",
+                  name: "newOwner",
                   type: "address",
-                },
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "score",
-                  type: "uint256",
                 },
               ],
-              name: "ReferralScoreSubmitted",
+              name: "OwnershipTransferred",
               type: "event",
             },
             {
               inputs: [
                 {
                   internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-                {
-                  internalType: "bytes32",
-                  name: "",
-                  type: "bytes32",
-                },
-              ],
-              name: "accountBalances",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "",
+                  name: "_candidateAddress",
                   type: "address",
                 },
                 {
                   internalType: "uint256",
-                  name: "",
+                  name: "_jobId",
                   type: "uint256",
                 },
               ],
-              name: "accountCompleteDeposits",
-              outputs: [
-                {
-                  internalType: "uint8",
-                  name: "",
-                  type: "uint8",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              name: "accountMonthlyRefundPcts",
-              outputs: [
-                {
-                  internalType: "uint8",
-                  name: "",
-                  type: "uint8",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-              ],
-              name: "balances",
-              outputs: [
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              stateMutability: "view",
+              name: "ReferCandidate",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
@@ -272,6 +465,93 @@ const contracts = {
                   name: "score",
                   type: "uint256",
                 },
+                {
+                  internalType: "bool",
+                  name: "isScoreGivenByCompany",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeOfHiring",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isHired",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "jobConfirmed",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "companiesAddressList",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "companyAddressToCandidateScore",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "companyAddressToHiredCandidateAddress",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
               ],
               stateMutability: "view",
               type: "function",
@@ -294,6 +574,11 @@ const contracts = {
                 {
                   internalType: "uint256",
                   name: "jobsCreated",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "time_score",
                   type: "uint256",
                 },
               ],
@@ -332,14 +617,57 @@ const contracts = {
             {
               inputs: [
                 {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "companyaccountBalances",
+              outputs: [
+                {
                   internalType: "uint256",
-                  name: "refId",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "companyaddressToScore",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_referralCounter",
                   type: "uint256",
                 },
                 {
-                  internalType: "string",
-                  name: "email",
-                  type: "string",
+                  internalType: "uint256",
+                  name: "_jobId",
+                  type: "uint256",
                 },
               ],
               name: "confirmReferral",
@@ -357,74 +685,7 @@ const contracts = {
               ],
               name: "deleteJob",
               outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "getAccountCompleteDeposits",
-              outputs: [
-                {
-                  internalType: "uint8[]",
-                  name: "",
-                  type: "uint8[]",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "getAccountMonthlyRefundPcts",
-              outputs: [
-                {
-                  internalType: "uint8[3][]",
-                  name: "",
-                  type: "uint8[3][]",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "startId",
-                  type: "uint256",
-                },
-              ],
-              name: "getAllJobs",
-              outputs: [
-                {
-                  components: [
-                    {
-                      internalType: "uint256",
-                      name: "id",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "bounty",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "bool",
-                      name: "isRemoved",
-                      type: "bool",
-                    },
-                    {
-                      internalType: "address",
-                      name: "creator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct FrontDoorStructs.Job[]",
-                  name: "",
-                  type: "tuple[]",
-                },
-              ],
-              stateMutability: "view",
+              stateMutability: "payable",
               type: "function",
             },
             {
@@ -464,9 +725,24 @@ const contracts = {
                       name: "creator",
                       type: "address",
                     },
+                    {
+                      internalType: "bool",
+                      name: "issucceed",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "numberOfCandidateHired",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeAtWhichJobCreated",
+                      type: "uint256",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Job[]",
-                  name: "",
+                  name: "jobArray",
                   type: "tuple[]",
                 },
               ],
@@ -499,6 +775,26 @@ const contracts = {
                       internalType: "uint256",
                       name: "score",
                       type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isScoreGivenByCompany",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeOfHiring",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isHired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "jobConfirmed",
+                      type: "bool",
                     },
                   ],
                   internalType: "struct FrontDoorStructs.Candidate",
@@ -535,208 +831,6 @@ const contracts = {
                   internalType: "struct FrontDoorStructs.CompanyScore[]",
                   name: "",
                   type: "tuple[]",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "jobId",
-                  type: "uint256",
-                },
-              ],
-              name: "getJob",
-              outputs: [
-                {
-                  components: [
-                    {
-                      internalType: "uint256",
-                      name: "id",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "bounty",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "bool",
-                      name: "isRemoved",
-                      type: "bool",
-                    },
-                    {
-                      internalType: "address",
-                      name: "creator",
-                      type: "address",
-                    },
-                  ],
-                  internalType: "struct FrontDoorStructs.Job",
-                  name: "",
-                  type: "tuple",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "wallet",
-                  type: "address",
-                },
-              ],
-              name: "getReferee",
-              outputs: [
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "wallet",
-                      type: "address",
-                    },
-                    {
-                      internalType: "string",
-                      name: "email",
-                      type: "string",
-                    },
-                    {
-                      internalType: "bytes32",
-                      name: "emailHash",
-                      type: "bytes32",
-                    },
-                    {
-                      internalType: "uint256",
-                      name: "score",
-                      type: "uint256",
-                    },
-                  ],
-                  internalType: "struct FrontDoorStructs.Referee",
-                  name: "",
-                  type: "tuple",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "refId",
-                  type: "uint256",
-                },
-              ],
-              name: "getReferral",
-              outputs: [
-                {
-                  components: [
-                    {
-                      internalType: "uint256",
-                      name: "id",
-                      type: "uint256",
-                    },
-                    {
-                      internalType: "bool",
-                      name: "confirmed",
-                      type: "bool",
-                    },
-                    {
-                      components: [
-                        {
-                          internalType: "address",
-                          name: "wallet",
-                          type: "address",
-                        },
-                        {
-                          internalType: "string",
-                          name: "email",
-                          type: "string",
-                        },
-                        {
-                          internalType: "uint256",
-                          name: "score",
-                          type: "uint256",
-                        },
-                      ],
-                      internalType: "struct FrontDoorStructs.Referrer",
-                      name: "referrer",
-                      type: "tuple",
-                    },
-                    {
-                      components: [
-                        {
-                          internalType: "address",
-                          name: "wallet",
-                          type: "address",
-                        },
-                        {
-                          internalType: "string",
-                          name: "email",
-                          type: "string",
-                        },
-                        {
-                          internalType: "bytes32",
-                          name: "emailHash",
-                          type: "bytes32",
-                        },
-                        {
-                          internalType: "uint256",
-                          name: "score",
-                          type: "uint256",
-                        },
-                      ],
-                      internalType: "struct FrontDoorStructs.Referee",
-                      name: "referee",
-                      type: "tuple",
-                    },
-                    {
-                      components: [
-                        {
-                          internalType: "uint256",
-                          name: "id",
-                          type: "uint256",
-                        },
-                        {
-                          internalType: "uint256",
-                          name: "bounty",
-                          type: "uint256",
-                        },
-                        {
-                          internalType: "bool",
-                          name: "isRemoved",
-                          type: "bool",
-                        },
-                        {
-                          internalType: "address",
-                          name: "creator",
-                          type: "address",
-                        },
-                      ],
-                      internalType: "struct FrontDoorStructs.Job",
-                      name: "job",
-                      type: "tuple",
-                    },
-                  ],
-                  internalType: "struct FrontDoorStructs.Referral",
-                  name: "",
-                  type: "tuple",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "getReferralIDs",
-              outputs: [
-                {
-                  internalType: "uint256[]",
-                  name: "",
-                  type: "uint256[]",
                 },
               ],
               stateMutability: "view",
@@ -800,6 +894,11 @@ const contracts = {
                       name: "score",
                       type: "uint256",
                     },
+                    {
+                      internalType: "uint256",
+                      name: "numberOfSuccesfullReferrals",
+                      type: "uint256",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Referrer",
                   name: "",
@@ -823,6 +922,43 @@ const contracts = {
                 },
               ],
               name: "hasScoredCompany",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_candidateAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "_jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "hireCandidate",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "isCompany",
               outputs: [
                 {
                   internalType: "bool",
@@ -863,6 +999,21 @@ const contracts = {
                   name: "creator",
                   type: "address",
                 },
+                {
+                  internalType: "bool",
+                  name: "issucceed",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "numberOfCandidateHired",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeAtWhichJobCreated",
+                  type: "uint256",
+                },
               ],
               stateMutability: "view",
               type: "function",
@@ -875,40 +1026,6 @@ const contracts = {
                   internalType: "address",
                   name: "",
                   type: "address",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-              ],
-              name: "refereeList",
-              outputs: [
-                {
-                  internalType: "address",
-                  name: "wallet",
-                  type: "address",
-                },
-                {
-                  internalType: "string",
-                  name: "email",
-                  type: "string",
-                },
-                {
-                  internalType: "bytes32",
-                  name: "emailHash",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "uint256",
-                  name: "score",
-                  type: "uint256",
                 },
               ],
               stateMutability: "view",
@@ -975,6 +1092,11 @@ const contracts = {
                       name: "score",
                       type: "uint256",
                     },
+                    {
+                      internalType: "uint256",
+                      name: "numberOfSuccesfullReferrals",
+                      type: "uint256",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Referrer",
                   name: "referrer",
@@ -993,18 +1115,33 @@ const contracts = {
                       type: "string",
                     },
                     {
-                      internalType: "bytes32",
-                      name: "emailHash",
-                      type: "bytes32",
-                    },
-                    {
                       internalType: "uint256",
                       name: "score",
                       type: "uint256",
                     },
+                    {
+                      internalType: "bool",
+                      name: "isScoreGivenByCompany",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeOfHiring",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isHired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "jobConfirmed",
+                      type: "bool",
+                    },
                   ],
-                  internalType: "struct FrontDoorStructs.Referee",
-                  name: "referee",
+                  internalType: "struct FrontDoorStructs.Candidate",
+                  name: "candidate",
                   type: "tuple",
                 },
                 {
@@ -1029,10 +1166,45 @@ const contracts = {
                       name: "creator",
                       type: "address",
                     },
+                    {
+                      internalType: "bool",
+                      name: "issucceed",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "numberOfCandidateHired",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeAtWhichJobCreated",
+                      type: "uint256",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Job",
                   name: "job",
                   type: "tuple",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeAtWhichReferralStarted",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeAtWhichReferralEnded",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isConfirmed",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "referralEnd",
+                  type: "uint256",
                 },
               ],
               stateMutability: "view",
@@ -1074,30 +1246,6 @@ const contracts = {
                   name: "",
                   type: "address",
                 },
-                {
-                  internalType: "uint256",
-                  name: "",
-                  type: "uint256",
-                },
-              ],
-              name: "referredEmails",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
               ],
               name: "referrerList",
               outputs: [
@@ -1114,6 +1262,11 @@ const contracts = {
                 {
                   internalType: "uint256",
                   name: "score",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "numberOfSuccesfullReferrals",
                   type: "uint256",
                 },
               ],
@@ -1134,6 +1287,13 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "registerCompany",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "uint256",
@@ -1149,20 +1309,7 @@ const contracts = {
                   type: "uint256",
                 },
               ],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "string",
-                  name: "email",
-                  type: "string",
-                },
-              ],
-              name: "registerReferee",
-              outputs: [],
-              stateMutability: "nonpayable",
+              stateMutability: "payable",
               type: "function",
             },
             {
@@ -1206,100 +1353,6 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "bytes32",
-                  name: "symbol",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amount",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint8",
-                  name: "index",
-                  type: "uint8",
-                },
-              ],
-              name: "setFinalDeposit",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint8",
-                  name: "month1RefundPct",
-                  type: "uint8",
-                },
-                {
-                  internalType: "uint8",
-                  name: "month2RefundPct",
-                  type: "uint8",
-                },
-                {
-                  internalType: "uint8",
-                  name: "month3RefundPct",
-                  type: "uint8",
-                },
-              ],
-              name: "setPercentages",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "score",
-                  type: "uint256",
-                },
-                {
-                  internalType: "address",
-                  name: "companyAddress",
-                  type: "address",
-                },
-              ],
-              name: "submitCompanyScore",
-              outputs: [
-                {
-                  internalType: "bytes32",
-                  name: "",
-                  type: "bytes32",
-                },
-              ],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "score",
-                  type: "uint256",
-                },
-                {
-                  internalType: "address",
-                  name: "referrerWallet",
-                  type: "address",
-                },
-              ],
-              name: "submitReferralScore",
-              outputs: [
-                {
-                  internalType: "bytes32",
-                  name: "",
-                  type: "bytes32",
-                },
-              ],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
                   internalType: "address",
                   name: "newOwner",
                   type: "address",
@@ -1308,57 +1361,6 @@ const contracts = {
               name: "transferOwnership",
               outputs: [],
               stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "uint256",
-                  name: "newLimit",
-                  type: "uint256",
-                },
-              ],
-              name: "updateJobListingLimit",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "bytes32",
-                  name: "",
-                  type: "bytes32",
-                },
-              ],
-              name: "whitelistedTokenDecimals",
-              outputs: [
-                {
-                  internalType: "uint8",
-                  name: "",
-                  type: "uint8",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "bytes32",
-                  name: "",
-                  type: "bytes32",
-                },
-              ],
-              name: "whitelistedTokens",
-              outputs: [
-                {
-                  internalType: "address",
-                  name: "",
-                  type: "address",
-                },
-              ],
-              stateMutability: "view",
               type: "function",
             },
           ],

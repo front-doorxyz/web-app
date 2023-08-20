@@ -40,9 +40,17 @@ const deployRecruitmentContract: DeployFunction =async function (hre: HardhatRun
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("Recruitment", {
+  const FrontDoorToken = await deploy("FrontDoorToken",{
     from: deployer,
     args: [],
+    log: true,
+    autoMine: true,
+  })
+ 
+ 
+  await deploy("Recruitment", {
+    from: deployer,
+    args: [FrontDoorToken.address],
     log: true,
     autoMine: true,
   });

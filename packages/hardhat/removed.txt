@@ -1,0 +1,2 @@
+ require(_jobId > 0 , "Job Id should be greater than 0");
+ require(bounty > 0 , "Bounty should be greater than 0");

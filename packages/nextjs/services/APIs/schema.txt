@@ -1,0 +1,142 @@
+// This is an example collection definition.
+// You should edit it for your use case.
+
+// The language (Polylang) is similar to JavaScript,
+// but semi-colons are mandatory.
+
+// The `collection` keyword defines a named collection.
+// Collection properties define the "columns" in a record.
+
+// @`public` means that the collection is public, anyone can view and read
+// the records in the collection. You can still implement rules on who can 
+// edit the data by defining functions on the collection and checking the public key.
+
+
+@public
+collection Jobs {
+  id: string;
+  publicKey:PublicKey;
+  roleTitle: string;
+  description: string;
+  location: string;
+  maxSalary: number;
+  minSalary: number;
+  bounty: number;
+  companyName: string;
+  status:boolean;
+  owner:string;
+  date:string;
+  type:string;
+  candidates:string[];
+  
+
+  constructor(
+    id: string,
+    roleTitle: string,
+    description: string,
+    location: string,
+    maxSalary: number,
+    minSalary: number,
+    bounty: number,
+    companyName: string,
+    owner:string,
+    type:string,
+    date:string
+  ) {
+    this.id = id;
+    this.roleTitle = roleTitle;
+    this.description = description;
+    this.location = location;
+    this.maxSalary = maxSalary;
+    this.minSalary = minSalary;
+    this.bounty = bounty;
+    this.companyName = companyName;
+    this.publicKey = ctx.publicKey;
+    this.status = true;
+    this.type = type;
+    this.date = date;
+    this.owner = owner;
+    this.candidates =[]; 
+  }
+
+  updateJob(
+    roleTitle: string,
+    description: string,
+    location: string,
+    maxSalary: number,
+    minSalary: number,
+    bounty: number,
+    companyName: string,
+    type:string,
+    date:string
+  ) {
+    if (this.publicKey != ctx.publicKey) {
+      throw error('invalid public key');
+    }
+    this.roleTitle = roleTitle;
+    this.description = description;
+    this.location = location;
+    this.maxSalary = maxSalary;
+    this.minSalary = minSalary;
+    this.bounty = bounty;
+    this.companyName = companyName;
+    this.type = type;
+    this.date = date;
+  }
+
+  updateStatus(
+    status:boolean
+  ){
+    if (this.publicKey != ctx.publicKey) {
+      throw error('invalid public key');
+    }
+    this.status = status;
+  }
+
+  applyCandidate(candidateId:string){
+    this.candidates.push(candidateId)
+  }
+}
+
+@public
+collection Companies {
+  id: string;
+  publicKey:PublicKey;
+  companyName: string;
+  description: string;
+  companySite:string;
+
+   constructor(
+    id: string,
+    companyName: string,
+    description: string,
+    companySite:string
+  ) {
+    this.id = ctx.publicKey;
+    this.companyName = companyName;
+    this.description = description;
+    this.companySite = companySite;
+  }
+}
+
+
+@public
+collection Candidates {
+  id: string;
+  publicKey:PublicKey;
+  candidateName: string;
+  description: string;
+  candidateSite:string;
+
+   constructor(
+    id: string,
+    candidateName: string,
+    description: string,
+    candidateSite:string
+  ) {
+    this.id = ctx.publicKey;
+    this.candidateName = candidateName;
+    this.description = description;
+    this.candidateSite = candidateSite;
+  }
+}
