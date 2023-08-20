@@ -21,7 +21,7 @@
   version "0.9.0"
 
 "@babel/cli@^7.21.0":
-  version "7.22.9"
+  version "7.22.10"
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.17"
     commander "^4.0.1"
@@ -34,27 +34,28 @@
     "@nicolo-ribaudo/chokidar-2" "2.1.8-no-fsevents.3"
     chokidar "^3.4.0"
 
-"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.22.5":
-  version "7.22.5"
+"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.16.7", "@babel/code-frame@^7.22.10", "@babel/code-frame@^7.22.5":
+  version "7.22.10"
   dependencies:
-    "@babel/highlight" "^7.22.5"
+    "@babel/highlight" "^7.22.10"
+    chalk "^2.4.2"
 
 "@babel/compat-data@^7.20.5", "@babel/compat-data@^7.22.5", "@babel/compat-data@^7.22.6", "@babel/compat-data@^7.22.9":
   version "7.22.9"
 
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.12.0", "@babel/core@^7.13.0", "@babel/core@^7.18.6", "@babel/core@^7.20.7", "@babel/core@^7.21.0", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0":
-  version "7.22.9"
+  version "7.22.10"
   dependencies:
     "@ampproject/remapping" "^2.2.0"
-    "@babel/code-frame" "^7.22.5"
-    "@babel/generator" "^7.22.9"
-    "@babel/helper-compilation-targets" "^7.22.9"
+    "@babel/code-frame" "^7.22.10"
+    "@babel/generator" "^7.22.10"
+    "@babel/helper-compilation-targets" "^7.22.10"
     "@babel/helper-module-transforms" "^7.22.9"
-    "@babel/helpers" "^7.22.6"
-    "@babel/parser" "^7.22.7"
+    "@babel/helpers" "^7.22.10"
+    "@babel/parser" "^7.22.10"
     "@babel/template" "^7.22.5"
-    "@babel/traverse" "^7.22.8"
-    "@babel/types" "^7.22.5"
+    "@babel/traverse" "^7.22.10"
+    "@babel/types" "^7.22.10"
     convert-source-map "^1.7.0"
     debug "^4.1.0"
     gensync "^1.0.0-beta.2"
@@ -62,17 +63,17 @@
     semver "^6.3.1"
 
 "@babel/generator@^7.17.3":
-  version "7.22.9"
+  version "7.22.10"
   dependencies:
-    "@babel/types" "^7.22.5"
+    "@babel/types" "^7.22.10"
     "@jridgewell/gen-mapping" "^0.3.2"
     "@jridgewell/trace-mapping" "^0.3.17"
     jsesc "^2.5.1"
 
-"@babel/generator@^7.18.6", "@babel/generator@^7.22.7", "@babel/generator@^7.22.9":
-  version "7.22.9"
+"@babel/generator@^7.18.6", "@babel/generator@^7.22.10":
+  version "7.22.10"
   dependencies:
-    "@babel/types" "^7.22.5"
+    "@babel/types" "^7.22.10"
     "@jridgewell/gen-mapping" "^0.3.2"
     "@jridgewell/trace-mapping" "^0.3.17"
     jsesc "^2.5.1"
@@ -90,12 +91,12 @@
     "@babel/types" "^7.22.5"
 
 "@babel/helper-builder-binary-assignment-operator-visitor@^7.22.5":
-  version "7.22.5"
+  version "7.22.10"
   dependencies:
-    "@babel/types" "^7.22.5"
+    "@babel/types" "^7.22.10"
 
-"@babel/helper-compilation-targets@^7.20.7", "@babel/helper-compilation-targets@^7.22.5", "@babel/helper-compilation-targets@^7.22.6", "@babel/helper-compilation-targets@^7.22.9":
-  version "7.22.9"
+"@babel/helper-compilation-targets@^7.20.7", "@babel/helper-compilation-targets@^7.22.10", "@babel/helper-compilation-targets@^7.22.5", "@babel/helper-compilation-targets@^7.22.6":
+  version "7.22.10"
   dependencies:
     "@babel/compat-data" "^7.22.9"
     "@babel/helper-validator-option" "^7.22.5"
@@ -103,8 +104,8 @@
     lru-cache "^5.1.1"
     semver "^6.3.1"
 
-"@babel/helper-create-class-features-plugin@^7.18.6", "@babel/helper-create-class-features-plugin@^7.22.5", "@babel/helper-create-class-features-plugin@^7.22.9":
-  version "7.22.9"
+"@babel/helper-create-class-features-plugin@^7.18.6", "@babel/helper-create-class-features-plugin@^7.22.10", "@babel/helper-create-class-features-plugin@^7.22.5":
+  version "7.22.10"
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.22.5"
     "@babel/helper-environment-visitor" "^7.22.5"
@@ -173,7 +174,7 @@
 "@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.12.13", "@babel/helper-plugin-utils@^7.14.5", "@babel/helper-plugin-utils@^7.18.6", "@babel/helper-plugin-utils@^7.20.2", "@babel/helper-plugin-utils@^7.22.5", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
   version "7.22.5"
 
-"@babel/helper-remap-async-to-generator@^7.22.5":
+"@babel/helper-remap-async-to-generator@^7.22.5", "@babel/helper-remap-async-to-generator@^7.22.9":
   version "7.22.9"
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.22.5"
@@ -212,28 +213,28 @@
   version "7.22.5"
 
 "@babel/helper-wrap-function@^7.22.9":
-  version "7.22.9"
+  version "7.22.10"
   dependencies:
     "@babel/helper-function-name" "^7.22.5"
     "@babel/template" "^7.22.5"
-    "@babel/types" "^7.22.5"
+    "@babel/types" "^7.22.10"
 
-"@babel/helpers@^7.22.6":
-  version "7.22.6"
+"@babel/helpers@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/template" "^7.22.5"
-    "@babel/traverse" "^7.22.6"
-    "@babel/types" "^7.22.5"
+    "@babel/traverse" "^7.22.10"
+    "@babel/types" "^7.22.10"
 
-"@babel/highlight@^7.22.5":
-  version "7.22.5"
+"@babel/highlight@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-validator-identifier" "^7.22.5"
-    chalk "^2.0.0"
+    chalk "^2.4.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.17.3", "@babel/parser@^7.18.6", "@babel/parser@^7.20.5", "@babel/parser@^7.22.5", "@babel/parser@^7.22.7":
-  version "7.22.7"
+"@babel/parser@^7.17.3", "@babel/parser@^7.18.6", "@babel/parser@^7.20.5", "@babel/parser@^7.22.10", "@babel/parser@^7.22.5":
+  version "7.22.10"
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.22.5":
   version "7.22.5"
@@ -269,12 +270,6 @@
 
 "@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2":
   version "7.21.0-placeholder-for-preset-env.2"
-
-"@babel/plugin-proposal-unicode-property-regex@^7.4.4":
-  version "7.18.6"
-  dependencies:
-    "@babel/helper-create-regexp-features-plugin" "^7.18.6"
-    "@babel/helper-plugin-utils" "^7.18.6"
 
 "@babel/plugin-syntax-async-generators@^7.8.4":
   version "7.8.4"
@@ -382,12 +377,12 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-async-generator-functions@^7.22.7":
-  version "7.22.7"
+"@babel/plugin-transform-async-generator-functions@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-environment-visitor" "^7.22.5"
     "@babel/helper-plugin-utils" "^7.22.5"
-    "@babel/helper-remap-async-to-generator" "^7.22.5"
+    "@babel/helper-remap-async-to-generator" "^7.22.9"
     "@babel/plugin-syntax-async-generators" "^7.8.4"
 
 "@babel/plugin-transform-async-to-generator@^7.22.5":
@@ -402,8 +397,8 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-block-scoping@^7.22.5":
-  version "7.22.5"
+"@babel/plugin-transform-block-scoping@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
@@ -439,12 +434,12 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/template" "^7.22.5"
 
-"@babel/plugin-transform-destructuring@^7.22.5":
-  version "7.22.5"
+"@babel/plugin-transform-destructuring@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-dotall-regex@^7.22.5", "@babel/plugin-transform-dotall-regex@^7.4.4":
+"@babel/plugin-transform-dotall-regex@^7.22.5":
   version "7.22.5"
   dependencies:
     "@babel/helper-create-regexp-features-plugin" "^7.22.5"
@@ -578,8 +573,8 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.3"
 
-"@babel/plugin-transform-optional-chaining@^7.22.5", "@babel/plugin-transform-optional-chaining@^7.22.6":
-  version "7.22.6"
+"@babel/plugin-transform-optional-chaining@^7.22.10", "@babel/plugin-transform-optional-chaining@^7.22.5":
+  version "7.22.10"
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-skip-transparent-expression-wrappers" "^7.22.5"
@@ -634,11 +629,11 @@
     "@babel/helper-annotate-as-pure" "^7.22.5"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-regenerator@^7.22.5":
-  version "7.22.5"
+"@babel/plugin-transform-regenerator@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
-    regenerator-transform "^0.15.1"
+    regenerator-transform "^0.15.2"
 
 "@babel/plugin-transform-reserved-words@^7.22.5":
   version "7.22.5"
@@ -672,15 +667,15 @@
     "@babel/helper-plugin-utils" "^7.22.5"
 
 "@babel/plugin-transform-typescript@^7.22.5":
-  version "7.22.9"
+  version "7.22.10"
   dependencies:
     "@babel/helper-annotate-as-pure" "^7.22.5"
-    "@babel/helper-create-class-features-plugin" "^7.22.9"
+    "@babel/helper-create-class-features-plugin" "^7.22.10"
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-typescript" "^7.22.5"
 
-"@babel/plugin-transform-unicode-escapes@^7.22.5":
-  version "7.22.5"
+"@babel/plugin-transform-unicode-escapes@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
@@ -703,10 +698,10 @@
     "@babel/helper-plugin-utils" "^7.22.5"
 
 "@babel/preset-env@^7.18.6", "@babel/preset-env@^7.20.2":
-  version "7.22.9"
+  version "7.22.10"
   dependencies:
     "@babel/compat-data" "^7.22.9"
-    "@babel/helper-compilation-targets" "^7.22.9"
+    "@babel/helper-compilation-targets" "^7.22.10"
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/helper-validator-option" "^7.22.5"
     "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression" "^7.22.5"
@@ -731,15 +726,15 @@
     "@babel/plugin-syntax-top-level-await" "^7.14.5"
     "@babel/plugin-syntax-unicode-sets-regex" "^7.18.6"
     "@babel/plugin-transform-arrow-functions" "^7.22.5"
-    "@babel/plugin-transform-async-generator-functions" "^7.22.7"
+    "@babel/plugin-transform-async-generator-functions" "^7.22.10"
     "@babel/plugin-transform-async-to-generator" "^7.22.5"
     "@babel/plugin-transform-block-scoped-functions" "^7.22.5"
-    "@babel/plugin-transform-block-scoping" "^7.22.5"
+    "@babel/plugin-transform-block-scoping" "^7.22.10"
     "@babel/plugin-transform-class-properties" "^7.22.5"
     "@babel/plugin-transform-class-static-block" "^7.22.5"
     "@babel/plugin-transform-classes" "^7.22.6"
     "@babel/plugin-transform-computed-properties" "^7.22.5"
-    "@babel/plugin-transform-destructuring" "^7.22.5"
+    "@babel/plugin-transform-destructuring" "^7.22.10"
     "@babel/plugin-transform-dotall-regex" "^7.22.5"
     "@babel/plugin-transform-duplicate-keys" "^7.22.5"
     "@babel/plugin-transform-dynamic-import" "^7.22.5"
@@ -762,36 +757,34 @@
     "@babel/plugin-transform-object-rest-spread" "^7.22.5"
     "@babel/plugin-transform-object-super" "^7.22.5"
     "@babel/plugin-transform-optional-catch-binding" "^7.22.5"
-    "@babel/plugin-transform-optional-chaining" "^7.22.6"
+    "@babel/plugin-transform-optional-chaining" "^7.22.10"
     "@babel/plugin-transform-parameters" "^7.22.5"
     "@babel/plugin-transform-private-methods" "^7.22.5"
     "@babel/plugin-transform-private-property-in-object" "^7.22.5"
     "@babel/plugin-transform-property-literals" "^7.22.5"
-    "@babel/plugin-transform-regenerator" "^7.22.5"
+    "@babel/plugin-transform-regenerator" "^7.22.10"
     "@babel/plugin-transform-reserved-words" "^7.22.5"
     "@babel/plugin-transform-shorthand-properties" "^7.22.5"
     "@babel/plugin-transform-spread" "^7.22.5"
     "@babel/plugin-transform-sticky-regex" "^7.22.5"
     "@babel/plugin-transform-template-literals" "^7.22.5"
     "@babel/plugin-transform-typeof-symbol" "^7.22.5"
-    "@babel/plugin-transform-unicode-escapes" "^7.22.5"
+    "@babel/plugin-transform-unicode-escapes" "^7.22.10"
     "@babel/plugin-transform-unicode-property-regex" "^7.22.5"
     "@babel/plugin-transform-unicode-regex" "^7.22.5"
     "@babel/plugin-transform-unicode-sets-regex" "^7.22.5"
-    "@babel/preset-modules" "^0.1.5"
-    "@babel/types" "^7.22.5"
-    babel-plugin-polyfill-corejs2 "^0.4.4"
-    babel-plugin-polyfill-corejs3 "^0.8.2"
-    babel-plugin-polyfill-regenerator "^0.5.1"
+    "@babel/preset-modules" "0.1.6-no-external-plugins"
+    "@babel/types" "^7.22.10"
+    babel-plugin-polyfill-corejs2 "^0.4.5"
+    babel-plugin-polyfill-corejs3 "^0.8.3"
+    babel-plugin-polyfill-regenerator "^0.5.2"
     core-js-compat "^3.31.0"
     semver "^6.3.1"
 
-"@babel/preset-modules@^0.1.5":
-  version "0.1.6"
+"@babel/preset-modules@0.1.6-no-external-plugins":
+  version "0.1.6-no-external-plugins"
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-proposal-unicode-property-regex" "^7.4.4"
-    "@babel/plugin-transform-dotall-regex" "^7.4.4"
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
@@ -818,9 +811,9 @@
   version "0.8.0"
 
 "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.20.6", "@babel/runtime@^7.20.7", "@babel/runtime@^7.22.6", "@babel/runtime@^7.8.4":
-  version "7.22.6"
+  version "7.22.10"
   dependencies:
-    regenerator-runtime "^0.13.11"
+    regenerator-runtime "^0.14.0"
 
 "@babel/runtime@7.12.1":
   version "7.12.1"
@@ -839,17 +832,17 @@
     "@babel/parser" "^7.22.5"
     "@babel/types" "^7.22.5"
 
-"@babel/traverse@^7.18.6", "@babel/traverse@^7.21.2", "@babel/traverse@^7.22.6", "@babel/traverse@^7.22.8":
-  version "7.22.8"
+"@babel/traverse@^7.18.6", "@babel/traverse@^7.21.2", "@babel/traverse@^7.22.10":
+  version "7.22.10"
   dependencies:
-    "@babel/code-frame" "^7.22.5"
-    "@babel/generator" "^7.22.7"
+    "@babel/code-frame" "^7.22.10"
+    "@babel/generator" "^7.22.10"
     "@babel/helper-environment-visitor" "^7.22.5"
     "@babel/helper-function-name" "^7.22.5"
     "@babel/helper-hoist-variables" "^7.22.5"
     "@babel/helper-split-export-declaration" "^7.22.6"
-    "@babel/parser" "^7.22.7"
-    "@babel/types" "^7.22.5"
+    "@babel/parser" "^7.22.10"
+    "@babel/types" "^7.22.10"
     debug "^4.1.0"
     globals "^11.1.0"
 
@@ -867,15 +860,15 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-"@babel/types@^7.17.0", "@babel/types@^7.22.5":
-  version "7.22.5"
+"@babel/types@^7.17.0", "@babel/types@^7.22.10":
+  version "7.22.10"
   dependencies:
     "@babel/helper-string-parser" "^7.22.5"
     "@babel/helper-validator-identifier" "^7.22.5"
     to-fast-properties "^2.0.0"
 
-"@babel/types@^7.20.2", "@babel/types@^7.22.5", "@babel/types@^7.4.4":
-  version "7.22.5"
+"@babel/types@^7.20.2", "@babel/types@^7.22.10", "@babel/types@^7.22.5", "@babel/types@^7.4.4":
+  version "7.22.10"
   dependencies:
     "@babel/helper-string-parser" "^7.22.5"
     "@babel/helper-validator-identifier" "^7.22.5"
@@ -887,48 +880,48 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@ceramicnetwork/3id-did-resolver@^2.22.0":
-  version "2.22.0"
+"@ceramicnetwork/3id-did-resolver@^2.24.1":
+  version "2.24.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/stream-tile" "^2.25.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/stream-tile" "^2.27.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     cross-fetch "^3.1.4"
     lru_map "^0.4.1"
     multiformats "^11.0.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/anchor-listener@^1.14.0":
-  version "1.14.0"
+"@ceramicnetwork/anchor-listener@^1.16.1":
+  version "1.16.1"
   dependencies:
-    "@ceramicnetwork/anchor-utils" "^1.12.0"
+    "@ceramicnetwork/anchor-utils" "^1.14.1"
     "@ethersproject/providers" "^5.5.1"
     rxjs "^7.5.2"
 
-"@ceramicnetwork/anchor-utils@^1.12.0":
-  version "1.12.0"
+"@ceramicnetwork/anchor-utils@^1.14.1":
+  version "1.14.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
+    "@ceramicnetwork/common" "^2.31.1"
     "@ethersproject/abi" "^5.7.0"
     multiformats "^11.0.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/blockchain-utils-linking@^2.15.0":
-  version "2.15.0"
+"@ceramicnetwork/blockchain-utils-linking@^2.16.0":
+  version "2.16.0"
   dependencies:
-    "@ceramicnetwork/streamid" "^2.16.0"
-    "@didtools/cacao" "^1.0.0"
+    "@ceramicnetwork/streamid" "^2.17.0"
+    "@didtools/cacao" "^2.1.0"
     "@stablelib/random" "^1.0.1"
     "@stablelib/sha256" "^1.0.1"
     caip "~1.1.0"
     near-api-js "^0.44.2"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/blockchain-utils-validation@^2.21.0":
-  version "2.21.0"
+"@ceramicnetwork/blockchain-utils-validation@^2.23.1":
+  version "2.23.1"
   dependencies:
-    "@ceramicnetwork/blockchain-utils-linking" "^2.15.0"
-    "@ceramicnetwork/common" "^2.29.0"
+    "@ceramicnetwork/blockchain-utils-linking" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
     "@ethersproject/contracts" "^5.5.0"
     "@ethersproject/providers" "^5.5.1"
     "@ethersproject/wallet" "^5.5.0"
@@ -944,18 +937,18 @@
     uint8arrays "^4.0.3"
 
 "@ceramicnetwork/cli@^2.31.0":
-  version "2.34.0"
+  version "2.36.1"
   dependencies:
     "@awaitjs/express" "^0.9.0"
-    "@ceramicnetwork/3id-did-resolver" "^2.22.0"
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/core" "^2.36.0"
-    "@ceramicnetwork/http-client" "^2.26.0"
-    "@ceramicnetwork/ipfs-daemon" "^2.22.0"
+    "@ceramicnetwork/3id-did-resolver" "^2.24.1"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/core" "^2.38.1"
+    "@ceramicnetwork/http-client" "^2.28.1"
+    "@ceramicnetwork/ipfs-daemon" "^2.24.1"
     "@ceramicnetwork/logger" "^2.5.0"
     "@ceramicnetwork/observability" "^1.4.1"
-    "@ceramicnetwork/stream-tile" "^2.25.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/stream-tile" "^2.27.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     "@stablelib/random" "^1.0.1"
     aws-sdk "^2.1049.0"
     commander "^9.4.1"
@@ -982,20 +975,21 @@
     typedjson "^1.8.0"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/codecs@^1.4.0":
-  version "1.4.0"
+"@ceramicnetwork/codecs@^1.6.1":
+  version "1.6.1"
   dependencies:
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/streamid" "^2.17.0"
+    cartonne "^2.1.1"
     codeco "^1.1.0"
     multiformats "^11.0.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/common@^2.20.0", "@ceramicnetwork/common@^2.24.0", "@ceramicnetwork/common@^2.29.0":
-  version "2.29.0"
+"@ceramicnetwork/common@^2.20.0", "@ceramicnetwork/common@^2.24.0", "@ceramicnetwork/common@^2.31.1":
+  version "2.31.1"
   dependencies:
-    "@ceramicnetwork/codecs" "^1.4.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
-    "@didtools/cacao" "^2.0.0"
+    "@ceramicnetwork/codecs" "^1.6.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
+    "@didtools/cacao" "^2.1.0"
     "@didtools/pkh-ethereum" "^0.1.0"
     "@didtools/pkh-solana" "^0.1.0"
     "@didtools/pkh-stacks" "^0.1.0"
@@ -1012,30 +1006,31 @@
     rxjs "^7.5.2"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/core@^2.36.0":
-  version "2.36.0"
+"@ceramicnetwork/core@^2.38.1":
+  version "2.38.1"
   dependencies:
-    "@ceramicnetwork/anchor-listener" "^1.14.0"
-    "@ceramicnetwork/anchor-utils" "^1.12.0"
-    "@ceramicnetwork/codecs" "^1.4.0"
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/ipfs-topology" "^2.23.0"
+    "@ceramicnetwork/anchor-listener" "^1.16.1"
+    "@ceramicnetwork/anchor-utils" "^1.14.1"
+    "@ceramicnetwork/codecs" "^1.6.1"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/ipfs-topology" "^2.25.1"
     "@ceramicnetwork/observability" "^1.4.1"
-    "@ceramicnetwork/pinning-aggregation" "^2.21.0"
-    "@ceramicnetwork/pinning-ipfs-backend" "^2.21.0"
-    "@ceramicnetwork/stream-caip10-link" "^2.24.0"
-    "@ceramicnetwork/stream-caip10-link-handler" "^2.22.0"
-    "@ceramicnetwork/stream-model" "^1.11.0"
-    "@ceramicnetwork/stream-model-handler" "^1.11.0"
-    "@ceramicnetwork/stream-model-instance" "^1.11.0"
-    "@ceramicnetwork/stream-model-instance-handler" "^1.11.0"
-    "@ceramicnetwork/stream-tile" "^2.25.0"
-    "@ceramicnetwork/stream-tile-handler" "^2.24.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/pinning-aggregation" "^2.23.1"
+    "@ceramicnetwork/pinning-ipfs-backend" "^2.23.1"
+    "@ceramicnetwork/stream-caip10-link" "^2.26.1"
+    "@ceramicnetwork/stream-caip10-link-handler" "^2.24.1"
+    "@ceramicnetwork/stream-model" "^1.13.1"
+    "@ceramicnetwork/stream-model-handler" "^1.13.1"
+    "@ceramicnetwork/stream-model-instance" "^1.13.1"
+    "@ceramicnetwork/stream-model-instance-handler" "^1.13.1"
+    "@ceramicnetwork/stream-tile" "^2.27.1"
+    "@ceramicnetwork/stream-tile-handler" "^2.26.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     "@ceramicnetwork/wasm-bloom-filter" "^0.1.0"
     "@datastructures-js/priority-queue" "^6.1.0"
     "@ethersproject/providers" "^5.5.1"
     "@ipld/dag-cbor" "^7.0.0"
+    "@scarf/scarf" "^1.1.1"
     "@stablelib/random" "^1.0.1"
     "@stablelib/sha256" "^1.0.1"
     "@stablelib/uuid" "^1.0.1"
@@ -1061,15 +1056,16 @@
     sqlite3 "^5.0.8"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/http-client@^2.21.0", "@ceramicnetwork/http-client@^2.26.0":
-  version "2.26.0"
+"@ceramicnetwork/http-client@^2.21.0", "@ceramicnetwork/http-client@^2.28.1":
+  version "2.28.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/stream-caip10-link" "^2.24.0"
-    "@ceramicnetwork/stream-model" "^1.11.0"
-    "@ceramicnetwork/stream-model-instance" "^1.11.0"
-    "@ceramicnetwork/stream-tile" "^2.25.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/stream-caip10-link" "^2.26.1"
+    "@ceramicnetwork/stream-model" "^1.13.1"
+    "@ceramicnetwork/stream-model-instance" "^1.13.1"
+    "@ceramicnetwork/stream-tile" "^2.27.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
+    "@scarf/scarf" "^1.1.1"
     query-string "^7.1.0"
     rxjs "^7.5.2"
 
@@ -1085,11 +1081,11 @@
     query-string "^7.1.0"
     rxjs "^7.5.2"
 
-"@ceramicnetwork/ipfs-daemon@^2.22.0":
-  version "2.22.0"
+"@ceramicnetwork/ipfs-daemon@^2.24.1":
+  version "2.24.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/ipfs-topology" "^2.23.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/ipfs-topology" "^2.25.1"
     express "^4.17.2"
     get-port "^6.0.0"
     go-ipfs "^0.18.1"
@@ -1099,10 +1095,10 @@
     merge-options "^3.0.4"
     tmp-promise "^3.0.3"
 
-"@ceramicnetwork/ipfs-topology@^2.23.0":
-  version "2.23.0"
+"@ceramicnetwork/ipfs-topology@^2.25.1":
+  version "2.25.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
+    "@ceramicnetwork/common" "^2.31.1"
     cross-fetch "^3.1.4"
 
 "@ceramicnetwork/logger@^2.5.0":
@@ -1122,63 +1118,63 @@
     "@opentelemetry/sdk-trace-base" "1.15.0"
     "@opentelemetry/semantic-conventions" "1.15.0"
 
-"@ceramicnetwork/pinning-aggregation@^2.21.0":
-  version "2.21.0"
+"@ceramicnetwork/pinning-aggregation@^2.23.1":
+  version "2.23.1"
   dependencies:
     "@stablelib/sha256" "^1.0.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/pinning-ipfs-backend@^2.21.0":
-  version "2.21.0"
+"@ceramicnetwork/pinning-ipfs-backend@^2.23.1":
+  version "2.23.1"
   dependencies:
     "@stablelib/sha256" "^1.0.1"
     ipfs-http-client "^60.0.0"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-caip10-link-handler@^2.22.0":
-  version "2.22.0"
+"@ceramicnetwork/stream-caip10-link-handler@^2.24.1":
+  version "2.24.1"
   dependencies:
-    "@ceramicnetwork/blockchain-utils-validation" "^2.21.0"
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/stream-caip10-link" "^2.24.0"
-    "@ceramicnetwork/stream-handler-common" "^1.19.0"
+    "@ceramicnetwork/blockchain-utils-validation" "^2.23.1"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/stream-caip10-link" "^2.26.1"
+    "@ceramicnetwork/stream-handler-common" "^1.21.1"
 
-"@ceramicnetwork/stream-caip10-link@^2.15.0", "@ceramicnetwork/stream-caip10-link@^2.19.0", "@ceramicnetwork/stream-caip10-link@^2.24.0":
-  version "2.24.0"
+"@ceramicnetwork/stream-caip10-link@^2.15.0", "@ceramicnetwork/stream-caip10-link@^2.19.0", "@ceramicnetwork/stream-caip10-link@^2.26.1":
+  version "2.26.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     caip "~1.1.0"
     did-resolver "^4.0.1"
     lodash.clonedeep "^4.5.0"
 
-"@ceramicnetwork/stream-handler-common@^1.19.0":
-  version "1.19.0"
+"@ceramicnetwork/stream-handler-common@^1.21.1":
+  version "1.21.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     lodash.clonedeep "^4.5.0"
 
-"@ceramicnetwork/stream-model-handler@^1.11.0":
-  version "1.11.0"
+"@ceramicnetwork/stream-model-handler@^1.13.1":
+  version "1.13.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/stream-handler-common" "^1.19.0"
-    "@ceramicnetwork/stream-model" "^1.11.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/stream-handler-common" "^1.21.1"
+    "@ceramicnetwork/stream-model" "^1.13.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     ajv "^8.8.2"
     ajv-formats "^2.1.1"
     fast-json-patch "^3.1.0"
     lodash.clonedeep "^4.5.0"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-model-instance-handler@^1.11.0":
-  version "1.11.0"
+"@ceramicnetwork/stream-model-instance-handler@^1.13.1":
+  version "1.13.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/stream-handler-common" "^1.19.0"
-    "@ceramicnetwork/stream-model-instance" "^1.11.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/stream-handler-common" "^1.21.1"
+    "@ceramicnetwork/stream-model-instance" "^1.13.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     ajv "^8.8.2"
     ajv-formats "^2.1.1"
     fast-json-patch "^3.1.0"
@@ -1186,11 +1182,11 @@
     lru_map "^0.4.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-model-instance@^1.11.0", "@ceramicnetwork/stream-model-instance@^1.6.0":
-  version "1.11.0"
+"@ceramicnetwork/stream-model-instance@^1.13.1", "@ceramicnetwork/stream-model-instance@^1.6.0":
+  version "1.13.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     "@ipld/dag-cbor" "^7.0.0"
     "@stablelib/random" "^1.0.1"
     fast-json-patch "^3.1.0"
@@ -1208,13 +1204,17 @@
     object-sizeof "^2.6.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-model@^1.11.0", "@ceramicnetwork/stream-model@^1.6.0":
-  version "1.11.0"
+"@ceramicnetwork/stream-model@^1.13.1", "@ceramicnetwork/stream-model@^1.6.0":
+  version "1.13.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/codecs" "^1.6.1"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     "@ipld/dag-cbor" "^7.0.0"
     "@stablelib/random" "^1.0.1"
+    ajv "^8.8.2"
+    ajv-formats "^2.1.1"
+    codeco "^1.1.0"
     fast-json-patch "^3.1.0"
     json-schema-typed "^8.0.1"
     multiformats "^11.0.1"
@@ -1233,13 +1233,13 @@
     multihashes "^4.0.3"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-tile-handler@^2.24.0":
-  version "2.24.0"
+"@ceramicnetwork/stream-tile-handler@^2.26.1":
+  version "2.26.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/stream-handler-common" "^1.19.0"
-    "@ceramicnetwork/stream-tile" "^2.25.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/stream-handler-common" "^1.21.1"
+    "@ceramicnetwork/stream-tile" "^2.27.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     ajv "^8.8.2"
     ajv-formats "^2.1.1"
     fast-json-patch "^3.1.0"
@@ -1247,11 +1247,11 @@
     lru_map "^0.4.1"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/stream-tile@^2.20.0", "@ceramicnetwork/stream-tile@^2.25.0":
-  version "2.25.0"
+"@ceramicnetwork/stream-tile@^2.20.0", "@ceramicnetwork/stream-tile@^2.27.1":
+  version "2.27.1"
   dependencies:
-    "@ceramicnetwork/common" "^2.29.0"
-    "@ceramicnetwork/streamid" "^2.16.0"
+    "@ceramicnetwork/common" "^2.31.1"
+    "@ceramicnetwork/streamid" "^2.17.0"
     "@ipld/dag-cbor" "^7.0.0"
     "@stablelib/random" "^1.0.1"
     dids "^4.0.0"
@@ -1259,8 +1259,8 @@
     lodash.clonedeep "^4.5.0"
     uint8arrays "^4.0.3"
 
-"@ceramicnetwork/streamid@^2.14.0", "@ceramicnetwork/streamid@^2.16.0":
-  version "2.16.0"
+"@ceramicnetwork/streamid@^2.14.0", "@ceramicnetwork/streamid@^2.17.0":
+  version "2.17.0"
   dependencies:
     "@ipld/dag-cbor" "^7.0.0"
     "@stablelib/sha256" "^1.0.1"
@@ -1286,7 +1286,7 @@
   version "0.3.1"
 
 "@chainsafe/is-ip@^2.0.1":
-  version "2.0.1"
+  version "2.0.2"
 
 "@chainsafe/netmask@^2.0.0":
   version "2.0.0"
@@ -1434,15 +1434,6 @@
   dependencies:
     "@datastructures-js/heap" "^4.3.1"
 
-"@didtools/cacao@^1.0.0":
-  version "1.2.0"
-  dependencies:
-    "@ipld/dag-cbor" "^7.0.1"
-    apg-js "^4.1.1"
-    caip "^1.1.0"
-    multiformats "^9.5.1"
-    uint8arrays "^4.0.2"
-
 "@didtools/cacao@^2.0.0", "@didtools/cacao@^2.1.0":
   version "2.1.0"
   dependencies:
@@ -1468,14 +1459,14 @@
     "@stablelib/random" "^1.0.2"
     caip "^1.1.0"
 
-"@didtools/pkh-ethereum@^0.4.0":
-  version "0.4.0"
+"@didtools/pkh-ethereum@^0.4.1":
+  version "0.4.1"
   dependencies:
     "@didtools/cacao" "^2.1.0"
-    "@ethersproject/wallet" "^5.7.0"
+    "@noble/curves" "^1.1.0"
+    "@noble/hashes" "^1.3.1"
     "@stablelib/random" "^1.0.2"
     caip "^1.1.0"
-    uint8arrays "^4.0.3"
 
 "@didtools/pkh-solana@^0.1.0":
   version "0.1.1"
@@ -1578,8 +1569,8 @@
 "@esbuild/darwin-arm64@0.17.6":
   version "0.17.6"
 
-"@esbuild/darwin-arm64@0.18.17":
-  version "0.18.17"
+"@esbuild/darwin-arm64@0.18.20":
+  version "0.18.20"
 
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
   version "4.4.0"
@@ -1887,23 +1878,23 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@fortawesome/fontawesome-common-types@6.4.0":
-  version "6.4.0"
+"@fortawesome/fontawesome-common-types@6.4.2":
+  version "6.4.2"
 
 "@fortawesome/fontawesome-svg-core@^6.4.0", "@fortawesome/fontawesome-svg-core@~1 || ~6":
-  version "6.4.0"
+  version "6.4.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.4.0"
+    "@fortawesome/fontawesome-common-types" "6.4.2"
 
 "@fortawesome/free-regular-svg-icons@^6.4.0":
-  version "6.4.0"
+  version "6.4.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.4.0"
+    "@fortawesome/fontawesome-common-types" "6.4.2"
 
 "@fortawesome/free-solid-svg-icons@^6.4.0":
-  version "6.4.0"
+  version "6.4.2"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.4.0"
+    "@fortawesome/fontawesome-common-types" "6.4.2"
 
 "@fortawesome/react-fontawesome@^0.2.0":
   version "0.2.0"
@@ -2259,19 +2250,19 @@
     multiformats "^9.5.4"
 
 "@ipld/dag-cbor@^9.0.0":
-  version "9.0.3"
+  version "9.0.4"
   dependencies:
     cborg "^2.0.1"
     multiformats "^12.0.1"
 
 "@ipld/dag-cbor@^9.0.1":
-  version "9.0.3"
+  version "9.0.4"
   dependencies:
     cborg "^2.0.1"
     multiformats "^12.0.1"
 
 "@ipld/dag-json@^10.0.0":
-  version "10.1.2"
+  version "10.1.3"
   dependencies:
     cborg "^2.0.1"
     multiformats "^12.0.1"
@@ -2282,9 +2273,19 @@
     multiformats "^9.5.4"
 
 "@ipld/dag-pb@^4.0.0":
-  version "4.0.4"
+  version "4.0.5"
   dependencies:
     multiformats "^12.0.1"
+
+"@isaacs/cliui@^8.0.2":
+  version "8.0.2"
+  dependencies:
+    string-width "^5.1.2"
+    string-width-cjs "npm:string-width@^4.2.0"
+    strip-ansi "^7.0.1"
+    strip-ansi-cjs "npm:strip-ansi@^6.0.1"
+    wrap-ansi "^8.1.0"
+    wrap-ansi-cjs "npm:wrap-ansi@^7.0.0"
 
 "@jridgewell/gen-mapping@^0.3.0", "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.3"
@@ -2296,23 +2297,20 @@
 "@jridgewell/resolve-uri@^3.0.3":
   version "3.1.1"
 
-"@jridgewell/resolve-uri@3.1.0":
-  version "3.1.0"
+"@jridgewell/resolve-uri@^3.1.0":
+  version "3.1.1"
 
 "@jridgewell/set-array@^1.0.1":
   version "1.1.2"
 
-"@jridgewell/sourcemap-codec@^1.4.10":
+"@jridgewell/sourcemap-codec@^1.4.10", "@jridgewell/sourcemap-codec@^1.4.14":
   version "1.4.15"
 
-"@jridgewell/sourcemap-codec@1.4.14":
-  version "1.4.14"
-
 "@jridgewell/trace-mapping@^0.3.17", "@jridgewell/trace-mapping@^0.3.9":
-  version "0.3.18"
+  version "0.3.19"
   dependencies:
-    "@jridgewell/resolve-uri" "3.1.0"
-    "@jridgewell/sourcemap-codec" "1.4.14"
+    "@jridgewell/resolve-uri" "^3.1.0"
+    "@jridgewell/sourcemap-codec" "^1.4.14"
 
 "@jridgewell/trace-mapping@0.3.9":
   version "0.3.9"
@@ -2340,7 +2338,7 @@
     "@pedrouid/environment" "^1.0.1"
 
 "@ledgerhq/connect-kit-loader@^1.0.1":
-  version "1.1.0"
+  version "1.1.2"
 
 "@lexical/clipboard@0.10.0":
   version "0.10.0"
@@ -2507,7 +2505,18 @@
     it-pushable "^3.0.0"
     uint8arraylist "^2.1.2"
 
-"@libp2p/interfaces@^3.0.0", "@libp2p/interfaces@^3.2.0", "@libp2p/interfaces@^3.3.1":
+"@libp2p/interface@^0.1.1":
+  version "0.1.2"
+  dependencies:
+    "@multiformats/multiaddr" "^12.1.5"
+    abortable-iterator "^5.0.1"
+    it-pushable "^3.2.0"
+    it-stream-types "^2.0.1"
+    multiformats "^12.0.1"
+    p-defer "^4.0.0"
+    uint8arraylist "^2.4.3"
+
+"@libp2p/interfaces@^3.0.0", "@libp2p/interfaces@^3.2.0":
   version "3.3.2"
 
 "@libp2p/logger@^2.0.0", "@libp2p/logger@^2.0.5":
@@ -2531,7 +2540,7 @@
   version "1.1.1"
 
 "@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.6.0":
-  version "1.6.2"
+  version "1.6.3"
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
@@ -2629,7 +2638,7 @@
   dependencies:
     "@multiformats/multiaddr" "^12.0.0"
 
-"@multiformats/multiaddr@^11.0.0", "@multiformats/multiaddr@^11.1.5":
+"@multiformats/multiaddr@^11.0.0":
   version "11.6.1"
   dependencies:
     "@chainsafe/is-ip" "^2.0.1"
@@ -2639,27 +2648,26 @@
     uint8arrays "^4.0.2"
     varint "^6.0.0"
 
-"@multiformats/multiaddr@^12.0.0":
-  version "12.1.5"
+"@multiformats/multiaddr@^11.1.5":
+  version "11.6.1"
   dependencies:
     "@chainsafe/is-ip" "^2.0.1"
-    "@chainsafe/netmask" "^2.0.0"
-    "@libp2p/interfaces" "^3.3.1"
     dns-over-http-resolver "^2.1.0"
-    multiformats "^12.0.1"
+    err-code "^3.0.1"
+    multiformats "^11.0.0"
     uint8arrays "^4.0.2"
     varint "^6.0.0"
 
-"@multiformats/multiaddr@^12.1.3":
-  version "12.1.5"
+"@multiformats/multiaddr@^12.0.0", "@multiformats/multiaddr@^12.1.3", "@multiformats/multiaddr@^12.1.5":
+  version "12.1.7"
   dependencies:
     "@chainsafe/is-ip" "^2.0.1"
     "@chainsafe/netmask" "^2.0.0"
-    "@libp2p/interfaces" "^3.3.1"
+    "@libp2p/interface" "^0.1.1"
     dns-over-http-resolver "^2.1.0"
     multiformats "^12.0.1"
+    uint8-varint "^2.0.1"
     uint8arrays "^4.0.2"
-    varint "^6.0.0"
 
 "@multiformats/murmur3@^1.0.3":
   version "1.1.3"
@@ -2667,16 +2675,16 @@
     multiformats "^9.5.4"
     murmurhash3js-revisited "^3.0.0"
 
-"@next/env@13.4.12":
-  version "13.4.12"
+"@next/env@13.4.19":
+  version "13.4.19"
 
-"@next/eslint-plugin-next@13.4.12":
-  version "13.4.12"
+"@next/eslint-plugin-next@13.4.19":
+  version "13.4.19"
   dependencies:
     glob "7.1.7"
 
-"@next/swc-darwin-arm64@13.4.12":
-  version "13.4.12"
+"@next/swc-darwin-arm64@13.4.19":
+  version "13.4.19"
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
@@ -2689,7 +2697,7 @@
 "@noble/ed25519@^1.5.1", "@noble/ed25519@^1.6.0":
   version "1.7.3"
 
-"@noble/hashes@^1.1.2", "@noble/hashes@^1.2.0", "@noble/hashes@^1.3.0", "@noble/hashes@1.3.1":
+"@noble/hashes@^1.1.2", "@noble/hashes@^1.2.0", "@noble/hashes@^1.3.0", "@noble/hashes@^1.3.1", "@noble/hashes@1.3.1":
   version "1.3.1"
 
 "@noble/hashes@~1.1.1", "@noble/hashes@1.1.5":
@@ -2888,6 +2896,11 @@
     "@gar/promisify" "^1.0.1"
     semver "^7.3.5"
 
+"@npmcli/fs@^3.1.0":
+  version "3.1.0"
+  dependencies:
+    semver "^7.3.5"
+
 "@npmcli/move-file@^1.0.1":
   version "1.1.2"
   dependencies:
@@ -3021,15 +3034,8 @@
 "@pedrouid/environment@^1.0.1":
   version "1.0.1"
 
-"@pkgr/utils@^2.3.1":
-  version "2.4.2"
-  dependencies:
-    cross-spawn "^7.0.3"
-    fast-glob "^3.3.0"
-    is-glob "^4.0.3"
-    open "^9.1.0"
-    picocolors "^1.0.0"
-    tslib "^2.6.0"
+"@pkgjs/parseargs@^0.11.0":
+  version "0.11.0"
 
 "@polkadot/networks@7.9.2":
   version "7.9.2"
@@ -3259,7 +3265,7 @@
     picomatch "^2.2.2"
 
 "@rushstack/eslint-patch@^1.1.3":
-  version "1.3.2"
+  version "1.3.3"
 
 "@safe-global/safe-apps-provider@^0.15.2":
   version "0.15.2"
@@ -3280,9 +3286,12 @@
     ethers "^5.7.2"
 
 "@safe-global/safe-gateway-typescript-sdk@^3.5.3":
-  version "3.8.0"
+  version "3.9.0"
   dependencies:
     cross-fetch "^3.1.5"
+
+"@scarf/scarf@^1.1.1":
+  version "1.1.1"
 
 "@scure/base@~1.1.0":
   version "1.1.1"
@@ -3429,15 +3438,15 @@
     buffer "~6.0.3"
 
 "@solana/web3.js@^1.70.1":
-  version "1.78.1"
+  version "1.78.4"
   dependencies:
     "@babel/runtime" "^7.22.6"
     "@noble/curves" "^1.0.0"
-    "@noble/hashes" "^1.3.0"
+    "@noble/hashes" "^1.3.1"
     "@solana/buffer-layout" "^4.0.0"
-    agentkeepalive "^4.2.1"
+    agentkeepalive "^4.3.0"
     bigint-buffer "^1.1.5"
-    bn.js "^5.0.0"
+    bn.js "^5.2.1"
     borsh "^0.7.0"
     bs58 "^4.0.1"
     buffer "6.0.3"
@@ -3595,7 +3604,7 @@
     "@types/node" "^18.0.4"
 
 "@stacks/encryption@^6.2.0":
-  version "6.5.5"
+  version "6.7.0"
   dependencies:
     "@noble/hashes" "1.1.5"
     "@noble/secp256k1" "1.7.1"
@@ -3614,7 +3623,7 @@
     cross-fetch "^3.1.5"
 
 "@stacks/transactions@^6.2.0":
-  version "6.5.5"
+  version "6.7.0"
   dependencies:
     "@noble/hashes" "1.1.5"
     "@noble/secp256k1" "1.7.1"
@@ -3633,28 +3642,28 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@tanstack/query-core@4.32.0":
-  version "4.32.0"
+"@tanstack/query-core@4.33.0":
+  version "4.33.0"
 
-"@tanstack/query-persist-client-core@4.32.0":
-  version "4.32.0"
+"@tanstack/query-persist-client-core@4.33.0":
+  version "4.33.0"
   dependencies:
-    "@tanstack/query-core" "4.32.0"
+    "@tanstack/query-core" "4.33.0"
 
 "@tanstack/query-sync-storage-persister@^4.14.5":
-  version "4.32.0"
+  version "4.33.0"
   dependencies:
-    "@tanstack/query-persist-client-core" "4.32.0"
+    "@tanstack/query-persist-client-core" "4.33.0"
 
 "@tanstack/react-query-persist-client@^4.14.5":
-  version "4.32.0"
+  version "4.33.0"
   dependencies:
-    "@tanstack/query-persist-client-core" "4.32.0"
+    "@tanstack/query-persist-client-core" "4.33.0"
 
-"@tanstack/react-query@^4.14.5", "@tanstack/react-query@4.32.0":
-  version "4.32.0"
+"@tanstack/react-query@^4.14.5", "@tanstack/react-query@^4.33.0":
+  version "4.33.0"
   dependencies:
-    "@tanstack/query-core" "4.32.0"
+    "@tanstack/query-core" "4.33.0"
     use-sync-external-store "^1.2.0"
 
 "@taquito/utils@^11.2.0":
@@ -3690,6 +3699,9 @@
 
 "@tootallnate/once@1":
   version "1.1.2"
+
+"@tootallnate/once@2":
+  version "2.0.0"
 
 "@trivago/prettier-plugin-sort-imports@^4.1.1":
   version "4.2.0"
@@ -3882,16 +3894,16 @@
   version "12.20.55"
 
 "@types/node@^18.0.0":
-  version "18.17.1"
+  version "18.17.6"
 
 "@types/node@^18.0.4":
-  version "18.17.1"
+  version "18.17.6"
 
 "@types/node@^8.0.0":
   version "8.10.66"
 
 "@types/node@>=13.7.0":
-  version "20.4.5"
+  version "20.5.1"
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -3944,8 +3956,8 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8.0 || ^17.0.0 || ^18.0.0", "@types/react@^16.9.0 || ^17.0.0 || ^18.0.0", "@types/react@^18.0.15", "@types/react@^18.0.9":
-  version "18.2.17"
+"@types/react@*", "@types/react@^16.8.0 || ^17.0.0 || ^18.0.0", "@types/react@^16.9.0 || ^17.0.0 || ^18.0.0", "@types/react@^18.0.15", "@types/react@^18.0.9", "@types/react@>=16.8":
+  version "18.2.20"
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -4021,21 +4033,13 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@^5.0.0", "@typescript-eslint/parser@^6.0.0 || ^6.0.0-alpha":
+"@typescript-eslint/parser@^5.0.0", "@typescript-eslint/parser@^5.4.2 || ^6.0.0", "@typescript-eslint/parser@^6.0.0 || ^6.0.0-alpha":
   version "6.2.0"
   dependencies:
     "@typescript-eslint/scope-manager" "6.2.0"
     "@typescript-eslint/types" "6.2.0"
     "@typescript-eslint/typescript-estree" "6.2.0"
     "@typescript-eslint/visitor-keys" "6.2.0"
-    debug "^4.3.4"
-
-"@typescript-eslint/parser@^5.42.0":
-  version "5.62.0"
-  dependencies:
-    "@typescript-eslint/scope-manager" "5.62.0"
-    "@typescript-eslint/types" "5.62.0"
-    "@typescript-eslint/typescript-estree" "5.62.0"
     debug "^4.3.4"
 
 "@typescript-eslint/parser@latest":
@@ -4817,7 +4821,7 @@
 "@zxing/text-encoding@0.9.0":
   version "0.9.0"
 
-abbrev@1:
+abbrev@^1.0.0, abbrev@1:
   version "1.1.1"
 
 abbrev@1.0.x:
@@ -4830,6 +4834,12 @@ abort-controller@*, abort-controller@^3.0.0:
   version "3.0.0"
   dependencies:
     event-target-shim "^5.0.0"
+
+abortable-iterator@^5.0.1:
+  version "5.0.1"
+  dependencies:
+    get-iterator "^2.0.0"
+    it-stream-types "^2.0.1"
 
 abstract-level@^1.0.0, abstract-level@^1.0.2, abstract-level@^1.0.3:
   version "1.0.3"
@@ -4908,11 +4918,9 @@ agent-base@^6.0.0, agent-base@^6.0.2, agent-base@6:
   dependencies:
     debug "4"
 
-agentkeepalive@^4.1.3, agentkeepalive@^4.2.1:
-  version "4.3.0"
+agentkeepalive@^4.1.3, agentkeepalive@^4.2.1, agentkeepalive@^4.3.0:
+  version "4.5.0"
   dependencies:
-    debug "^4.1.0"
-    depd "^2.0.0"
     humanize-ms "^1.2.1"
 
 aggregate-error@^3.0.0:
@@ -4986,6 +4994,11 @@ ansi-escapes@^4.2.1, ansi-escapes@^4.3.0:
   dependencies:
     type-fest "^0.21.3"
 
+ansi-escapes@^5.0.0:
+  version "5.0.0"
+  dependencies:
+    type-fest "^1.0.2"
+
 ansi-regex@^3.0.0:
   version "3.0.1"
 
@@ -5013,9 +5026,6 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ansi-styles@^6.0.0:
-  version "6.2.1"
-
 antlr4ts@^0.5.0-alpha.4:
   version "0.5.0-alpha.4"
 
@@ -5036,9 +5046,6 @@ anymatch@~3.1.1, anymatch@~3.1.2:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
-
-apg-js@^4.1.1:
-  version "4.1.3"
 
 "aproba@^1.0.3 || ^2.0.0":
   version "2.0.0"
@@ -5220,6 +5227,11 @@ async-sema@^3.1.1:
 async@1.x:
   version "1.5.2"
 
+asynciterator.prototype@^1.0.0:
+  version "1.0.0"
+  dependencies:
+    has-symbols "^1.0.3"
+
 asynckit@^0.4.0:
   version "0.4.0"
 
@@ -5230,10 +5242,10 @@ atomic-sleep@^1.0.0:
   version "1.0.0"
 
 autoprefixer@^10.0.2, autoprefixer@^10.4.12:
-  version "10.4.14"
+  version "10.4.15"
   dependencies:
-    browserslist "^4.21.5"
-    caniuse-lite "^1.0.30001464"
+    browserslist "^4.21.10"
+    caniuse-lite "^1.0.30001520"
     fraction.js "^4.2.0"
     normalize-range "^0.1.2"
     picocolors "^1.0.0"
@@ -5246,7 +5258,7 @@ await-semaphore@^0.1.3:
   version "0.1.3"
 
 aws-sdk@^2.1049.0, aws-sdk@^2.838.0:
-  version "2.1425.0"
+  version "2.1440.0"
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -5301,20 +5313,20 @@ axobject-query@^3.1.1:
   dependencies:
     dequal "^2.0.3"
 
-babel-plugin-polyfill-corejs2@^0.4.4:
+babel-plugin-polyfill-corejs2@^0.4.5:
   version "0.4.5"
   dependencies:
     "@babel/compat-data" "^7.22.6"
     "@babel/helper-define-polyfill-provider" "^0.4.2"
     semver "^6.3.1"
 
-babel-plugin-polyfill-corejs3@^0.8.2:
+babel-plugin-polyfill-corejs3@^0.8.3:
   version "0.8.3"
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.4.2"
     core-js-compat "^3.31.0"
 
-babel-plugin-polyfill-regenerator@^0.5.1:
+babel-plugin-polyfill-regenerator@^0.5.2:
   version "0.5.2"
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.4.2"
@@ -5359,9 +5371,6 @@ bech32@^2.0.0:
 
 bech32@1.1.4:
   version "1.1.4"
-
-big-integer@^1.6.44:
-  version "1.6.51"
 
 big.js@^5.2.2:
   version "5.2.2"
@@ -5465,7 +5474,7 @@ blob-to-it@^1.0.1:
     browser-readablestream-to-it "^1.0.3"
 
 blob-to-it@^2.0.0:
-  version "2.0.3"
+  version "2.0.4"
   dependencies:
     browser-readablestream-to-it "^2.0.0"
 
@@ -5535,11 +5544,6 @@ borsh@^0.7.0:
     bs58 "^4.0.0"
     text-encoding-utf-8 "^1.0.2"
 
-bplist-parser@^0.2.0:
-  version "0.2.0"
-  dependencies:
-    big-integer "^1.6.44"
-
 brace-expansion@^1.1.7:
   version "1.1.11"
   dependencies:
@@ -5571,7 +5575,7 @@ browser-readablestream-to-it@^1.0.0, browser-readablestream-to-it@^1.0.1, browse
   version "1.0.3"
 
 browser-readablestream-to-it@^2.0.0:
-  version "2.0.3"
+  version "2.0.4"
 
 browser-stdout@1.3.1:
   version "1.3.1"
@@ -5600,12 +5604,12 @@ browserify-zlib@^0.1.4:
   dependencies:
     pako "~0.2.0"
 
-browserslist@^4.21.5, browserslist@^4.21.9, "browserslist@>= 4.21.0":
-  version "4.21.9"
+browserslist@^4.21.10, browserslist@^4.21.9, "browserslist@>= 4.21.0":
+  version "4.21.10"
   dependencies:
-    caniuse-lite "^1.0.30001503"
-    electron-to-chromium "^1.4.431"
-    node-releases "^2.0.12"
+    caniuse-lite "^1.0.30001517"
+    electron-to-chromium "^1.4.477"
+    node-releases "^2.0.13"
     update-browserslist-db "^1.0.11"
 
 bs58@^4.0.0, bs58@^4.0.1, bs58@4.0.1:
@@ -5690,11 +5694,6 @@ bufferutil@^4.0.1:
   dependencies:
     node-gyp-build "^4.3.0"
 
-bundle-name@^3.0.0:
-  version "3.0.0"
-  dependencies:
-    run-applescript "^5.0.0"
-
 busboy@^1.6.0, busboy@1.6.0:
   version "1.6.0"
   dependencies:
@@ -5738,6 +5737,22 @@ cacache@^15.0.5, cacache@^15.2.0:
     ssri "^8.0.1"
     tar "^6.0.2"
     unique-filename "^1.1.1"
+
+cacache@^17.0.0:
+  version "17.1.4"
+  dependencies:
+    "@npmcli/fs" "^3.1.0"
+    fs-minipass "^3.0.0"
+    glob "^10.2.2"
+    lru-cache "^7.7.1"
+    minipass "^7.0.3"
+    minipass-collect "^1.0.2"
+    minipass-flush "^1.0.5"
+    minipass-pipeline "^1.2.4"
+    p-map "^4.0.0"
+    ssri "^10.0.0"
+    tar "^6.1.11"
+    unique-filename "^3.0.0"
 
 cacheable-lookup@^5.0.3:
   version "5.0.4"
@@ -5802,8 +5817,8 @@ camelcase@^6.2.1:
 camelize@^1.0.0:
   version "1.0.1"
 
-caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001464, caniuse-lite@^1.0.30001503:
-  version "1.0.30001517"
+caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001517, caniuse-lite@^1.0.30001520:
+  version "1.0.30001522"
 
 canonicalize@^2.0.0:
   version "2.0.0"
@@ -5827,7 +5842,7 @@ carbites@^1.0.6:
     multiformats "^9.0.4"
 
 cartonne@^2.1.1:
-  version "2.1.1"
+  version "2.2.0"
   dependencies:
     "@ipld/dag-cbor" "^9.0.0"
     multiformats "^11.0.2"
@@ -5852,7 +5867,7 @@ cborg@^1.10.2, cborg@^1.3.3, cborg@^1.5.4, cborg@^1.6.0, cborg@^1.8.0, cborg@^1.
   version "1.10.2"
 
 cborg@^2.0.1:
-  version "2.0.3"
+  version "2.0.4"
 
 chai-as-promised@^7.1.1:
   version "7.1.1"
@@ -5875,13 +5890,6 @@ chainsaw@~0.1.0:
   dependencies:
     traverse ">=0.3.0 <0.4"
 
-chalk@^2.0.0:
-  version "2.4.2"
-  dependencies:
-    ansi-styles "^3.2.1"
-    escape-string-regexp "^1.0.5"
-    supports-color "^5.3.0"
-
 chalk@^2.4.2:
   version "2.4.2"
   dependencies:
@@ -5895,8 +5903,8 @@ chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@5.2.0:
-  version "5.2.0"
+chalk@5.3.0:
+  version "5.3.0"
 
 change-case@^4.1.2:
   version "4.1.2"
@@ -5996,6 +6004,11 @@ cli-cursor@^3.1.0:
   dependencies:
     restore-cursor "^3.1.0"
 
+cli-cursor@^4.0.0:
+  version "4.0.0"
+  dependencies:
+    restore-cursor "^4.0.0"
+
 cli-spinners@^2.5.0:
   version "2.9.0"
 
@@ -6006,12 +6019,6 @@ cli-table3@^0.5.0:
     string-width "^2.1.1"
   optionalDependencies:
     colors "^1.1.2"
-
-cli-truncate@^2.1.0:
-  version "2.1.0"
-  dependencies:
-    slice-ansi "^3.0.0"
-    string-width "^4.2.0"
 
 cli-truncate@^3.1.0:
   version "3.1.0"
@@ -6097,7 +6104,7 @@ color@^4.2:
     color-convert "^2.0.1"
     color-string "^1.9.0"
 
-colorette@^2.0.19:
+colorette@^2.0.20:
   version "2.0.20"
 
 colorette@2.0.19:
@@ -6142,14 +6149,14 @@ commander@^10.0.0:
 commander@^2.20.3:
   version "2.20.3"
 
-commander@^4.0.0:
-  version "4.1.1"
-
-commander@^4.0.1:
+commander@^4.0.0, commander@^4.0.1:
   version "4.1.1"
 
 commander@^9.4.1:
   version "9.5.0"
+
+commander@11.0.0:
+  version "11.0.0"
 
 commander@3.0.2:
   version "3.0.2"
@@ -6204,9 +6211,9 @@ copy-to-clipboard@^3.3.1:
     toggle-selection "^1.0.6"
 
 core-js-compat@^3.31.0:
-  version "3.32.0"
+  version "3.32.1"
   dependencies:
-    browserslist "^4.21.9"
+    browserslist "^4.21.10"
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -6264,7 +6271,7 @@ create-require@^1.1.0:
   version "1.1.1"
 
 cron-parser@^4.0.0:
-  version "4.8.1"
+  version "4.9.0"
   dependencies:
     luxon "^3.2.1"
 
@@ -6273,7 +6280,7 @@ cross-fetch@^3.1.4, cross-fetch@^3.1.5:
   dependencies:
     node-fetch "^2.6.12"
 
-cross-spawn@^7.0.2, cross-spawn@^7.0.3:
+cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   dependencies:
     path-key "^3.1.0"
@@ -6422,20 +6429,6 @@ deep-object-diff@^1.1.0, deep-object-diff@^1.1.9:
 deepmerge@^4.2.2:
   version "4.3.1"
 
-default-browser-id@^3.0.0:
-  version "3.0.0"
-  dependencies:
-    bplist-parser "^0.2.0"
-    untildify "^4.0.0"
-
-default-browser@^4.0.0:
-  version "4.0.0"
-  dependencies:
-    bundle-name "^3.0.0"
-    default-browser-id "^3.0.0"
-    execa "^7.1.1"
-    titleize "^3.0.0"
-
 defaults@^1.0.3:
   version "1.0.4"
   dependencies:
@@ -6455,9 +6448,6 @@ deferred-leveldown@~5.3.0:
   dependencies:
     abstract-leveldown "~6.2.1"
     inherits "^2.0.3"
-
-define-lazy-prop@^3.0.0:
-  version "3.0.0"
 
 define-properties@^1.1.2, define-properties@^1.1.3, define-properties@^1.1.4, define-properties@^1.2.0:
   version "1.2.0"
@@ -6535,7 +6525,7 @@ did-jwt@^6.0.0:
     uint8arrays "^3.0.0"
 
 did-jwt@^7.2.0:
-  version "7.2.4"
+  version "7.2.5"
   dependencies:
     "@noble/curves" "^1.0.0"
     "@noble/hashes" "^1.3.0"
@@ -6553,11 +6543,11 @@ did-resolver@^4.0.0, did-resolver@^4.0.1, did-resolver@^4.1.0:
   version "4.1.0"
 
 dids@^4.0.0, dids@^4.0.1:
-  version "4.0.3"
+  version "4.0.4"
   dependencies:
     "@didtools/cacao" "^2.1.0"
     "@didtools/codecs" "^1.0.1"
-    "@didtools/pkh-ethereum" "^0.4.0"
+    "@didtools/pkh-ethereum" "^0.4.1"
     "@stablelib/random" "^1.0.1"
     codeco "^1.1.0"
     dag-jose-utils "^3.0.0"
@@ -6606,7 +6596,7 @@ dns-over-http-resolver@^1.2.3:
     receptacle "^1.3.2"
 
 dns-over-http-resolver@^2.1.0:
-  version "2.1.1"
+  version "2.1.2"
   dependencies:
     debug "^4.3.1"
     native-fetch "^4.0.2"
@@ -6696,8 +6686,8 @@ electron-fetch@^1.7.2:
   dependencies:
     encoding "^0.1.13"
 
-electron-to-chromium@^1.4.431:
-  version "1.4.477"
+electron-to-chromium@^1.4.477:
+  version "1.4.496"
 
 elliptic@^6.4.0, elliptic@^6.5.2, elliptic@^6.5.4, elliptic@6.5.4:
   version "6.5.4"
@@ -6810,7 +6800,7 @@ error-polyfill@^0.1.3:
     o3 "^1.0.3"
     u3 "^0.1.1"
 
-es-abstract@^1.19.0, es-abstract@^1.20.4, es-abstract@^1.21.2:
+es-abstract@^1.19.0, es-abstract@^1.20.4, es-abstract@^1.21.2, es-abstract@^1.21.3:
   version "1.22.1"
   dependencies:
     array-buffer-byte-length "^1.0.0"
@@ -6855,6 +6845,24 @@ es-abstract@^1.19.0, es-abstract@^1.20.4, es-abstract@^1.21.2:
 
 es-array-method-boxes-properly@^1.0.0:
   version "1.0.0"
+
+es-iterator-helpers@^1.0.12:
+  version "1.0.13"
+  dependencies:
+    asynciterator.prototype "^1.0.0"
+    call-bind "^1.0.2"
+    define-properties "^1.2.0"
+    es-abstract "^1.21.3"
+    es-set-tostringtag "^2.0.1"
+    function-bind "^1.1.1"
+    get-intrinsic "^1.2.1"
+    globalthis "^1.0.3"
+    has-property-descriptors "^1.0.0"
+    has-proto "^1.0.1"
+    has-symbols "^1.0.3"
+    internal-slot "^1.0.5"
+    iterator.prototype "^1.1.0"
+    safe-array-concat "^1.0.0"
 
 es-set-tostringtag@^2.0.1:
   version "2.0.1"
@@ -6913,30 +6921,30 @@ esbuild@*, esbuild@0.16.3:
     "@esbuild/win32-x64" "0.16.3"
 
 esbuild@^0.18.10:
-  version "0.18.17"
+  version "0.18.20"
   optionalDependencies:
-    "@esbuild/android-arm" "0.18.17"
-    "@esbuild/android-arm64" "0.18.17"
-    "@esbuild/android-x64" "0.18.17"
-    "@esbuild/darwin-arm64" "0.18.17"
-    "@esbuild/darwin-x64" "0.18.17"
-    "@esbuild/freebsd-arm64" "0.18.17"
-    "@esbuild/freebsd-x64" "0.18.17"
-    "@esbuild/linux-arm" "0.18.17"
-    "@esbuild/linux-arm64" "0.18.17"
-    "@esbuild/linux-ia32" "0.18.17"
-    "@esbuild/linux-loong64" "0.18.17"
-    "@esbuild/linux-mips64el" "0.18.17"
-    "@esbuild/linux-ppc64" "0.18.17"
-    "@esbuild/linux-riscv64" "0.18.17"
-    "@esbuild/linux-s390x" "0.18.17"
-    "@esbuild/linux-x64" "0.18.17"
-    "@esbuild/netbsd-x64" "0.18.17"
-    "@esbuild/openbsd-x64" "0.18.17"
-    "@esbuild/sunos-x64" "0.18.17"
-    "@esbuild/win32-arm64" "0.18.17"
-    "@esbuild/win32-ia32" "0.18.17"
-    "@esbuild/win32-x64" "0.18.17"
+    "@esbuild/android-arm" "0.18.20"
+    "@esbuild/android-arm64" "0.18.20"
+    "@esbuild/android-x64" "0.18.20"
+    "@esbuild/darwin-arm64" "0.18.20"
+    "@esbuild/darwin-x64" "0.18.20"
+    "@esbuild/freebsd-arm64" "0.18.20"
+    "@esbuild/freebsd-x64" "0.18.20"
+    "@esbuild/linux-arm" "0.18.20"
+    "@esbuild/linux-arm64" "0.18.20"
+    "@esbuild/linux-ia32" "0.18.20"
+    "@esbuild/linux-loong64" "0.18.20"
+    "@esbuild/linux-mips64el" "0.18.20"
+    "@esbuild/linux-ppc64" "0.18.20"
+    "@esbuild/linux-riscv64" "0.18.20"
+    "@esbuild/linux-s390x" "0.18.20"
+    "@esbuild/linux-x64" "0.18.20"
+    "@esbuild/netbsd-x64" "0.18.20"
+    "@esbuild/openbsd-x64" "0.18.20"
+    "@esbuild/sunos-x64" "0.18.20"
+    "@esbuild/win32-arm64" "0.18.20"
+    "@esbuild/win32-ia32" "0.18.20"
+    "@esbuild/win32-x64" "0.18.20"
 
 esbuild@0.14.47:
   version "0.14.47"
@@ -7024,39 +7032,38 @@ escodegen@1.8.x:
     source-map "~0.2.0"
 
 eslint-config-next@^13.1.6:
-  version "13.4.12"
+  version "13.4.19"
   dependencies:
-    "@next/eslint-plugin-next" "13.4.12"
+    "@next/eslint-plugin-next" "13.4.19"
     "@rushstack/eslint-patch" "^1.1.3"
-    "@typescript-eslint/parser" "^5.42.0"
+    "@typescript-eslint/parser" "^5.4.2 || ^6.0.0"
     eslint-import-resolver-node "^0.3.6"
     eslint-import-resolver-typescript "^3.5.2"
     eslint-plugin-import "^2.26.0"
     eslint-plugin-jsx-a11y "^6.5.1"
     eslint-plugin-react "^7.31.7"
-    eslint-plugin-react-hooks "5.0.0-canary-7118f5dd7-20230705"
+    eslint-plugin-react-hooks "^4.5.0 || 5.0.0-canary-7118f5dd7-20230705"
 
 eslint-config-prettier@^8.5.0:
   version "8.9.0"
 
 eslint-import-resolver-node@^0.3.6, eslint-import-resolver-node@^0.3.7:
-  version "0.3.7"
+  version "0.3.9"
   dependencies:
     debug "^3.2.7"
-    is-core-module "^2.11.0"
-    resolve "^1.22.1"
+    is-core-module "^2.13.0"
+    resolve "^1.22.4"
 
 eslint-import-resolver-typescript@^3.5.2:
-  version "3.5.5"
+  version "3.6.0"
   dependencies:
     debug "^4.3.4"
     enhanced-resolve "^5.12.0"
     eslint-module-utils "^2.7.4"
+    fast-glob "^3.3.1"
     get-tsconfig "^4.5.0"
-    globby "^13.1.3"
     is-core-module "^2.11.0"
     is-glob "^4.0.3"
-    synckit "^0.8.5"
 
 eslint-module-utils@^2.7.4, eslint-module-utils@^2.8.0:
   version "2.8.0"
@@ -7064,7 +7071,7 @@ eslint-module-utils@^2.7.4, eslint-module-utils@^2.8.0:
     debug "^3.2.7"
 
 eslint-plugin-import@*, eslint-plugin-import@^2.26.0:
-  version "2.28.0"
+  version "2.28.1"
   dependencies:
     array-includes "^3.1.6"
     array.prototype.findlastindex "^1.2.2"
@@ -7075,13 +7082,12 @@ eslint-plugin-import@*, eslint-plugin-import@^2.26.0:
     eslint-import-resolver-node "^0.3.7"
     eslint-module-utils "^2.8.0"
     has "^1.0.3"
-    is-core-module "^2.12.1"
+    is-core-module "^2.13.0"
     is-glob "^4.0.3"
     minimatch "^3.1.2"
     object.fromentries "^2.0.6"
     object.groupby "^1.0.0"
     object.values "^1.1.6"
-    resolve "^1.22.3"
     semver "^6.3.1"
     tsconfig-paths "^3.14.2"
 
@@ -7110,16 +7116,17 @@ eslint-plugin-prettier@^4.2.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react-hooks@5.0.0-canary-7118f5dd7-20230705:
+"eslint-plugin-react-hooks@^4.5.0 || 5.0.0-canary-7118f5dd7-20230705":
   version "5.0.0-canary-7118f5dd7-20230705"
 
 eslint-plugin-react@^7.31.7:
-  version "7.33.1"
+  version "7.33.2"
   dependencies:
     array-includes "^3.1.6"
     array.prototype.flatmap "^1.3.1"
     array.prototype.tosorted "^1.1.1"
     doctrine "^2.1.0"
+    es-iterator-helpers "^1.0.12"
     estraverse "^5.3.0"
     jsx-ast-utils "^2.4.1 || ^3.0.0"
     minimatch "^3.1.2"
@@ -7486,6 +7493,9 @@ event-target-shim@^5.0.0:
 eventemitter3@^4.0.7, eventemitter3@4.0.7:
   version "4.0.7"
 
+eventemitter3@^5.0.1:
+  version "5.0.1"
+
 events@^3.3.0:
   version "3.3.0"
 
@@ -7498,38 +7508,12 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-execa@^5.0.0:
-  version "5.1.1"
-  dependencies:
-    cross-spawn "^7.0.3"
-    get-stream "^6.0.0"
-    human-signals "^2.1.0"
-    is-stream "^2.0.0"
-    merge-stream "^2.0.0"
-    npm-run-path "^4.0.1"
-    onetime "^5.1.2"
-    signal-exit "^3.0.3"
-    strip-final-newline "^2.0.0"
-
 execa@^6.1.0:
   version "6.1.0"
   dependencies:
     cross-spawn "^7.0.3"
     get-stream "^6.0.1"
     human-signals "^3.0.1"
-    is-stream "^3.0.0"
-    merge-stream "^2.0.0"
-    npm-run-path "^5.1.0"
-    onetime "^6.0.0"
-    signal-exit "^3.0.7"
-    strip-final-newline "^3.0.0"
-
-execa@^7.0.0, execa@^7.1.1:
-  version "7.2.0"
-  dependencies:
-    cross-spawn "^7.0.3"
-    get-stream "^6.0.1"
-    human-signals "^4.3.0"
     is-stream "^3.0.0"
     merge-stream "^2.0.0"
     npm-run-path "^5.1.0"
@@ -7550,8 +7534,24 @@ execa@5.1.1:
     signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
+execa@7.2.0:
+  version "7.2.0"
+  dependencies:
+    cross-spawn "^7.0.3"
+    get-stream "^6.0.1"
+    human-signals "^4.3.0"
+    is-stream "^3.0.0"
+    merge-stream "^2.0.0"
+    npm-run-path "^5.1.0"
+    onetime "^6.0.0"
+    signal-exit "^3.0.7"
+    strip-final-newline "^3.0.0"
+
 exit-hook@2.2.1:
   version "2.2.1"
+
+exponential-backoff@^3.1.1:
+  version "3.1.1"
 
 express@^4.17.1, express@^4.17.2, express@4.x:
   version "4.18.2"
@@ -7619,7 +7619,7 @@ fast-diff@^1.1.2:
 fast-fifo@^1.0.0:
   version "1.3.0"
 
-fast-glob@^3.0.3, fast-glob@^3.2.12, fast-glob@^3.2.7, fast-glob@^3.2.9, fast-glob@^3.3.0:
+fast-glob@^3.0.3, fast-glob@^3.2.12, fast-glob@^3.2.7, fast-glob@^3.2.9, fast-glob@^3.3.1:
   version "3.3.1"
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
@@ -7801,6 +7801,12 @@ for-each@^0.3.3:
   dependencies:
     is-callable "^1.1.3"
 
+foreground-child@^3.1.0:
+  version "3.1.1"
+  dependencies:
+    cross-spawn "^7.0.0"
+    signal-exit "^4.0.1"
+
 forever-agent@~0.6.1:
   version "0.6.1"
 
@@ -7838,7 +7844,7 @@ fp-ts@1.19.3:
   version "1.19.3"
 
 fraction.js@^4.2.0:
-  version "4.2.0"
+  version "4.2.1"
 
 fresh@0.5.2:
   version "0.5.2"
@@ -7902,6 +7908,11 @@ fs-minipass@^2.0.0:
   version "2.1.0"
   dependencies:
     minipass "^3.0.0"
+
+fs-minipass@^3.0.0:
+  version "3.0.3"
+  dependencies:
+    minipass "^7.0.3"
 
 fs-readdir-recursive@^1.1.0:
   version "1.1.0"
@@ -7988,6 +7999,9 @@ get-intrinsic@^1.0.2, get-intrinsic@^1.1.1, get-intrinsic@^1.1.3, get-intrinsic@
 get-iterator@^1.0.2:
   version "1.0.2"
 
+get-iterator@^2.0.0:
+  version "2.0.1"
+
 get-nonce@^1.0.0:
   version "1.0.1"
 
@@ -8018,7 +8032,7 @@ get-symbol-description@^1.0.0:
     get-intrinsic "^1.1.1"
 
 get-tsconfig@^4.5.0:
-  version "4.6.2"
+  version "4.7.0"
   dependencies:
     resolve-pkg-maps "^1.0.0"
 
@@ -8061,6 +8075,15 @@ glob-parent@^6.0.2:
 
 glob-to-regexp@^0.4.1, glob-to-regexp@0.4.1:
   version "0.4.1"
+
+glob@^10.2.2:
+  version "10.3.3"
+  dependencies:
+    foreground-child "^3.1.0"
+    jackspeak "^2.0.3"
+    minimatch "^9.0.1"
+    minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
+    path-scurry "^1.10.1"
 
 glob@^5.0.15:
   version "5.0.15"
@@ -8168,15 +8191,6 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-globby@^13.1.3:
-  version "13.2.2"
-  dependencies:
-    dir-glob "^3.0.1"
-    fast-glob "^3.3.0"
-    ignore "^5.2.4"
-    merge2 "^1.4.1"
-    slash "^4.0.0"
-
 globby@10.0.0:
   version "10.0.0"
   dependencies:
@@ -8254,7 +8268,7 @@ graphql-yoga@^3.9.1:
     tslib "^2.3.1"
 
 "graphql@^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0", "graphql@^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "graphql@^14.0.0 || ^15.0.0 || ^16.0.0", "graphql@^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "graphql@^15.2.0 || ^16.0.0", graphql@^16.2.0, graphql@^16.5.0:
-  version "16.7.1"
+  version "16.8.0"
 
 growl@1.10.5:
   version "1.10.5"
@@ -8516,7 +8530,7 @@ http-basic@^8.1.1:
     http-response-object "^3.0.1"
     parse-cache-control "^1.0.1"
 
-http-cache-semantics@^4.0.0, http-cache-semantics@^4.1.0:
+http-cache-semantics@^4.0.0, http-cache-semantics@^4.1.0, http-cache-semantics@^4.1.1:
   version "4.1.1"
 
 http-errors@^1.7.2:
@@ -8541,6 +8555,13 @@ http-proxy-agent@^4.0.0, http-proxy-agent@^4.0.1:
   version "4.0.1"
   dependencies:
     "@tootallnate/once" "1"
+    agent-base "6"
+    debug "4"
+
+http-proxy-agent@^5.0.0:
+  version "5.0.0"
+  dependencies:
+    "@tootallnate/once" "2"
     agent-base "6"
     debug "4"
 
@@ -8664,7 +8685,7 @@ inline-style-parser@0.1.1:
   version "0.1.1"
 
 inquirer@^8.2.1:
-  version "8.2.5"
+  version "8.2.6"
   dependencies:
     ansi-escapes "^4.2.1"
     chalk "^4.1.1"
@@ -8680,7 +8701,7 @@ inquirer@^8.2.1:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
     through "^2.3.6"
-    wrap-ansi "^7.0.0"
+    wrap-ansi "^6.0.1"
 
 interface-blockstore@^2.0.2, interface-blockstore@^2.0.3:
   version "2.0.3"
@@ -8703,7 +8724,7 @@ interface-datastore@^7.0.0:
     uint8arrays "^4.0.2"
 
 interface-datastore@^8.2.0:
-  version "8.2.3"
+  version "8.2.4"
   dependencies:
     interface-store "^5.0.0"
     nanoid "^4.0.0"
@@ -8716,7 +8737,7 @@ interface-store@^3.0.0:
   version "3.0.4"
 
 interface-store@^5.0.0:
-  version "5.1.2"
+  version "5.1.3"
 
 internal-slot@^1.0.3, internal-slot@^1.0.5:
   version "1.0.5"
@@ -8995,6 +9016,11 @@ is-arrayish@^0.2.1:
 is-arrayish@^0.3.1:
   version "0.3.2"
 
+is-async-function@^2.0.0:
+  version "2.0.0"
+  dependencies:
+    has-tostringtag "^1.0.0"
+
 is-bigint@^1.0.1:
   version "1.0.4"
   dependencies:
@@ -9017,12 +9043,12 @@ is-buffer@^2.0.0, is-buffer@^2.0.5, is-buffer@~2.0.3:
 is-callable@^1.1.3, is-callable@^1.1.4, is-callable@^1.2.7:
   version "1.2.7"
 
-is-core-module@^2.11.0, is-core-module@^2.12.0, is-core-module@^2.12.1, is-core-module@^2.5.0, is-core-module@^2.9.0:
+is-core-module@^2.11.0, is-core-module@^2.13.0, is-core-module@^2.5.0, is-core-module@^2.9.0:
   version "2.12.1"
   dependencies:
     has "^1.0.3"
 
-is-date-object@^1.0.1:
+is-date-object@^1.0.1, is-date-object@^1.0.5:
   version "1.0.5"
   dependencies:
     has-tostringtag "^1.0.0"
@@ -9033,17 +9059,16 @@ is-decimal@^2.0.0:
 is-deflate@^1.0.0:
   version "1.0.0"
 
-is-docker@^2.0.0:
-  version "2.2.1"
-
-is-docker@^3.0.0:
-  version "3.0.0"
-
 is-electron@^2.2.0:
   version "2.2.2"
 
 is-extglob@^2.1.1:
   version "2.1.1"
+
+is-finalizationregistry@^1.0.2:
+  version "1.0.2"
+  dependencies:
+    call-bind "^1.0.2"
 
 is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
@@ -9051,10 +9076,7 @@ is-fullwidth-code-point@^2.0.0:
 is-fullwidth-code-point@^3.0.0:
   version "3.0.0"
 
-is-fullwidth-code-point@^4.0.0:
-  version "4.0.0"
-
-is-generator-function@^1.0.7:
+is-generator-function@^1.0.10, is-generator-function@^1.0.7:
   version "1.0.10"
   dependencies:
     has-tostringtag "^1.0.0"
@@ -9073,11 +9095,6 @@ is-hex-prefixed@1.0.0:
 is-hexadecimal@^2.0.0:
   version "2.0.1"
 
-is-inside-container@^1.0.0:
-  version "1.0.0"
-  dependencies:
-    is-docker "^3.0.0"
-
 is-interactive@^1.0.0:
   version "1.0.0"
 
@@ -9088,6 +9105,9 @@ is-ip@^3.1.0:
 
 is-lambda@^1.0.1:
   version "1.0.1"
+
+is-map@^2.0.1:
+  version "2.0.2"
 
 is-negative-zero@^2.0.2:
   version "2.0.2"
@@ -9126,6 +9146,9 @@ is-regex@^1.1.4:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
 
+is-set@^2.0.1:
+  version "2.0.2"
+
 is-shared-array-buffer@^1.0.2:
   version "1.0.2"
   dependencies:
@@ -9158,15 +9181,19 @@ is-typedarray@^1.0.0, is-typedarray@~1.0.0, is-typedarray@1.0.0:
 is-unicode-supported@^0.1.0:
   version "0.1.0"
 
+is-weakmap@^2.0.1:
+  version "2.0.1"
+
 is-weakref@^1.0.2:
   version "1.0.2"
   dependencies:
     call-bind "^1.0.2"
 
-is-wsl@^2.2.0:
-  version "2.2.0"
+is-weakset@^2.0.1:
+  version "2.0.2"
   dependencies:
-    is-docker "^2.0.0"
+    call-bind "^1.0.2"
+    get-intrinsic "^1.1.1"
 
 isarray@^1.0.0:
   version "1.0.0"
@@ -9205,7 +9232,7 @@ it-all@^2.0.0:
   version "2.0.1"
 
 it-all@^3.0.1:
-  version "3.0.2"
+  version "3.0.3"
 
 it-batch@^1.0.8, it-batch@^1.0.9:
   version "1.0.9"
@@ -9223,7 +9250,7 @@ it-first@^2.0.0:
   version "2.0.1"
 
 it-first@^3.0.1:
-  version "3.0.2"
+  version "3.0.3"
 
 it-glob@^0.0.13:
   version "0.0.13"
@@ -9263,13 +9290,16 @@ it-peekable@^2.0.0:
 it-pipe@^1.1.0:
   version "1.1.0"
 
-it-pushable@^3.0.0:
+it-pushable@^3.0.0, it-pushable@^3.2.0:
   version "3.2.1"
   dependencies:
     p-defer "^4.0.0"
 
 it-stream-types@^1.0.4:
   version "1.0.5"
+
+it-stream-types@^2.0.1:
+  version "2.0.1"
 
 it-take@^1.0.1:
   version "1.0.2"
@@ -9283,6 +9313,22 @@ it-to-stream@^1.0.0:
     p-defer "^3.0.0"
     p-fifo "^1.0.0"
     readable-stream "^3.6.0"
+
+iterator.prototype@^1.1.0:
+  version "1.1.0"
+  dependencies:
+    define-properties "^1.1.4"
+    get-intrinsic "^1.1.3"
+    has-symbols "^1.0.3"
+    has-tostringtag "^1.0.0"
+    reflect.getprototypeof "^1.0.3"
+
+jackspeak@^2.0.3:
+  version "2.3.0"
+  dependencies:
+    "@isaacs/cliui" "^8.0.2"
+  optionalDependencies:
+    "@pkgjs/parseargs" "^0.11.0"
 
 javascript-natural-sort@0.7.1:
   version "0.7.1"
@@ -9312,7 +9358,7 @@ jet-logger@1.2.2:
     colors "1.3.0"
 
 jiti@^1.18.2:
-  version "1.19.1"
+  version "1.19.3"
 
 jmespath@0.16.0:
   version "0.16.0"
@@ -9748,43 +9794,38 @@ lines-and-columns@^1.1.6:
   version "1.2.4"
 
 lint-staged@^13.0.3:
-  version "13.2.3"
+  version "13.3.0"
   dependencies:
-    chalk "5.2.0"
-    cli-truncate "^3.1.0"
-    commander "^10.0.0"
-    debug "^4.3.4"
-    execa "^7.0.0"
+    chalk "5.3.0"
+    commander "11.0.0"
+    debug "4.3.4"
+    execa "7.2.0"
     lilconfig "2.1.0"
-    listr2 "^5.0.7"
-    micromatch "^4.0.5"
-    normalize-path "^3.0.0"
-    object-inspect "^1.12.3"
-    pidtree "^0.6.0"
-    string-argv "^0.3.1"
-    yaml "^2.2.2"
+    listr2 "6.6.1"
+    micromatch "4.0.5"
+    pidtree "0.6.0"
+    string-argv "0.3.2"
+    yaml "2.3.1"
 
-listr2@^5.0.7:
-  version "5.0.8"
+listr2@6.6.1:
+  version "6.6.1"
   dependencies:
-    cli-truncate "^2.1.0"
-    colorette "^2.0.19"
-    log-update "^4.0.0"
-    p-map "^4.0.0"
+    cli-truncate "^3.1.0"
+    colorette "^2.0.20"
+    eventemitter3 "^5.0.1"
+    log-update "^5.0.1"
     rfdc "^1.3.0"
-    rxjs "^7.8.0"
-    through "^2.3.8"
-    wrap-ansi "^7.0.0"
+    wrap-ansi "^8.1.0"
 
 lit-element@^3.3.0:
-  version "3.3.2"
+  version "3.3.3"
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.1.0"
     "@lit/reactive-element" "^1.3.0"
-    lit-html "^2.7.0"
+    lit-html "^2.8.0"
 
-lit-html@^2.7.0:
-  version "2.7.5"
+lit-html@^2.7.0, lit-html@^2.8.0:
+  version "2.8.0"
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
@@ -9880,13 +9921,14 @@ log-symbols@4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-log-update@^4.0.0:
-  version "4.0.0"
+log-update@^5.0.1:
+  version "5.0.1"
   dependencies:
-    ansi-escapes "^4.3.0"
-    cli-cursor "^3.1.0"
-    slice-ansi "^4.0.0"
-    wrap-ansi "^6.2.0"
+    ansi-escapes "^5.0.0"
+    cli-cursor "^4.0.0"
+    slice-ansi "^5.0.0"
+    strip-ansi "^7.0.1"
+    wrap-ansi "^8.0.1"
 
 logfmt@^1.3.2:
   version "1.3.2"
@@ -9943,11 +9985,17 @@ lru-cache@^6.0.0:
 lru-cache@^7.14.1:
   version "7.18.3"
 
+lru-cache@^7.7.1:
+  version "7.18.3"
+
+"lru-cache@^9.1.1 || ^10.0.0":
+  version "10.0.1"
+
 ltgt@^2.1.2, ltgt@^2.2.1:
   version "2.2.1"
 
 luxon@^3.2.1:
-  version "3.3.0"
+  version "3.4.0"
 
 magic-string@^0.25.3:
   version "0.25.9"
@@ -9967,6 +10015,25 @@ make-dir@^3.1.0:
 
 make-error@^1.1.1:
   version "1.3.6"
+
+make-fetch-happen@^11.0.3:
+  version "11.1.1"
+  dependencies:
+    agentkeepalive "^4.2.1"
+    cacache "^17.0.0"
+    http-cache-semantics "^4.1.1"
+    http-proxy-agent "^5.0.0"
+    https-proxy-agent "^5.0.0"
+    is-lambda "^1.0.1"
+    lru-cache "^7.7.1"
+    minipass "^5.0.0"
+    minipass-fetch "^3.0.0"
+    minipass-flush "^1.0.5"
+    minipass-pipeline "^1.2.4"
+    negotiator "^0.6.3"
+    promise-retry "^2.0.1"
+    socks-proxy-agent "^7.0.0"
+    ssri "^10.0.0"
 
 make-fetch-happen@^9.1.0:
   version "9.1.0"
@@ -10416,7 +10483,7 @@ micromark@^3.0.0:
     micromark-util-types "^1.0.1"
     uvu "^0.5.0"
 
-micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
+micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5, micromatch@4.0.5:
   version "4.0.5"
   dependencies:
     braces "^3.0.2"
@@ -10459,6 +10526,11 @@ minimatch@^3.0.4, minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2, "minimat
   dependencies:
     brace-expansion "^1.1.7"
 
+minimatch@^9.0.1:
+  version "9.0.3"
+  dependencies:
+    brace-expansion "^2.0.1"
+
 minimatch@3.0.4:
   version "3.0.4"
   dependencies:
@@ -10493,6 +10565,15 @@ minipass-fetch@^1.3.2:
   optionalDependencies:
     encoding "^0.1.12"
 
+minipass-fetch@^3.0.0:
+  version "3.0.4"
+  dependencies:
+    minipass "^7.0.3"
+    minipass-sized "^1.0.3"
+    minizlib "^2.1.2"
+  optionalDependencies:
+    encoding "^0.1.13"
+
 minipass-flush@^1.0.5:
   version "1.0.5"
   dependencies:
@@ -10513,10 +10594,16 @@ minipass@^3.0.0, minipass@^3.1.0, minipass@^3.1.1, minipass@^3.1.3:
   dependencies:
     yallist "^4.0.0"
 
+"minipass@^5.0.0 || ^6.0.2 || ^7.0.0":
+  version "7.0.3"
+
 minipass@^5.0.0:
   version "5.0.0"
 
-minizlib@^2.0.0, minizlib@^2.1.1:
+minipass@^7.0.3:
+  version "7.0.3"
+
+minizlib@^2.0.0, minizlib@^2.1.1, minizlib@^2.1.2:
   version "2.1.2"
   dependencies:
     minipass "^3.0.0"
@@ -10720,9 +10807,6 @@ multiformats@^9.4.13, multiformats@^9.4.2, multiformats@^9.4.5, multiformats@^9.
 multiformats@^9.4.7:
   version "9.9.0"
 
-multiformats@^9.5.1:
-  version "9.9.0"
-
 multihashes-sync@^1.1.1:
   version "1.1.1"
   dependencies:
@@ -10807,7 +10891,7 @@ near-api-js@^0.44.2:
     text-encoding-utf-8 "^1.0.2"
     tweetnacl "^1.0.1"
 
-negotiator@^0.6.2, negotiator@0.6.3:
+negotiator@^0.6.2, negotiator@^0.6.3, negotiator@0.6.3:
   version "0.6.3"
 
 neo-async@^2.6.0:
@@ -10817,9 +10901,9 @@ netmask@^2.0.2:
   version "2.0.2"
 
 next@^13.1.6, "next@>= 6.0.0":
-  version "13.4.12"
+  version "13.4.19"
   dependencies:
-    "@next/env" "13.4.12"
+    "@next/env" "13.4.19"
     "@swc/helpers" "0.5.1"
     busboy "1.6.0"
     caniuse-lite "^1.0.30001406"
@@ -10828,15 +10912,15 @@ next@^13.1.6, "next@>= 6.0.0":
     watchpack "2.4.0"
     zod "3.21.4"
   optionalDependencies:
-    "@next/swc-darwin-arm64" "13.4.12"
-    "@next/swc-darwin-x64" "13.4.12"
-    "@next/swc-linux-arm64-gnu" "13.4.12"
-    "@next/swc-linux-arm64-musl" "13.4.12"
-    "@next/swc-linux-x64-gnu" "13.4.12"
-    "@next/swc-linux-x64-musl" "13.4.12"
-    "@next/swc-win32-arm64-msvc" "13.4.12"
-    "@next/swc-win32-ia32-msvc" "13.4.12"
-    "@next/swc-win32-x64-msvc" "13.4.12"
+    "@next/swc-darwin-arm64" "13.4.19"
+    "@next/swc-darwin-x64" "13.4.19"
+    "@next/swc-linux-arm64-gnu" "13.4.19"
+    "@next/swc-linux-arm64-musl" "13.4.19"
+    "@next/swc-linux-x64-gnu" "13.4.19"
+    "@next/swc-linux-x64-musl" "13.4.19"
+    "@next/swc-win32-arm64-msvc" "13.4.19"
+    "@next/swc-win32-ia32-msvc" "13.4.19"
+    "@next/swc-win32-x64-msvc" "13.4.19"
 
 nextjs-progressbar@^0.0.16:
   version "0.0.16"
@@ -10891,7 +10975,7 @@ node-environment-flags@1.0.6:
     semver "^5.7.0"
 
 node-fetch@*, node-fetch@^2.6.1, node-fetch@^2.6.12, node-fetch@^2.6.7, node-fetch@^2.6.8:
-  version "2.6.12"
+  version "2.6.13"
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -10923,7 +11007,7 @@ node-gyp@8.x:
     tar "^6.1.2"
     which "^2.0.2"
 
-node-releases@^2.0.12:
+node-releases@^2.0.13:
   version "2.0.13"
 
 nofilter@^3.1.0:
@@ -10933,6 +11017,11 @@ nopt@^5.0.0:
   version "5.0.0"
   dependencies:
     abbrev "1"
+
+nopt@^6.0.0:
+  version "6.0.0"
+  dependencies:
+    abbrev "^1.0.0"
 
 nopt@3.x:
   version "3.0.6"
@@ -11108,12 +11197,7 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0, once@1.x:
   dependencies:
     wrappy "1"
 
-onetime@^5.1.0:
-  version "5.1.2"
-  dependencies:
-    mimic-fn "^2.1.0"
-
-onetime@^5.1.2:
+onetime@^5.1.0, onetime@^5.1.2:
   version "5.1.2"
   dependencies:
     mimic-fn "^2.1.0"
@@ -11122,14 +11206,6 @@ onetime@^6.0.0:
   version "6.0.0"
   dependencies:
     mimic-fn "^4.0.0"
-
-open@^9.1.0:
-  version "9.1.0"
-  dependencies:
-    default-browser "^4.0.0"
-    define-lazy-prop "^3.0.0"
-    is-inside-container "^1.0.0"
-    is-wsl "^2.2.0"
 
 opencollective-postinstall@^2.0.0:
   version "2.0.3"
@@ -11368,6 +11444,12 @@ path-key@^4.0.0:
 path-parse@^1.0.6, path-parse@^1.0.7:
   version "1.0.7"
 
+path-scurry@^1.10.1:
+  version "1.10.1"
+  dependencies:
+    lru-cache "^9.1.1 || ^10.0.0"
+    minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
+
 path-to-regexp@0.1.7:
   version "0.1.7"
 
@@ -11435,7 +11517,10 @@ pg-boss@^8.2.0:
 pg-cloudflare@^1.1.1:
   version "1.1.1"
 
-pg-connection-string@^2.6.1, pg-connection-string@2.6.1:
+pg-connection-string@^2.6.2:
+  version "2.6.2"
+
+pg-connection-string@2.6.1:
   version "2.6.1"
 
 pg-int8@1.0.1:
@@ -11457,11 +11542,11 @@ pg-types@^2.1.0:
     postgres-interval "^1.1.0"
 
 pg@^8.5.1, pg@^8.7.3, pg@>=8.0:
-  version "8.11.1"
+  version "8.11.3"
   dependencies:
     buffer-writer "2.0.0"
     packet-reader "1.0.0"
-    pg-connection-string "^2.6.1"
+    pg-connection-string "^2.6.2"
     pg-pool "^3.6.1"
     pg-protocol "^1.6.0"
     pg-types "^2.1.0"
@@ -11480,7 +11565,7 @@ picocolors@^1.0.0, picocolors@1.0.0:
 picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.3.1:
   version "2.3.1"
 
-pidtree@^0.6.0:
+pidtree@0.6.0:
   version "0.6.0"
 
 pify@^2.3.0:
@@ -11613,8 +11698,8 @@ postcss-selector-parser@^6.0.11, postcss-selector-parser@^6.0.2, postcss-selecto
 postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
   version "4.2.0"
 
-postcss@^8.0.0, postcss@^8.1.0, postcss@^8.1.6, postcss@^8.2.14, postcss@^8.2.15, postcss@^8.4.16, postcss@^8.4.19, postcss@^8.4.21, postcss@^8.4.23, postcss@^8.4.26, postcss@>=8.0.9:
-  version "8.4.27"
+postcss@^8.0.0, postcss@^8.1.0, postcss@^8.1.6, postcss@^8.2.14, postcss@^8.2.15, postcss@^8.4.16, postcss@^8.4.19, postcss@^8.4.21, postcss@^8.4.23, postcss@^8.4.27, postcss@>=8.0.9:
+  version "8.4.28"
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
@@ -11642,7 +11727,7 @@ postgres-interval@^1.1.0:
     xtend "^4.0.0"
 
 preact@^10.5.9:
-  version "10.16.0"
+  version "10.17.1"
 
 preact@10.4.1:
   version "10.4.1"
@@ -11709,7 +11794,7 @@ property-information@^6.0.0:
   version "6.2.0"
 
 protobufjs@^6.10.2, protobufjs@^6.11.2:
-  version "6.11.3"
+  version "6.11.4"
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
@@ -11742,7 +11827,7 @@ protobufjs@^7.0.0:
     long "^5.0.0"
 
 protons-runtime@^5.0.0:
-  version "5.0.1"
+  version "5.0.2"
   dependencies:
     protobufjs "^7.0.0"
     uint8arraylist "^2.4.3"
@@ -11812,9 +11897,9 @@ punycode@1.3.2:
   version "1.3.2"
 
 pvtsutils@^1.3.2:
-  version "1.3.2"
+  version "1.3.5"
   dependencies:
-    tslib "^2.4.0"
+    tslib "^2.6.1"
 
 pvutils@^1.1.3:
   version "1.1.3"
@@ -12188,6 +12273,16 @@ reduce-flatten@^2.0.0:
 reflect-metadata@^0.1.13:
   version "0.1.13"
 
+reflect.getprototypeof@^1.0.3:
+  version "1.0.3"
+  dependencies:
+    call-bind "^1.0.2"
+    define-properties "^1.1.4"
+    es-abstract "^1.20.4"
+    get-intrinsic "^1.1.1"
+    globalthis "^1.0.3"
+    which-builtin-type "^1.1.3"
+
 regenerate-unicode-properties@^10.1.0:
   version "10.1.0"
   dependencies:
@@ -12196,11 +12291,14 @@ regenerate-unicode-properties@^10.1.0:
 regenerate@^1.4.2:
   version "1.4.2"
 
-regenerator-runtime@^0.13.11, regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
+regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
   version "0.13.11"
 
-regenerator-transform@^0.15.1:
-  version "0.15.1"
+regenerator-runtime@^0.14.0:
+  version "0.14.0"
+
+regenerator-transform@^0.15.2:
+  version "0.15.2"
   dependencies:
     "@babel/runtime" "^7.8.4"
 
@@ -12330,17 +12428,10 @@ resolve-from@^5.0.0:
 resolve-pkg-maps@^1.0.0:
   version "1.0.0"
 
-resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0, resolve@^1.22.1, resolve@^1.22.2:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.14.2, resolve@^1.20.0, resolve@^1.22.2, resolve@^1.22.4:
   version "1.22.2"
   dependencies:
     is-core-module "^2.11.0"
-    path-parse "^1.0.7"
-    supports-preserve-symlinks-flag "^1.0.0"
-
-resolve@^1.22.3:
-  version "1.22.3"
-  dependencies:
-    is-core-module "^2.12.0"
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
@@ -12366,6 +12457,12 @@ responselike@^2.0.0:
 
 restore-cursor@^3.1.0:
   version "3.1.0"
+  dependencies:
+    onetime "^5.1.0"
+    signal-exit "^3.0.2"
+
+restore-cursor@^4.0.0:
+  version "4.0.0"
   dependencies:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
@@ -12429,8 +12526,8 @@ rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^3.25.2:
-  version "3.27.0"
+rollup@^3.27.1:
+  version "3.28.0"
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -12443,7 +12540,7 @@ rpc-utils@^0.6.1, rpc-utils@^0.6.2:
     nanoid "^3.3.1"
 
 rpc-websockets@^7.5.1:
-  version "7.5.1"
+  version "7.6.0"
   dependencies:
     "@babel/runtime" "^7.17.2"
     eventemitter3 "^4.0.7"
@@ -12452,11 +12549,6 @@ rpc-websockets@^7.5.1:
   optionalDependencies:
     bufferutil "^4.0.1"
     utf-8-validate "^5.0.2"
-
-run-applescript@^5.0.0:
-  version "5.0.0"
-  dependencies:
-    execa "^5.0.0"
 
 run-async@^2.4.0:
   version "2.4.1"
@@ -12479,7 +12571,7 @@ rxjs@^6.6.3:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.5.2, rxjs@^7.5.5, rxjs@^7.8.0:
+rxjs@^7.5.2, rxjs@^7.5.5:
   version "7.8.1"
   dependencies:
     tslib "^2.1.0"
@@ -12723,6 +12815,9 @@ side-channel@^1.0.4:
 signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
 
+signal-exit@^4.0.1:
+  version "4.1.0"
+
 simple-swizzle@^0.2.2:
   version "0.2.2"
   dependencies:
@@ -12734,28 +12829,12 @@ slash@^2.0.0:
 slash@^3.0.0:
   version "3.0.0"
 
-slash@^4.0.0:
-  version "4.0.0"
-
-slice-ansi@^3.0.0:
-  version "3.0.0"
-  dependencies:
-    ansi-styles "^4.0.0"
-    astral-regex "^2.0.0"
-    is-fullwidth-code-point "^3.0.0"
-
-slice-ansi@^4.0.0:
+slice-ansi@^4.0.0, slice-ansi@^5.0.0:
   version "4.0.0"
   dependencies:
     ansi-styles "^4.0.0"
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
-
-slice-ansi@^5.0.0:
-  version "5.0.0"
-  dependencies:
-    ansi-styles "^6.0.0"
-    is-fullwidth-code-point "^4.0.0"
 
 smart-buffer@^4.2.0:
   version "4.2.0"
@@ -12775,6 +12854,13 @@ socks-proxy-agent@^5.0.0, socks-proxy-agent@5:
 
 socks-proxy-agent@^6.0.0:
   version "6.2.1"
+  dependencies:
+    agent-base "^6.0.2"
+    debug "^4.3.3"
+    socks "^2.6.2"
+
+socks-proxy-agent@^7.0.0:
+  version "7.0.0"
   dependencies:
     agent-base "^6.0.2"
     debug "^4.3.3"
@@ -12930,6 +13016,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssri@^10.0.0:
+  version "10.0.5"
+  dependencies:
+    minipass "^7.0.3"
+
 ssri@^8.0.0:
   version "8.0.1"
   dependencies:
@@ -13004,7 +13095,7 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-string-argv@^0.3.1:
+string-argv@0.3.2:
   version "0.3.2"
 
 string-format@^2.0.0:
@@ -13012,6 +13103,13 @@ string-format@^2.0.0:
 
 string-hash@^1.1.1:
   version "1.1.3"
+
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
 
 "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
@@ -13040,6 +13138,13 @@ string-width@^3.0.0, string-width@^3.1.0:
     strip-ansi "^5.1.0"
 
 string-width@^5.0.0:
+  version "5.1.2"
+  dependencies:
+    eastasianwidth "^0.2.0"
+    emoji-regex "^9.2.2"
+    strip-ansi "^7.0.1"
+
+string-width@^5.1.2:
   version "5.1.2"
   dependencies:
     eastasianwidth "^0.2.0"
@@ -13084,6 +13189,11 @@ stringify-entities@^4.0.0:
   dependencies:
     character-entities-html4 "^2.0.0"
     character-entities-legacy "^3.0.0"
+
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-ansi@^4.0.0:
   version "4.0.0"
@@ -13131,12 +13241,12 @@ strip-json-comments@2.0.1:
   version "2.0.1"
 
 style-to-object@^0.4.1:
-  version "0.4.1"
+  version "0.4.2"
   dependencies:
     inline-style-parser "0.1.1"
 
 styled-components@^6.0.0-rc.3:
-  version "6.0.5"
+  version "6.0.7"
   dependencies:
     "@babel/cli" "^7.21.0"
     "@babel/core" "^7.21.0"
@@ -13222,12 +13332,6 @@ sync-rpc@^1.2.1:
   version "1.3.6"
   dependencies:
     get-port "^3.1.0"
-
-synckit@^0.8.5:
-  version "0.8.5"
-  dependencies:
-    "@pkgr/utils" "^2.3.1"
-    tslib "^2.5.0"
 
 table-layout@^1.0.2:
   version "1.0.2"
@@ -13355,7 +13459,7 @@ thread-stream@^0.15.1:
 throttled-queue@^2.1.2, throttled-queue@^2.1.4:
   version "2.1.4"
 
-through@^2.3.6, through@^2.3.8, "through@>=2.2.7 <3", through@2, through@2.3.x:
+through@^2.3.6, "through@>=2.2.7 <3", through@2, through@2.3.x:
   version "2.3.8"
 
 through2@^2.0.3:
@@ -13400,9 +13504,6 @@ tiny-secp256k1@^1.1.3:
 
 tiny-warning@^1.0.3:
   version "1.0.3"
-
-titleize@^3.0.0:
-  version "3.0.0"
 
 tmp-promise@^3.0.3:
   version "3.0.3"
@@ -13544,8 +13645,8 @@ tslib@^1.9.0:
 tslib@^1.9.3:
   version "1.14.1"
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.6.0:
-  version "2.6.1"
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.6.1:
+  version "2.6.2"
 
 tslib@1.14.1:
   version "1.14.1"
@@ -13611,6 +13712,9 @@ type-fest@^0.8.0:
 
 type-fest@^0.8.1:
   version "0.8.1"
+
+type-fest@^1.0.2:
+  version "1.4.0"
 
 type-fest@^3.8.0:
   version "3.13.1"
@@ -13706,7 +13810,13 @@ ufo@^1.1.2:
 uglify-js@^3.1.4:
   version "3.17.4"
 
-uint8arraylist@^2.1.2, uint8arraylist@^2.4.3:
+uint8-varint@^2.0.1:
+  version "2.0.1"
+  dependencies:
+    uint8arraylist "^2.0.0"
+    uint8arrays "^4.0.2"
+
+uint8arraylist@^2.0.0, uint8arraylist@^2.1.2, uint8arraylist@^2.4.3:
   version "2.4.3"
   dependencies:
     uint8arrays "^4.0.2"
@@ -13722,9 +13832,9 @@ uint8arrays@^3.0.0:
     multiformats "^9.4.2"
 
 uint8arrays@^4.0.2, uint8arrays@^4.0.3:
-  version "4.0.4"
+  version "4.0.6"
   dependencies:
-    multiformats "^11.0.0"
+    multiformats "^12.0.1"
 
 uint8arrays@3.1.0:
   version "3.1.0"
@@ -13775,8 +13885,18 @@ unique-filename@^1.1.1:
   dependencies:
     unique-slug "^2.0.0"
 
+unique-filename@^3.0.0:
+  version "3.0.0"
+  dependencies:
+    unique-slug "^4.0.0"
+
 unique-slug@^2.0.0:
   version "2.0.2"
+  dependencies:
+    imurmurhash "^0.1.4"
+
+unique-slug@^4.0.0:
+  version "4.0.0"
   dependencies:
     imurmurhash "^0.1.4"
 
@@ -13835,9 +13955,6 @@ universalify@^2.0.0:
 
 unpipe@~1.0.0, unpipe@1.0.0:
   version "1.0.0"
-
-untildify@^4.0.0:
-  version "4.0.0"
 
 unzip-stream@^0.3.0:
   version "0.3.1"
@@ -13966,7 +14083,7 @@ varint@^6.0.0:
   version "6.0.0"
 
 varintes@^2.0.4:
-  version "2.0.4"
+  version "2.0.5"
 
 varuint-bitcoin@^1.1.2:
   version "1.1.2"
@@ -14024,11 +14141,11 @@ vite-node@^0.28.5:
     vite "^3.0.0 || ^4.0.0"
 
 "vite@^3.0.0 || ^4.0.0", vite@^4.1.4:
-  version "4.4.7"
+  version "4.4.9"
   dependencies:
     esbuild "^0.18.10"
-    postcss "^8.4.26"
-    rollup "^3.25.2"
+    postcss "^8.4.27"
+    rollup "^3.27.1"
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -14154,10 +14271,34 @@ which-boxed-primitive@^1.0.2:
     is-string "^1.0.5"
     is-symbol "^1.0.3"
 
+which-builtin-type@^1.1.3:
+  version "1.1.3"
+  dependencies:
+    function.prototype.name "^1.1.5"
+    has-tostringtag "^1.0.0"
+    is-async-function "^2.0.0"
+    is-date-object "^1.0.5"
+    is-finalizationregistry "^1.0.2"
+    is-generator-function "^1.0.10"
+    is-regex "^1.1.4"
+    is-weakref "^1.0.2"
+    isarray "^2.0.5"
+    which-boxed-primitive "^1.0.2"
+    which-collection "^1.0.1"
+    which-typed-array "^1.1.9"
+
+which-collection@^1.0.1:
+  version "1.0.1"
+  dependencies:
+    is-map "^2.0.1"
+    is-set "^2.0.1"
+    is-weakmap "^2.0.1"
+    is-weakset "^2.0.1"
+
 which-module@^2.0.0:
   version "2.0.1"
 
-which-typed-array@^1.1.10, which-typed-array@^1.1.11, which-typed-array@^1.1.2:
+which-typed-array@^1.1.10, which-typed-array@^1.1.11, which-typed-array@^1.1.2, which-typed-array@^1.1.9:
   version "1.1.11"
   dependencies:
     available-typed-arrays "^1.0.5"
@@ -14211,12 +14352,26 @@ wordwrapjs@^4.0.0:
 workerpool@6.2.1:
   version "6.2.1"
 
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+  version "7.0.0"
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
 wrap-ansi@^5.1.0:
   version "5.1.0"
   dependencies:
     ansi-styles "^3.2.0"
     string-width "^3.0.0"
     strip-ansi "^5.0.0"
+
+wrap-ansi@^6.0.1:
+  version "6.2.0"
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
 
 wrap-ansi@^6.2.0:
   version "6.2.0"
@@ -14225,7 +14380,7 @@ wrap-ansi@^6.2.0:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
 
-wrap-ansi@^7.0.0:
+wrap-ansi@^7.0.0, wrap-ansi@^8.0.1, wrap-ansi@^8.1.0:
   version "7.0.0"
   dependencies:
     ansi-styles "^4.0.0"
@@ -14309,7 +14464,7 @@ yallist@^3.0.2:
 yallist@^4.0.0:
   version "4.0.0"
 
-yaml@^2.1.1, yaml@^2.2.2:
+yaml@^2.1.1, yaml@2.3.1:
   version "2.3.1"
 
 yargs-parser@^13.1.2, yargs-parser@13.1.2:
@@ -14401,7 +14556,7 @@ zod@>=3.19.1, zod@3.21.4:
   version "3.21.4"
 
 zustand@^4.1.2, zustand@^4.3.1:
-  version "4.3.9"
+  version "4.4.1"
   dependencies:
     use-sync-external-store "1.2.0"
 

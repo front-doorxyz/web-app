@@ -319,7 +319,6 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
   function getAllJobsOfCompany(uint256 startId, address companyWallet) external view returns (FrontDoorStructs.Job[] memory jobArray) {
     require(startId <= jobIdCounter, "Invalid startId");
-    
     uint256 jobCount = 0;
     for (uint256 i = startId; i < jobIdCounter; i++) {
         if (jobList[i].creator == companyWallet && !jobList[i].isRemoved) {
