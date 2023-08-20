@@ -1,4 +1,6 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-toolbox";
+import "@nomiclabs/hardhat-ethers";
 import * as dotenv from "dotenv";
 import "hardhat-deploy";
 import { HardhatUserConfig } from "hardhat/config";
@@ -14,9 +16,17 @@ const deployerPrivateKey =
 // If not set, it uses ours Etherscan default API key.
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
-const config:HardhatUserConfig = {
-  solidity: "0.8.17",
-  defaultNetwork: "linea",
+const config: HardhatUserConfig = {
+  solidity:{
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
+  defaultNetwork: "hardhat",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -80,7 +90,6 @@ const config:HardhatUserConfig = {
       apiKey: `${etherscanApiKey}`,
     },
   },
-  
 };
 
 export default config;
