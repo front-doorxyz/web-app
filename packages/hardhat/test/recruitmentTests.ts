@@ -1,3 +1,4 @@
+import { getReferrer } from "./../../nextjs/services/APIs/smartContract";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
@@ -97,10 +98,11 @@ describe("Recruitment", () => {
   });
   describe("Register Referrer", () => {
     it("Register referrer", async () => {
-      const { dummyToken, recruitment, owner, company, referrer, referree } = await loadFixture(fixture);
-      await recruitment.connect(referrer).registerReferrer("john.doe@mail.com");
-      
-      
+      const { recruitment, referrer } = await loadFixture(fixture);
+      const email: string = "john.doe@mail.com";
+      await recruitment.connect(referrer).registerReferrer(email);
+      const referrerData = await recruitment.getReferrer(referrer.address);
+      expect(referrerData.email).to.equal(email);
     });
   });
 });
