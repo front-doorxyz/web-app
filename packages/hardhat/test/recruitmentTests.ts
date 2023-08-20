@@ -95,4 +95,12 @@ describe("Recruitment", () => {
       expect(jobs.length).to.equal(0);
     });
   });
+  describe("Register Referrer", () => {
+    it("Register referrer", async () => {
+      const { dummyToken, recruitment, owner, company, referrer, referree } = await loadFixture(fixture);
+      await recruitment.connect(referrer).registerReferrer("john.doe@mail.com");
+      
+      
+    });
+  });
 });
