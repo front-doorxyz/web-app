@@ -245,10 +245,9 @@ export const registerReferrer = async(email:string) =>{
   }
 
 
-  export const getAllJobsOfCompany = async(jobStartId:number,companyAddress:Address) =>{
+  export const getAllJobsOfCompany = async(companyAddress:Address) =>{
     try{
-        console.log(jobStartId,companyAddress)
-        const tx = await deployedContract.getAllJobsOfCompany(jobStartId,companyAddress);
+        const tx = await deployedContract.getAllJobsOfCompany(companyAddress);
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         return tx?.data ? tx?.data : null;

@@ -365,7 +365,7 @@ const contracts = {
           ],
         },
         Recruitment: {
-          address: "0x2b8913aCCf8AC4008DE75C440fA499281C4102f1",
+          address: "0x0219F6096605C5282f794a1D802aaE10e1A97B90",
           abi: [
             {
               inputs: [
@@ -691,11 +691,6 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "uint256",
-                  name: "startId",
-                  type: "uint256",
-                },
-                {
                   internalType: "address",
                   name: "companyWallet",
                   type: "address",
@@ -742,7 +737,7 @@ const contracts = {
                     },
                   ],
                   internalType: "struct FrontDoorStructs.Job[]",
-                  name: "jobArray",
+                  name: "",
                   type: "tuple[]",
                 },
               ],

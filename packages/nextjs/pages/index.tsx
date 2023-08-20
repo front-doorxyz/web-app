@@ -27,7 +27,7 @@ const AllJobs: NextPage = () => {
 
   useEffect(() => {
     if (address) {
-      getAllJobsOfCompany(0, address);
+      getAllJobsOfCompany(address);
     }
   }, [address]);
 
