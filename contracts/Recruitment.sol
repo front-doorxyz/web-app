@@ -319,18 +319,32 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     return companyScores[companyAddress];
   }
 
-  function getAllJobsOfCompany(uint256 startId, address companyWallet) external view returns (FrontDoorStructs.Job[] memory) {
-    if (startId > jobIdCounter) revert Errors.JobListingLimitExceed();
+function getAllJobsOfCompany(address companyWallet) external view returns (FrontDoorStructs.Job[] memory) {
     uint256 jobsFetched = 0;
-    FrontDoorStructs.Job[] memory jobArray;
-    for (uint i=startId; i < jobIdCounter; i++) {
-      if (jobList[i].creator == companyWallet) {
-        if (jobList[i].isRemoved == false) {
-          jobArray[jobsFetched] = jobList[i];
-          jobsFetched++;
+
+    // Count the number of jobs for the company
+    for (uint256 i = 1; i < jobIdCounter; i++) {
+        if (jobList[i].creator == companyWallet && !jobList[i].isRemoved) {
+            jobsFetched++;
         }
-      }
     }
+
+    // Initialize the memory array
+    FrontDoorStructs.Job[] memory jobArray = new FrontDoorStructs.Job[](jobsFetched);
+    uint256 index = 0;
+
+    // Populate the memory array with jobs
+    for (uint256 i = 1; i < jobIdCounter; i++) {
+        if (jobList[i].creator == companyWallet && !jobList[i].isRemoved) {
+            FrontDoorStructs.Job storage currentJob = jobList[i];
+            jobArray[index] = currentJob;
+            index++;
+        }
+    }
+
     return jobArray;
-  }
+}
+
+
+
  }  
