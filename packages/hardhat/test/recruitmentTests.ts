@@ -83,7 +83,7 @@ describe("Recruitment", () => {
       await jobId2.wait();
       const companyBal2 = await recruitment.companyaccountBalances(company.address);
       expect(ethers.utils.parseEther("300")).to.equal(companyBal2);
-      const jobs = await recruitment.getAllJobsOfCompany(0, company.address);
+      const jobs = await recruitment.getAllJobsOfCompany(company.address);
       console.log(jobs);
     });
   });
