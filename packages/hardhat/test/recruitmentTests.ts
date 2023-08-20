@@ -66,7 +66,7 @@ describe("Recruitment", () => {
       const companyBal = await recruitment.companyaccountBalances(company.address);
       expect(bounty).to.equal(companyBal);
     });
-    it("Retrieve all jobs from company", async () => {
+    it("Retrieve all jobs from company, should retreive 2 jobs", async () => {
       const { dummyToken, recruitment, company } = await loadFixture(fixture);
       await recruitment.connect(company).registerCompany();
       const companyStruct = await recruitment.companyList(company.address);
@@ -84,7 +84,15 @@ describe("Recruitment", () => {
       const companyBal2 = await recruitment.companyaccountBalances(company.address);
       expect(ethers.utils.parseEther("300")).to.equal(companyBal2);
       const jobs = await recruitment.getAllJobsOfCompany(company.address);
-      console.log(jobs);
+      expect(jobs.length).to.equal(2);
+    });
+    it("Retrieve all jobs when no job is created", async () => {
+      const { recruitment, company } = await loadFixture(fixture);
+      await recruitment.connect(company).registerCompany();
+      const companyStruct = await recruitment.companyList(company.address);
+      expect(company.address).to.equal(companyStruct.wallet);
+      const jobs = await recruitment.getAllJobsOfCompany(company.address);
+      expect(jobs.length).to.equal(0);
     });
   });
 });
