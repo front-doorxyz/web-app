@@ -104,5 +104,37 @@ describe("Recruitment", () => {
       const referrerData = await recruitment.getReferrer(referrer.address);
       expect(referrerData.email).to.equal(email);
     });
+    it("Register referrer with same email", async () => {
+      const { recruitment, referrer,referree } = await loadFixture(fixture);
+      const email: string = "john.doe@mail.com";
+      await recruitment.connect(referrer).registerReferrer(email);
+      const referrerData = await recruitment.getReferrer(referrer.address);
+      expect(referrerData.email).to.equal(email);
+      await recruitment.connect(referree).registerReferrer(email);
+      const referreeData = await recruitment.getReferrer(referree.address);
+      console.log(referreeData);
+    });
+  });
+  describe("Register Referral", () => {
+    it("Register referral", async () => {
+      const { dummyToken, recruitment, company, referrer } = await loadFixture(fixture);
+      await recruitment.connect(company).registerCompany();
+      const companyStruct = await recruitment.companyList(company.address);
+      expect(company.address).to.equal(companyStruct.wallet);
+      const bounty = ethers.utils.parseEther("750");
+      await dummyToken.connect(company).approve(recruitment.address, bounty);
+      const jobId = await recruitment.connect(company).registerJob(bounty);
+      await jobId.wait();
+      const email: string = "john.doe@mail.com";
+      await recruitment.connect(referrer).registerReferrer(email);
+      const referrerData = await recruitment.getReferrer(referrer.address);
+      expect(referrerData.email).to.equal(email);
+      const emailReferral: string = "referralemail@mail.com";
+      await recruitment.connect(referrer).registerReferral(1, emailReferral);
+      const jobs = await recruitment.getAllJobsOfCompany(company.address);
+      console.log(jobs);
+
+    });
+
   });
 });
