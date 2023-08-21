@@ -1,24 +1,34 @@
 import React, { useContext, useState } from "react";
+import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { GeneralContext } from "~~/providers/GeneralContext";
+import { checkReferrerRegistration } from "~~/services/APIs/database";
 import { registerReferral } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
 type Props = {
   jobId: string;
   setReferModal: (value: boolean) => void;
+  address: string;
 };
 
-const ReferModal = ({ setReferModal, jobId }: Props) => {
+const ReferModal = ({ setReferModal, jobId, address }: Props) => {
   const { referrer } = useContext(GeneralContext);
   const [refereeMail, setRefereeMail] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const registerReferralSC = async () => {
-    if (!referrer) {
-      notification.error("Please register as a referrer");
-
+    let referrerExists;
+    try {
+      referrerExists = await checkReferrerRegistration(address);
+    } catch (e) {
+      referrerExists = false;
+    }
+    if (!referrerExists) {
+      notification.warning("Register as a referrer");
+      router.push("/register");
       return;
     }
     setLoading(true);

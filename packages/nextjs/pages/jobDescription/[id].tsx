@@ -144,7 +144,7 @@ const Description = () => {
           <div className="h-[60vh]">
             <TextEditor readOnly={true} initialValue={jobInfo.description} title={"Job Details"} />
           </div>
-          {referModal && <ReferModal jobId={jobId} setReferModal={() => setReferModal(false)} />}
+          {referModal && <ReferModal jobId={jobId} setReferModal={() => setReferModal(false)} address={address} />}
         </div>
       ) : (
         "Job info loading"
