@@ -140,9 +140,15 @@ describe("Recruitment", () => {
       const bounty = ethers.utils.parseEther("100");
       await dummyToken.connect(company).approve(recruitment.address, bounty);
       const jobId = await recruitment.connect(company).registerJob(bounty);
-      console.log("transaction: ", jobId);
+      // console.log("transaction: ", jobId);
       const receipt = await jobId.wait();
-      console.log("receipt: ", receipt.events);
+      // console.log("receipt: ", receipt.events);
+
+      const [jobEvent] = receipt.events.filter((el: any) => {
+        return el.event == "JobCreated";
+      });
+      const [address, newjobid] = jobEvent.args;
+      console.log("jobevent: ", newjobid.toNumber());
 
       const email: string = "john.doe@mail.com";
       await recruitment.connect(referrer).registerReferrer(email);
