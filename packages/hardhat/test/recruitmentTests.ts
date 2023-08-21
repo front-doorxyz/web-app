@@ -8,7 +8,7 @@ import { ethers } from "hardhat";
 
 describe("Recruitment", () => {
   const fixture = async () => {
-    const [owner, company, referrer, referree] = await ethers.getSigners();
+    const [owner, company, referrer, referree, frontDoorWallet] = await ethers.getSigners();
     const DummyToken: ContractFactory = await ethers.getContractFactory("FrontDoorToken");
     const dummyToken: Contract = await DummyToken.deploy();
     await dummyToken.deployed();
@@ -17,7 +17,7 @@ describe("Recruitment", () => {
     await dummyToken.transfer(referrer.getAddress(), tkns);
     await dummyToken.transfer(referree.getAddress(), tkns);
     const Recruitment: ContractFactory = await ethers.getContractFactory("Recruitment");
-    const recruitment: Contract = await Recruitment.deploy(dummyToken.address);
+    const recruitment: Contract = await Recruitment.deploy(dummyToken.address, frontDoorWallet.address);
     await recruitment.deployed();
     return { dummyToken, recruitment, owner, company, referrer, referree };
   };
@@ -137,7 +137,7 @@ describe("Recruitment", () => {
       await recruitment.connect(company).registerCompany();
       const companyStruct = await recruitment.companyList(company.address);
       expect(company.address).to.equal(companyStruct.wallet);
-      const bounty = ethers.utils.parseEther("750");
+      const bounty = ethers.utils.parseEther("100");
       await dummyToken.connect(company).approve(recruitment.address, bounty);
       const jobId = await recruitment.connect(company).registerJob(bounty);
       await jobId.wait();
@@ -155,6 +155,9 @@ describe("Recruitment", () => {
       const hire = await recruitment.connect(company).hireCandidate(referree.address, 1);
       await hire.wait();
       console.log(await recruitment.candidateStatus(referree.address));
+      console.log(await recruitment.getAllJobsOfCompany(company.address));
+      await recruitment.connect(company).diburseBounty(1);
+
     });
   });
 });

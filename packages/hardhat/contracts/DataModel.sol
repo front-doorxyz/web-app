@@ -11,6 +11,7 @@ library FrontDoorStructs {
         uint256 timeOfHiring; // time at which candidate is hired
         bool isHired;
         bool jobConfirmed; // bool if candidate confirms the job
+        address referrer; // address of the referrer
     }
 
      struct Referrer{

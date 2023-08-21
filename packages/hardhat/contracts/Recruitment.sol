@@ -29,6 +29,8 @@ contract Recruitment is Ownable, ReentrancyGuard {
   mapping(address => bool) public isCompany; // check if company is registered or not
 
   mapping(uint256 => FrontDoorStructs.Candidate[]) public candidateListForJob; // list of candidates for a job
+  mapping (uint256 => FrontDoorStructs.Candidate) public jobCandidatehire;
+
 
   address acceptedTokenAddress;
 
@@ -45,10 +47,11 @@ contract Recruitment is Ownable, ReentrancyGuard {
   uint256 private jobIdCounter = 1;
   uint256 private referralCounter = 1;
 
-
+  address frontDoorAddress;
   // Constructor
-  constructor(address _acceptedTokenAddress) {
+  constructor(address _acceptedTokenAddress, address _frontDoorAddress) {
     acceptedTokenAddress = _acceptedTokenAddress;
+    frontDoorAddress = _frontDoorAddress;
   }
 
   /**
@@ -138,6 +141,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
     FrontDoorStructs.Job memory job = jobList[jobId];
 
     candidate.email = refereeMail;
+    candidate.referrer = msg.sender;
 
     FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(
       referralCounter,
@@ -170,6 +174,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
     referralList[_referralCounter].isConfirmed = true;
     referralList[_referralCounter].candidate.wallet = msg.sender;
     candidateList[msg.sender] =  referralList[_referralCounter].candidate;
+
     emit Event.ReferralConfirmed(msg.sender, _referralCounter, _jobId); // emit event
 
     // push into a mapping jobsid => candidates
@@ -195,7 +200,8 @@ contract Recruitment is Ownable, ReentrancyGuard {
     candidateList[_candidateAddress].isHired = true;
     candidateList[_candidateAddress].timeOfHiring = block.timestamp;
     jobList[_jobId].numberOfCandidateHired += 1;
-
+    jobList[_jobId].issucceed = true;
+    jobCandidatehire[_jobId] = candidateList[_candidateAddress];
     // if ((companyaccountBalances[msg.sender]) >= (jobList[_jobId].bounty * jobList[_jobId].numberOfCandidateHired)) {
     //   revert Errors.NotEnoughFundDepositedByCompany();
     // }
@@ -258,6 +264,31 @@ contract Recruitment is Ownable, ReentrancyGuard {
     return candidateList[_candidateAddress].isHired;
   }
 
+
+  function diburseBounty(uint256 _jobId) external checkIfItisACompany(msg.sender){
+    require(jobList[_jobId].issucceed == true, "Job is not succeed yet");
+    require(jobList[_jobId].numberOfCandidateHired > 0, "No candidate is hired yet");
+    //require(jobList[_jobId].timeAtWhichJobCreated + 90 days < block.timestamp, "90 days are not completed yet");
+    require(jobList[_jobId].creator == msg.sender, "Only job creator can diburse");
+    uint256 bounty = jobList[_jobId].bounty;
+
+    console.log(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000);
+    console.log(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000);
+    console.log(frontDoorAddress, bounty * 2500 / 10_000);
+
+    
+    ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
+    ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
+    ERC20(acceptedTokenAddress).approve(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
+    ERC20(acceptedTokenAddress).transfer(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
+    ERC20(acceptedTokenAddress).transfer(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
+    ERC20(acceptedTokenAddress).transfer(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
+    
+    
+    
+  
+
+  }
   event PercentagesCompleted(
     address indexed sender,
     uint8 month1RefundPct,

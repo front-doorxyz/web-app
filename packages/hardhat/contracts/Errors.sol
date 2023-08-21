@@ -13,4 +13,5 @@ library Errors {
     error CandidateNotHiredByCompany();
     error SameCandidateCannotBeReferredTwice();
     error NotEnoughFundDepositedByCompany();
+    error InvalidMonth();
 }
