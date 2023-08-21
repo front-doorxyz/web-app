@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
+import { isValidURL } from "~~/helpers";
 import { GeneralContext } from "~~/providers/GeneralContext";
 import { registerCompany } from "~~/services/APIs/database";
 import { registerCompany as registerCompanySC } from "~~/services/APIs/smartContract";
@@ -40,15 +41,6 @@ const CompanyRegister = () => {
       setRegistered(true);
       notification.success("registration successfull");
       router.push("/client");
-    }
-  };
-
-  const isValidURL = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      return false;
     }
   };
 

@@ -4,6 +4,7 @@ import Chip from "../../components/Chip";
 import { readCompanyById, readJobListingById } from "../../services/APIs/database";
 import { Address, useAccount } from "wagmi";
 import { MapPinIcon } from "@heroicons/react/24/outline";
+import ReferModal from "~~/components/ReferModal";
 import StarRating from "~~/components/StarRating";
 import TextEditor from "~~/components/TextEditor";
 import { truncateDescription } from "~~/helpers";
@@ -11,26 +12,30 @@ import { GeneralContext } from "~~/providers/GeneralContext";
 
 const Description = () => {
   const { deleteJob, registerReferral, email, setEmail, id, setId } = useContext(GeneralContext);
+  const [jobId, setJobId] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
   const [jobInfo, setJobInfo] = useState<any>({});
   const [companyInfo, setCompanyInfo] = useState<any>({});
   const { address } = useAccount();
+  const [referModal, setReferModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     if (jobInfo?.description && companyInfo?.companyName) {
       setLoading(false);
     }
-  }, [jobInfo]);
+  }, [jobInfo, companyInfo]);
 
   useEffect(() => {
     const { id } = router.query;
     console.log(id);
+    setJobId(id);
     setId(id);
 
     readJobListingById(id)
       .then(jobListing => {
         setJobInfo(jobListing);
+        getCompanyData(jobListing.owner);
       })
       .catch(error => {
         // Handle the error appropriately
@@ -41,12 +46,6 @@ const Description = () => {
     const data = await readCompanyById(address);
     setCompanyInfo(data);
   };
-
-  useEffect(() => {
-    if (address) {
-      getCompanyData(address);
-    }
-  }, [address]);
 
   return (
     <>
@@ -117,8 +116,12 @@ const Description = () => {
                 </div>
               </div>
               <div className="flex items-center justify-center gap-2">
-                <button className="px-10 py-3 bg-green-500 text-white text-sm md:text-md rounded">Apply</button>
-                <button className="px-10 py-3 bg-blue-500 text-white text-sm md:text-md rounded">Refer</button>
+                <button
+                  className="px-10 py-3 bg-blue-500 text-white text-sm md:text-md rounded"
+                  onClick={() => setReferModal(!referModal)}
+                >
+                  Refer
+                </button>
               </div>
             </div>
             <div className="flex flex-col w-[40vw] h-[200px] bg-primary p-4 rounded-lg shadow-md mt-[2%]  ">
@@ -141,6 +144,7 @@ const Description = () => {
           <div className="h-[60vh]">
             <TextEditor readOnly={true} initialValue={jobInfo.description} title={"Job Details"} />
           </div>
+          {referModal && <ReferModal jobId={jobId} setReferModal={() => setReferModal(false)} />}
         </div>
       ) : (
         "Job info loading"

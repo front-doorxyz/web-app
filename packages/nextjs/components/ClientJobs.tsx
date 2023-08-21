@@ -45,9 +45,6 @@ const ClientJob = (props: Job) => {
         <button className="px-4 py-2 bg-slate-500 text-white text-sm md:text-sm rounded" onClick={handleEditJob}>
           Edit Job
         </button>
-        <button className="px-4 py-2 bg-red-500 text-white text-sm md:text-sm rounded" onClick={handleEditJob}>
-          Delete Job
-        </button>
       </div>
     </div>
   );

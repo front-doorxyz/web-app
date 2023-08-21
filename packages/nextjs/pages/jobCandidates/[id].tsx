@@ -1,8 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { readJobListingById } from "../../services/APIs/database";
 import { NextPage } from "next";
 import HireModal from "~~/components/HireModal";
 
 const JobCandidates: NextPage = () => {
+  const [jobInfo, setJobInfo] = useState<any>({});
+  const router = useRouter();
+  useEffect(() => {
+    const { id } = router.query;
+    console.log(id);
+
+    readJobListingById(id)
+      .then(jobListing => {
+        setJobInfo(jobListing);
+        console.log(jobListing);
+      })
+      .catch(error => {
+        // Handle the error appropriately
+      });
+  }, [router]);
+
   const candidatesPerPage = 5;
   const candidate1 = {
     id: 1,
@@ -92,7 +110,14 @@ const JobCandidates: NextPage = () => {
           </button>
         ))}
       </div>
-      {hireModal && <HireModal setHireModal={() => setHireModal(false)} loading={loading} confirmHire={confirmHire} />}
+      {hireModal && (
+        <HireModal
+          setHireModal={() => setHireModal(false)}
+          loading={loading}
+          confirmHire={confirmHire}
+          jobInfo={jobInfo}
+        />
+      )}
     </div>
   );
 };

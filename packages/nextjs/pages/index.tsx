@@ -10,18 +10,16 @@ import { GeneralContext } from "~~/providers/GeneralContext";
 import { getAllJobsOfCompany } from "~~/services/APIs/smartContract";
 
 const AllJobs: NextPage = () => {
-  const { data: signer } = useSigner();
   const { address } = useAccount();
-  const { setAllJobs } = useContext(GeneralContext);
   const router = useRouter();
   useEffect(() => {
     // Extract the query parameters from the URL
-    const { refId, email } = router.query;
+    const { refId, jobId } = router.query;
 
     // Check if the required query parameters exist, and their values match the desired values
-    if (refId && email) {
+    if (refId && jobId) {
       // Redirect to the specific page if the query parameters match
-      router.push(`/${refId}+${email}`);
+      router.push(`/${refId}+${jobId}`);
     }
   }, [router.query]);
 

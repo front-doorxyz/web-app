@@ -186,17 +186,20 @@ const JobFill = ({ type }: Props) => {
           value={jobInfo.roleTitle}
         />
       </label>
-      <label className="join flex flex-col gap-2">
-        <span className="indicator-item badge badge-primary"> Bounty</span>
-        <input
-          type="number"
-          placeholder="Type here"
-          className="input input-bordered w-[50vw]"
-          onChange={handleChange}
-          name="bounty"
-          value={jobInfo.bounty}
-        />
-      </label>
+      {type !== "edit" && (
+        <label className="join flex flex-col gap-2">
+          <span className="indicator-item badge badge-primary"> Bounty</span>
+          <input
+            type="number"
+            placeholder="Type here"
+            className="input input-bordered w-[50vw]"
+            onChange={handleChange}
+            name="bounty"
+            value={jobInfo.bounty}
+          />
+        </label>
+      )}
+
       <label className="join flex flex-col gap-2">
         <span className="indicator-item badge badge-primary"> Max Salary</span>
         <input

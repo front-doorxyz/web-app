@@ -1,22 +1,14 @@
-import { CollectionRecordReference, Polybase } from "@polybase/client";
-import { ethPersonalSign } from "@polybase/eth";
-import { useAccount } from "wagmi";
-import { notification } from "~~/utils/scaffold-eth";
-
-// const { address } = useAccount();
+import { Polybase } from "@polybase/client";
 
 export const db = new Polybase({
   defaultNamespace:
     "pk/0xbaeff2028f7c15332ab23549f09c33eee5cb9231559067afe56f975ea6a4b660b1e32eead19b6a8bd48d8347fa3753c8749d43b9a8716905c0fc8a3c70e3e9b1/navh-2",
-  // "pk/0xbaeff2028f7c15332ab23549f09c33eee5cb9231559067afe56f975ea6a4b660b1e32eead19b6a8bd48d8347fa3753c8749d43b9a8716905c0fc8a3c70e3e9b1/navh-frontdoor",
-  // "pk/0xbaeff2028f7c15332ab23549f09c33eee5cb9231559067afe56f975ea6a4b660b1e32eead19b6a8bd48d8347fa3753c8749d43b9a8716905c0fc8a3c70e3e9b1/Front-Door",
 });
 
 const jobsReference = db.collection("Jobs");
-const candidatesReference = db.collection("Candidates");
+const referrersReference = db.collection("Referrers");
 const companiesReference = db.collection("Companies");
-
-//TODO: Make all functions dynamic
+const candidatesReference = db.collection("Candidates");
 
 export async function registerCandidate(candidateData: any) {
   const recordData = await candidatesReference.create(candidateData);
@@ -30,8 +22,27 @@ export async function readCandidateById(id: string) {
   return data;
 }
 
-export async function registerCompany(candidateData: any) {
-  const recordData = await companiesReference.create(candidateData);
+export async function checkCandidateRegistration(id: string) {
+  const record = await candidatesReference.record(id).get();
+  const exists = record.exists();
+  console.log(exists);
+  return exists;
+}
+
+export async function registerReferrer(referrerData: any) {
+  const recordData = await referrersReference.create(referrerData);
+  return recordData;
+}
+
+export async function readReferrerById(id: string) {
+  const record = await referrersReference.record(id).get();
+  const { data } = record;
+  console.log(data);
+  return data;
+}
+
+export async function registerCompany(referrerData: any) {
+  const recordData = await companiesReference.create(referrerData);
   return recordData;
 }
 
@@ -66,8 +77,8 @@ export async function checkCompanyRegistration(id: string) {
   return exists;
 }
 
-export async function checkCandidateRegistration(id: string) {
-  const record = await candidatesReference.record(id).get();
+export async function checkReferrerRegistration(id: string) {
+  const record = await referrersReference.record(id).get();
   const exists = record.exists();
   console.log(exists);
   return exists;

@@ -4,6 +4,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 type Props = {
   setHireModal: (value: boolean) => void;
   confirmHire: () => void;
+  jobInfo: any;
   loading: boolean;
 };
 
@@ -26,7 +27,7 @@ const HireModal = (props: Props) => {
               Role title
             </div>
             <div className="md:w-[10vw] h-[50px] p-2 border-2 border-accent flex items-center justify-center text-bold">
-              Java Developer
+              {props.jobInfo.roleTitle}
             </div>
           </div>
           <div id="info" className="flex flex-wrap gap-2 items-center">

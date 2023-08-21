@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { Address } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
 import contracts from "~~/generated/deployedContracts";
@@ -82,7 +82,7 @@ export const registerReferrer = async(email:string) =>{
       } 
   }
 
-  export const registerReferral = async(jobId:number,refereeMail:string) =>{
+  export const registerReferral = async(jobId:BigNumber,refereeMail:string) =>{
     try{
         const tx = await deployedContract.registerReferral(jobId,refereeMail);
         const receipt = await tx.wait();
@@ -96,49 +96,6 @@ export const registerReferrer = async(email:string) =>{
     }
   }
 
-
-  export const submitReferralScore = async(score:number,referrerWallet:Address)=>{
-    try{
-        const tx = await deployedContract.submitReferralScore(score,referrerWallet);
-        const receipt = await tx.wait();
-        console.log("Success! Transaction hash:", receipt.transactionHash);
-        notification.success("Referral Score Submitted successfully");
-        return tx?.data ? tx?.data : null;
-    }
-    catch(error){
-        console.log('Error'+error)
-        notification.error("Failed to submit score")
-    }
-  }
-
-
-  export const submitCompanyScore = async(score:number,companyAddress:Address) =>{
-    try{
-        const tx = await deployedContract.submitCompanyScore(score,companyAddress);
-        const receipt = await tx.wait();
-        console.log("Success! Transaction hash:", receipt.transactionHash);
-        notification.success("Company Score Submitted successfully");
-        return tx?.data ? tx?.data : null;
-    }
-    catch(error){
-        console.log('Error'+error)
-        notification.error("Failed to submit score")
-    }
-  }
-
-  export const referCandidate = async(candidateAddress:Address,jobId:number) =>{
-    try{
-        const tx = await deployedContract.ReferCandidate(candidateAddress,jobId);
-        const receipt = await tx.wait();
-        console.log("Success! Transaction hash:", receipt.transactionHash);
-        notification.success("Refer Candidate successfull");
-        return tx?.data ? tx?.data : null;
-    }
-    catch(error){
-        console.log('Error'+error)
-        notification.error("Failed to refer candidate")
-    }
-  }
 
 
   export const confirmReferral = async(referralCounter:number,jobId:number) =>{

@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import * as eth from "@polybase/eth";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { db, registerCandidate } from "~~/services/APIs/database";
+import { db, registerReferrer } from "~~/services/APIs/database";
 import { notification } from "~~/utils/scaffold-eth";
 
-const CandidateRegister = () => {
-  const { setCandidate, setRegistered } = useContext(GeneralContext);
+const ReferrerRegister = () => {
+  const { setRefferer, setRegistered } = useContext(GeneralContext);
   const { address } = useAccount();
   const router = useRouter();
   const [name, setName] = useState("");
@@ -35,11 +35,11 @@ const CandidateRegister = () => {
       notification.error("Pls enter a proper url ");
       return;
     }
-    const candidateData = [address, name, email, portfolio];
+    const referrerData = [address, name, email, portfolio];
 
-    const candidate = await registerCandidate(candidateData);
-    if (candidate.id) {
-      setCandidate(true);
+    const referrer = await registerReferrer(referrerData);
+    if (referrer.id) {
+      setRefferer(true);
       setRegistered(true);
       notification.success("registration successfull");
       router.push("/");
@@ -71,7 +71,7 @@ const CandidateRegister = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <span className="indicator-item badge badge-primary">Description</span>
+          <span className="indicator-item badge badge-primary">Email</span>
           <input
             type="text"
             value={email}
@@ -79,15 +79,7 @@ const CandidateRegister = () => {
             className="input input-bordered w-[200px] md:w-[20vw]"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <span className="indicator-item badge badge-primary">Portfolio / Socials</span>
-          <input
-            type="text"
-            value={portfolio}
-            onChange={handlePortfolioChange}
-            className="input input-bordered w-[200px] md:w-[20vw]"
-          />
-        </div>
+
         <button className="btn btn-primary w-[200px] md:w-[20vw]" onClick={handleRegister}>
           Register
         </button>
@@ -96,4 +88,4 @@ const CandidateRegister = () => {
   );
 };
 
-export default CandidateRegister;
+export default ReferrerRegister;

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Recruitment from "../generated/recruitment.json";
-import { readAll, write } from "../services/store/playground_store";
 import { notification } from "../utils/scaffold-eth/notification";
-import axios from "axios";
 import { ethers } from "ethers";
 import { useAccount, useSigner } from "wagmi";
-import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
+import { checkCompanyRegistration, checkReferrerRegistration } from "~~/services/APIs/database";
 
 export const GeneralContext = React.createContext();
 export const GeneralProvider = ({ children }) => {
@@ -19,7 +17,7 @@ export const GeneralProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [registered, setRegistered] = useState(false);
-  const [candidate, setCandidate] = useState(false);
+  const [referrer, setReferrer] = useState(false);
   const [jobInfo, setJobInfo] = React.useState({
     id: 0,
     roleTitle: "Role Title",
@@ -37,19 +35,25 @@ export const GeneralProvider = ({ children }) => {
     if (!address) {
       return;
     }
-    const candidateExists = await checkCandidateRegistration(address);
+    console.log("hii");
+    // const candidateExists = await checkReferrerRegistration(address);
     const companyExists = await checkCompanyRegistration(address);
-    if (candidateExists) {
-      setCandidate(true);
-    }
-    if (candidateExists || companyExists) {
+    console.log(companyExists);
+    // if (candidateExists) {
+    //   setReferrer(true);
+    // }
+    if (companyExists) {
       setRegistered(true);
       return;
     }
+    // if (candidateExists || companyExists) {
+    //   setRegistered(true);
+    //   return;
+    // }
   };
 
   useEffect(() => {
-    setCandidate(false);
+    setReferrer(false);
     setRegistered(false);
     checkRegistration();
   }, [address]);
@@ -256,7 +260,8 @@ export const GeneralProvider = ({ children }) => {
     setSearch,
     registered,
     setRegistered,
-    setCandidate,
+    setReferrer,
+    referrer,
   };
 
   return <GeneralContext.Provider value={value}>{children}</GeneralContext.Provider>;
