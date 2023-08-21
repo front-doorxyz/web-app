@@ -12,7 +12,7 @@ const ReferrerRegister = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [portfolio, setPortfolio] = useState("");
+
   db.signer(async (data: string) => {
     const sig = await eth.sign(data, address);
     return { h: "eth-personal-sign", sig };
@@ -26,16 +26,9 @@ const ReferrerRegister = () => {
     setEmail(event.target.value);
   };
 
-  const handlePortfolioChange = event => {
-    setPortfolio(event.target.value);
-  };
-
   const handleRegister = async () => {
-    if (!isValidURL(portfolio)) {
-      notification.error("Pls enter a proper url ");
-      return;
-    }
-    const referrerData = [address, name, email, portfolio];
+
+    const referrerData = [address, name, email];
 
     const referrer = await registerReferrer(referrerData);
     if (referrer.id) {

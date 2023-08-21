@@ -42,6 +42,7 @@
     "@polybase/client": "^0.6.5",
     "emailjs": "^4.0.2",
     "emailjs-com": "^3.2.0",
+    "ethers": "^5.7.2",
     "i18next": "^22.5.0",
     "react-google-recaptcha": "^3.1.0",
     "styled-components": "^6.0.0-rc.3"

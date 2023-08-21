@@ -147,8 +147,8 @@ describe("Recruitment", () => {
       const [jobEvent] = receipt.events.filter((el: any) => {
         return el.event == "JobCreated";
       });
-      const [address, newjobid] = jobEvent.args;
-      console.log("jobevent: ", newjobid.toNumber());
+      const [address,newjobid] = jobEvent.args
+      console.log("jobevent: ", newjobid);
 
       const email: string = "john.doe@mail.com";
       await recruitment.connect(referrer).registerReferrer(email);

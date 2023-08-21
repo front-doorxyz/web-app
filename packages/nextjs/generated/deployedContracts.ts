@@ -5,7 +5,7 @@ const contracts = {
       chainId: "59140",
       contracts: {
         FrontDoorToken: {
-          address: "0xC542e24CC12C6ee3F73BFD319895CD348aA486e4",
+          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
           abi: [
             {
               inputs: [],
@@ -365,7 +365,7 @@ const contracts = {
           ],
         },
         Recruitment: {
-          address: "0x0219F6096605C5282f794a1D802aaE10e1A97B90",
+          address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
           abi: [
             {
               inputs: [
