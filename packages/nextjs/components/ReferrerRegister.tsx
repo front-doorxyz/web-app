@@ -27,8 +27,9 @@ const ReferrerRegister = () => {
   };
 
   const handleRegister = async () => {
-
     const referrerData = [address, name, email];
+    const tx = registerReferrer(email);
+    console.log(tx);
 
     const referrer = await registerReferrer(referrerData);
     if (referrer.id) {
@@ -36,15 +37,6 @@ const ReferrerRegister = () => {
       setRegistered(true);
       notification.success("registration successfull");
       router.push("/");
-    }
-  };
-
-  const isValidURL = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      return false;
     }
   };
 

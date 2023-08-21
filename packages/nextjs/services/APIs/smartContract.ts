@@ -105,7 +105,7 @@ export const deleteJob = async (jobId: number) => {
         notification.error("Failed to register Referral")
     }
   }
-};
+
 
 export const confirmReferral = async (referralCounter: number, jobId: number) => {
   try {
