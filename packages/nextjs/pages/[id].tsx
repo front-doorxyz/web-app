@@ -4,8 +4,9 @@ import { NextPage } from "next";
 import { useAccount } from "wagmi";
 import CandidateModal from "~~/components/CandidateModal";
 import HireModal from "~~/components/HireModal";
-import { checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
+import { applyforJob, checkCandidateRegistration, checkCompanyRegistration } from "~~/services/APIs/database";
 import { confirmReferral } from "~~/services/APIs/smartContract";
+import { notification } from "~~/utils/scaffold-eth";
 
 const RefConfirm: NextPage = () => {
   const [refId, setRefId] = useState(0);
@@ -28,12 +29,19 @@ const RefConfirm: NextPage = () => {
   }, [router]);
 
   const confirmReferralSC = async () => {
-    const isCandidate = await checkCandidateRegistration(address);
+    let isCandidate;
+    try {
+      isCandidate = await checkCandidateRegistration(address);
+    } catch (e) {
+      isCandidate = false;
+    }
 
     if (isCandidate) {
       setIsLoading(true);
       const data = await confirmReferral(refId, jobId);
-
+      const addCandidate = await applyforJob(String(jobId), address);
+      notification.success("Applied for the job!");
+      router.push("/");
       return;
     }
     setCandidateModal(true);
@@ -42,13 +50,24 @@ const RefConfirm: NextPage = () => {
   return (
     <>
       {address ? (
-        <div className="flex items-center justify-center h-[80vh]">
+        <div className="flex flex-col items-center justify-center h-[80vh]">
+          <div id="info" className="flex flex-col items-center justify-center gap-2 mb-[2%]">
+            <h3 className="text-sm md:text-xl">Thank you for choosing Front-Door</h3>
+            <h1 className="text-xl md:text-5xl font-bold font-bai-jamjuree text-black dark:text-gray-300">
+              Confirm your Referral and get Hired!
+            </h1>
+          </div>
           <div className="card  rounded-lg shadow-lg p-[2%] w-[30vw]">
             <div className="flex flex-col justify-start items-center gap-4 ">
-              <div className="text-md md:text-xl">Confirm your referral</div>
               <div className="flex flex-col items-center justify-center gap-4">
-                <input type="text" placeholder="Ref Id" className="input input-bordered w-[20vw]" value={refId} />
-                <input type="text" placeholder="Email" className="input input-bordered w-[20vw]" value={jobId} />
+                <label className="join flex flex-col gap-2">
+                  <span className="indicator-item badge badge-primary">Refid</span>
+                  <input type="text" placeholder="Ref Id" className="input input-bordered w-[20vw]" value={refId} />
+                </label>
+                <label className="join flex flex-col gap-2">
+                  <span className="indicator-item badge badge-primary">jobId</span>
+                  <input type="text" placeholder="Email" className="input input-bordered w-[20vw]" value={jobId} />
+                </label>
               </div>
               <button className="btn btn-primary" disabled={isLoading} onClick={confirmReferralSC}>
                 Confirm Referral

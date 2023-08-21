@@ -36,7 +36,7 @@ const CandidateModal = ({ setCandidateModal, address }: Props) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="relative w-[30vw] h-[40vh] bg-secondary p-4 rounded-lg">
-        With this information companies will connect with you
+        Looks like you are not registered as a candidate... <br />
         <button
           className="absolute top-2 right-2"
           onClick={() => {

@@ -24,7 +24,7 @@ export async function readCandidateById(id: string) {
 
 export async function checkCandidateRegistration(id: string) {
   const record = await candidatesReference.record(id).get();
-  const exists = record.exists();
+  const exists = record?.exists() || false;
   console.log(exists);
   return exists;
 }
@@ -72,14 +72,14 @@ export async function readJobListingById(id: string) {
 
 export async function checkCompanyRegistration(id: string) {
   const record = await companiesReference.record(id).get();
-  const exists = record.exists();
+  const exists = record?.exists() || false;
   console.log(exists);
   return exists;
 }
 
 export async function checkReferrerRegistration(id: string) {
   const record = await referrersReference.record(id).get();
-  const exists = record.exists();
+  const exists = record?.exists() || false;
   console.log(exists);
   return exists;
 }

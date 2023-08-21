@@ -35,21 +35,26 @@ export const GeneralProvider = ({ children }) => {
     if (!address) {
       return;
     }
-    console.log("hii");
-    // const candidateExists = await checkReferrerRegistration(address);
-    const companyExists = await checkCompanyRegistration(address);
-    console.log(companyExists);
-    // if (candidateExists) {
-    //   setReferrer(true);
-    // }
-    if (companyExists) {
+    let referrerExists;
+    try {
+      referrerExists = await checkReferrerRegistration(address);
+    } catch (e) {
+      referrerExists = false;
+    }
+    let companyExists;
+    try {
+      companyExists = await checkCompanyRegistration(address);
+    } catch (e) {
+      companyExists = false;
+    }
+
+    if (referrerExists) {
+      setReferrer(true);
+    }
+    if (referrerExists || companyExists) {
       setRegistered(true);
       return;
     }
-    // if (candidateExists || companyExists) {
-    //   setRegistered(true);
-    //   return;
-    // }
   };
 
   useEffect(() => {

@@ -5,7 +5,14 @@ import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
 import { Address, useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { createJobListing, db, readCompanyById, readJobListingById, updateJobListing } from "~~/services/APIs/database";
+import {
+  checkCompanyRegistration,
+  createJobListing,
+  db,
+  readCompanyById,
+  readJobListingById,
+  updateJobListing,
+} from "~~/services/APIs/database";
 import { registerJob } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -121,6 +128,18 @@ const JobFill = ({ type }: Props) => {
   };
 
   const handleJob = async () => {
+    let companyExists;
+    try {
+      companyExists = await checkCompanyRegistration(address);
+    } catch (e) {
+      companyExists = false;
+    }
+    if (!companyExists) {
+      notification.error("Register as a company to post jobs");
+      router.push("/register");
+      return;
+    }
+
     const requiredFields = ["companyName", "description", "roleTitle", "bounty", "maxSalary", "minSalary"];
     const isMissingFields = requiredFields.some(field => !jobInfo[field]);
 
