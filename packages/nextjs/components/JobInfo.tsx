@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import JobModal from "./JobModal";
 import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
+import { ethers } from "ethers";
 import { Address, useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
 import {
@@ -40,11 +41,6 @@ const JobFill = ({ type }: Props) => {
     const { name, value } = e.target;
     let parsedValue = value; // Initialize parsedValue with the original value
 
-    if (name === "minSalary" || name === "maxSalary" || name === "bounty") {
-      parsedValue = parseInt(value); // Convert value to an integer
-      // If you want to allow decimal values, use parseFloat instead:
-      // parsedValue = parseFloat(value);
-    }
     setJobInfo({
       ...jobInfo,
       [name]: parsedValue,
@@ -97,31 +93,35 @@ const JobFill = ({ type }: Props) => {
 
   const confirmJob = async () => {
     try {
-      let jobId = await registerJob(jobInfo.bounty);
+      const bountyEthers = ethers.utils.parseEther(jobInfo.bounty);
+      let jobId = await registerJob(bountyEthers);
       console.log(jobId);
 
       if (!jobId) {
         notification.error("Error in smart contract transaction: registerJob");
         return;
       }
-      console.log("jobId", jobId);
-      jobInfo.id = jobId;
+
       const date = getDate();
       const jobData = [
-        jobInfo.id,
+        jobId,
         jobInfo.roleTitle,
         jobInfo.description,
         jobInfo.location,
         jobInfo.maxSalary,
         jobInfo.minSalary,
-        jobInfo.bounty,
+        bountyEthers,
         jobInfo.companyName,
         address,
         jobInfo.type,
         date,
       ];
       console.log([jobData]);
-      await createJobListing(jobData);
+      const data = await createJobListing(jobData);
+      if (data.id) {
+        notification.success("Job Registered sucessfully");
+        router.push("/");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -210,6 +210,8 @@ const JobFill = ({ type }: Props) => {
           <span className="indicator-item badge badge-primary"> Bounty</span>
           <input
             type="number"
+            step="any"
+            min="0"
             placeholder="Type here"
             className="input input-bordered w-[50vw]"
             onChange={handleChange}

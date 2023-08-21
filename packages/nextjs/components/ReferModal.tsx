@@ -22,7 +22,7 @@ const ReferModal = ({ setReferModal, jobId }: Props) => {
       return;
     }
     setLoading(true);
-    const tx = await registerReferral(ethers.BigNumber.from(jobId), refereeMail);
+    const tx = await registerReferral(Number(jobId), refereeMail);
     setLoading(false);
   };
 

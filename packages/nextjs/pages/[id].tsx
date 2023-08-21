@@ -38,7 +38,7 @@ const RefConfirm: NextPage = () => {
 
     if (isCandidate) {
       setIsLoading(true);
-      const data = await confirmReferral(refId, jobId);
+      const data = await confirmReferral(refId, Number(jobId));
       const addCandidate = await applyforJob(String(jobId), address);
       notification.success("Applied for the job!");
       router.push("/");

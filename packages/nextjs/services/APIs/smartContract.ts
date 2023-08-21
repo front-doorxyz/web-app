@@ -53,14 +53,19 @@ export const registerReferrer = async(email:string) =>{
     }
   }
 
-  export const registerJob = async (bounty:number) => {
+  export const registerJob = async (bounty:BigNumber) => {
     try {
       
       const tx = await deployedContract.registerJob(bounty);
       const receipt = await tx.wait();
+      const [jobEvent] = receipt.events.filter((el: any) => {
+        return el.event == "JobCreated";
+      });
+      const [address,newjobid] = jobEvent.args
+      console.log("jobevent: ", newjobid.toNumber());
       console.log("Success! Transaction hash:", receipt.transactionHash);
       notification.success("Job registered successfully");
-      return tx?.data ? tx?.data : null;
+      return newjobid ? Number(newjobid) : null;
     } catch (error) {
       console.error("Error:", error);
       notification.error("Failed to register job");
@@ -75,20 +80,20 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Delete Job successfully");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
       } catch (error) {
         console.error("Error:", error);
         notification.error("Failed to delete job");
       } 
   }
 
-  export const registerReferral = async(jobId:BigNumber,refereeMail:string) =>{
+  export const registerReferral = async(jobId:number,refereeMail:string) =>{
     try{
         const tx = await deployedContract.registerReferral(jobId,refereeMail);
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Referral Registered successfully");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -104,7 +109,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Confirm referral successful");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -119,7 +124,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Hiring Candidate Successful");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -134,7 +139,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("90 Days Passed Successfully");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -149,7 +154,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Got Candidate");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -164,7 +169,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Got Referrer");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -179,7 +184,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Got Referrer scores");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -193,7 +198,7 @@ export const registerReferrer = async(email:string) =>{
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Got Company scores");
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)
@@ -207,7 +212,7 @@ export const registerReferrer = async(email:string) =>{
         const tx = await deployedContract.getAllJobsOfCompany(companyAddress);
         const receipt = await tx.wait();
         console.log("Success! Transaction hash:", receipt.transactionHash);
-        return tx?.data ? tx?.data : null;
+        return receipt?.data ? receipt?.data : null;
     }
     catch(error){
         console.log('Error'+error)

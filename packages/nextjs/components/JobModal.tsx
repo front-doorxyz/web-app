@@ -14,14 +14,12 @@ const JobModal = (props: Props) => {
   const [referrerShare, setRefferrerScore] = useState(0);
   const [candidateShare, setCandidateScore] = useState(0);
   const [frontDoorShare, setFrontDoorShare] = useState(0);
-  const [equalShare, setEqualShare] = useState(0);
 
   useEffect(() => {
     let bountyNumber = Number(jobInfo.bounty);
     setRefferrerScore(() => (65 / 100) * bountyNumber);
     setCandidateScore(() => (10 / 100) * bountyNumber);
-    setFrontDoorShare(() => (20 / 100) * bountyNumber);
-    setEqualShare(() => (5 / 100) * bountyNumber);
+    setFrontDoorShare(() => (25 / 100) * bountyNumber);
   }, [jobInfo]);
 
   return (
@@ -56,7 +54,7 @@ const JobModal = (props: Props) => {
                 Referrer Share[65%]
               </div>
               <div className="md:w-[350px] h-[40px] border-2 border-accent flex items-center justify-center">
-                {referrerShare}
+                {referrerShare} ETH
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -64,23 +62,15 @@ const JobModal = (props: Props) => {
                 Candidate Share[10%]
               </div>
               <div className="md:w-[350px] h-[40px] border-2 border-accent flex items-center justify-center">
-                {candidateShare}
+                {candidateShare} ETH
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
               <div className="md:w-[350px] h-[40px] border-2 border-accent flex items-center justify-center">
-                Front Door Share[20%]
+                Front Door Share[25%]
               </div>
               <div className="md:w-[350px] h-[40px] border-2 border-accent  flex items-center justify-center">
-                {frontDoorShare}
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <div className="md:w-[350px] h-[40px] border-2 border-accent flex items-center justify-center">
-                Referrers & interviewed candidates[5%]
-              </div>
-              <div className="md:w-[350px] h-[40px] border-2 border-accent flex items-center justify-center">
-                {equalShare}
+                {frontDoorShare} ETH
               </div>
             </div>
           </div>
