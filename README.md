@@ -3,7 +3,10 @@
 ## Introduction
 
 The Recruitment ecosystem is highly fragmented, participants have conflicting incentives, and collaboration is fraught with friction.
-Improved collaboration would deepen the talent pools that hiring entities can access, enable recruitment firms to reduce wasted effort and increase client satisfaction, enable individuals and community leads to refer-to-earn from their professional networks.
+Improved collaboration would:
+- Deepen the talent pools that hiring entities can access
+- Enable recruitment firms to reduce wasted effort and increase client satisfaction
+- Enable individuals and community leads to refer-to-earn from their professional networks
 Front Door uses Web3 tools and technology to solve a Web2 human coordination problem with a huge size of prize.
 
 ## Problem
@@ -18,26 +21,27 @@ A few key factors block scalable cooperation within the Recruitment ecosystem, r
 
 ## Solution
 
-We are building a transparent system that works on referrerals. We believe that that as Web3 world brings oppurtunities to each and every individual, we unlock incentive mechanisms that ensure quality of the jobs being posted + quality of candidates being hired through our platform.
+We are building a transparent referral system. We believe that as the Web3 world brings opportunities to each and every individual, Front Door can unlock incentive mechanisms that ensure quality of the jobs being posted & quality of candidates being hired through our platform.
 Our solution involves 3 user personas:
 
-- Companies -- Posting jobs and Hiring candidates
-- Refferrers -- People involved that refer other people for jobs (could be our ex manager etc)
-- Referree/Candidate -- People looking for jobs
+- Companies -- Posting jobs and hiring candidates. Providing the recruitment bounty to incentivise referrals
+- Referrers -- Introducing trusted candidates to jobs, this activity forms the basis of an on-chain reputation system 
+- Referee/Candidate -- People looking for jobs
 
 #### Companies
 
-Role of a company looking for people to hire is simple. Companies will post jobs, and hire through the platform. Each job being posted has a bounty involved(part of the incentive mechanism). This bounty is collected to make sure the jobs being posted here are important and legit. They also raise the stakes for companies fighting for candidates and want to hire as soon as possible. This bounty is transparent and seen as a part of the Job.
-Company can check jobs posted, see candidates that have applied for that job and hire from the site itself!
+Companies require candidate applicants and post jobs to source candidates and hire through the platform. Each job posted has a bounty associated (part of the incentive mechanism). This bounty is collected to make sure the jobs being posted are important and legitimate. Bounties incentivise Referrers to refer their contacts to the Companies job.  
 
-#### Refferrers
+Companies can control their applicant pool, hire, review and pay for the recruitment service all through the site. 
 
-Role of a refferrer is to help other people get jobs by doing a simple referral flow. A referrer will refer a candidate/referree for a job using their emails.
+#### Referrers
 
-#### Candidate/ Referree
+Referrers are the introducers of high-quality candidates to jobs. Referrer reputations are based on the reviews Hiring Companies give their candidates on chain. 
+Referrers introduce a candidate/referee with the candidates email and CV/profile. 
 
-Once a Referrer refers a Candidate, the Candidate receives a mail from Front-Door. This mail has a link to the website that allows the Candidate to confirm the referral
-if candidate confirms the referral, candidate is put in the list of people who have applied for that particular job.
+#### Candidate/ Referee
+
+Once a Referrer refers a Candidate, the Candidate receives an email from Front Door. This mail has a link to the website that allows the Candidate to confirm the referral. Upon confirmation the candidate is added to the Hiring Companies applicant pool for that specific job. 
 
 # Role of Bounty : Gamechanger
 
@@ -47,15 +51,15 @@ if candidate confirms the referral, candidate is put in the list of people who h
 - Candidate Share -- 25%
 - Front Door Share -- 10%
 
-The fact that each persona involved gets benefited being involved in this job flow helps a lot. Referrer share being the highest encourages people to refer each other for jobs.
-[Future Scope] -- We plan to introduce scoring mechanisms to add more transparency. Each persona Referrer, Company, Candidate will have a Score. This Score can be used to verify the genuineness of the Persona involved and this Score will be on Chain.
+Bounties are fairly distributed to the key stakeholders to incentivise productive behavior and encourage broad adoption. 
+[Future Scope] -- We plan to introduce scoring mechanisms to add more transparency. Each persona Referrer, Company, Candidate will have an on Chain Score. This Score can be used to verify the authenticity of stakeholders. 
 
 # OH SNAP!
 
-Bounty distribution happens directly through a cron job using Snaps! This is truly important for us as we dont need to be involved in distributing the shares at regular time intervals (probation periods for jobs vary).
-To automate this is crucial as it makes the system full proof and trustable. The bounty set by the company cant be changed/edited as it is onChain.
-As transactions are involved and triggered through the metamask wallets itself, we are able to show the user the right transaction insights, confirm the transaction and let it go through.
-With the power of Cron jobs, we are able to trigger this on events, for example after 90 days of the job and the candidate being hired and working properly, the bounty distribution happens.
+Bounty distribution happens directly through a cron job using Snaps! Centralisation risk is eliminated from the distribution of funds at regular time intervals (probation periods for jobs vary).
+Automatic Bounty distribution is crucial as it makes the system foolproof and trustworthy. The bounty set by the company cant be changed/edited as it is onChain.
+Transactions are triggered through the metamask wallets itself, users have the required transaction insights, confirmations and trust in the system.
+With the power of Cron jobs, transactions are triggered on predetermined events, for example 90 days from the candidate start date the final bounty distribution occurs.   
 
 # Linea
 
