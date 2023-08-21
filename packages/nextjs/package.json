@@ -25,6 +25,7 @@
     "@ethersproject/networks": "^5.7.1",
     "@ethersproject/web": "^5.7.1",
     "@heroicons/react": "^2.0.11",
+    "@metamask/detect-provider": "^2.0.0",
     "@rainbow-me/rainbowkit": "^0.11.0",
     "@uniswap/sdk": "^3.0.3",
     "axios": "^1.4.0",
