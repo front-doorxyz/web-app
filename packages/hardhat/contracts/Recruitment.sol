@@ -11,7 +11,7 @@ import "hardhat/console.sol";
 
 import {FrontDoorStructs} from "./DataModel.sol";
 import {Errors} from "./Errors.sol";
-import {Event} from "./Events.sol";
+
 
 contract Recruitment is Ownable, ReentrancyGuard {
   // =============    Defining Mapping        ==================
@@ -111,7 +111,8 @@ contract Recruitment is Ownable, ReentrancyGuard {
     }
 
     companyaccountBalances[msg.sender] += bounty;
-    emit Event.DepositCompleted(msg.sender, bounty, jobId);
+    emit DepositCompleted(msg.sender, bounty, jobId);
+    emit JobCreated(msg.sender, jobId);
 
     return jobId;
   }
@@ -158,7 +159,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
     referralList[referralCounter] = referral;
     uint256 referralId = referralCounter;
     referralCounter++;
-    emit Event.RegisterReferral(refereeMail, msg.sender, jobId, referralId);
+    emit RegisterReferral(refereeMail, msg.sender, jobId, referralId);
     return referralId;
   }
   
@@ -175,7 +176,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
     referralList[_referralCounter].candidate.wallet = msg.sender;
     candidateList[msg.sender] =  referralList[_referralCounter].candidate;
 
-    emit Event.ReferralConfirmed(msg.sender, _referralCounter, _jobId); // emit event
+    emit ReferralConfirmed(msg.sender, _referralCounter, _jobId); // emit event
 
     // push into a mapping jobsid => candidates
 
@@ -206,7 +207,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
     //   revert Errors.NotEnoughFundDepositedByCompany();
     // }
 
-    emit Event.CandidateHired(msg.sender, _candidateAddress, _jobId); // emit event
+    emit CandidateHired(msg.sender, _candidateAddress, _jobId); // emit event
   }
 
   function getCandidate(address wallet) external view returns (FrontDoorStructs.Candidate memory) {
@@ -268,15 +269,10 @@ contract Recruitment is Ownable, ReentrancyGuard {
   function diburseBounty(uint256 _jobId) external checkIfItisACompany(msg.sender){
     require(jobList[_jobId].issucceed == true, "Job is not succeed yet");
     require(jobList[_jobId].numberOfCandidateHired > 0, "No candidate is hired yet");
+    // commented for test purposes 
     //require(jobList[_jobId].timeAtWhichJobCreated + 90 days < block.timestamp, "90 days are not completed yet");
     require(jobList[_jobId].creator == msg.sender, "Only job creator can diburse");
     uint256 bounty = jobList[_jobId].bounty;
-
-    console.log(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000);
-    console.log(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000);
-    console.log(frontDoorAddress, bounty * 2500 / 10_000);
-
-    
     ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
     ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
     ERC20(acceptedTokenAddress).approve(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
@@ -304,5 +300,6 @@ contract Recruitment is Ownable, ReentrancyGuard {
   event ReferralRejected(address indexed candidateAddress, uint256 indexed referralId, uint256 indexed jobId);
   event CandidateHiredSuccesfullyAfter90Days(address indexed companyAddress, address candidateAddress, uint256 jobId);
   event RegisterReferral(string indexed email, address indexed refferer, uint256 indexed jobId, uint256 referralId);
+  event JobCreated(address indexed companyAddress, uint256 indexed jobId);
 
 }

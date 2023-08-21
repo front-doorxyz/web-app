@@ -140,7 +140,10 @@ describe("Recruitment", () => {
       const bounty = ethers.utils.parseEther("100");
       await dummyToken.connect(company).approve(recruitment.address, bounty);
       const jobId = await recruitment.connect(company).registerJob(bounty);
-      await jobId.wait();
+      console.log("transaction: ", jobId);
+      const receipt = await jobId.wait();
+      console.log("receipt: ", receipt.events);
+
       const email: string = "john.doe@mail.com";
       await recruitment.connect(referrer).registerReferrer(email);
       const referrerData = await recruitment.getReferrer(referrer.address);
@@ -151,11 +154,8 @@ describe("Recruitment", () => {
       const jobsReffers = await recruitment.connect(referree).confirmReferral(1, 1);
       const data2 = await jobsReffers.wait();
       const candadidatesForJob = await recruitment.getCandidateListForJob(1);
-      console.log(candadidatesForJob);
       const hire = await recruitment.connect(company).hireCandidate(referree.address, 1);
       await hire.wait();
-      console.log(await recruitment.candidateStatus(referree.address));
-      console.log(await recruitment.getAllJobsOfCompany(company.address));
       await recruitment.connect(company).diburseBounty(1);
 
     });
