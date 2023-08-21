@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
+import "hardhat/console.sol";
+
 import {FrontDoorStructs} from "./DataModel.sol";
 import {Errors} from "./Errors.sol";
 import {Event} from "./Events.sol";
@@ -26,6 +28,8 @@ contract Recruitment is Ownable, ReentrancyGuard {
   mapping(address => mapping(address => bool)) public hasScoredCompany; //allows only to score once
   mapping(address => bool) public isCompany; // check if company is registered or not
 
+  mapping(uint256 => FrontDoorStructs.Candidate[]) public candidateListForJob; // list of candidates for a job
+
   address acceptedTokenAddress;
 
   // Company address  to  candiate address  gives score to company
@@ -40,9 +44,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
   //  Counters
   uint256 private jobIdCounter = 1;
   uint256 private referralCounter = 1;
-  uint256 month1;
-  uint256 month2;
-  uint256 month3;
+
 
   // Constructor
   constructor(address _acceptedTokenAddress) {
@@ -75,23 +77,6 @@ contract Recruitment is Ownable, ReentrancyGuard {
   }
 
   //   Register Functions
-
-  /**
-   * @notice Register a Candidate with email
-   * @param email email of the candidate
-   */
-  function registerCandidate(string memory email) external {
-    FrontDoorStructs.Candidate memory candidate = FrontDoorStructs.Candidate(
-      msg.sender,
-      email,
-      0,
-      false,
-      0,
-      false,
-      false
-    );
-    candidateList[msg.sender] = candidate;
-  }
 
   /**
    * @notice Register a Referrer with email
@@ -129,23 +114,6 @@ contract Recruitment is Ownable, ReentrancyGuard {
   }
 
   /**
-   * @notice Flags a job as deleted. Sets the status of a job from `true` to `false`
-   * @param jobId The ID of a job to be marked as deleted.
-   * @dev Only the creator of a job can delete it.
-   * @dev ==============      Have to review this function more ====================
-   */
-  function deleteJob(uint256 jobId) external payable nonReentrant checkIfItisACompany(msg.sender) {
-    FrontDoorStructs.Job memory job = jobList[jobId];
-    if (job.creator != msg.sender) revert Errors.OnlyJobCreatorAllowedToDelete();
-    if (job.isRemoved == true) revert Errors.JobAlreadyDeleted();
-
-    require(job.issucceed == true, "Job is not succeed yet"); // check if job is succeed or not
-
-    job.isRemoved = true;
-    delete jobList[jobId]; // deleting a job from jobList
-  }
-
-  /**
    * @notice Registers a Company
    */
   function registerCompany() external {
@@ -160,7 +128,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
    * @param jobId The job ID already registered with the contract.
    * @param refereeMail The email of the referee.
    */
-  function registerReferral(uint256 jobId, string memory refereeMail) external nonReentrant {
+  function registerReferral(uint256 jobId, string memory refereeMail) external nonReentrant returns (uint256){
     // Simple Checks Of Parameters
     require(jobId > 0, "Job Id should be greater than 0"); // check if job is registered or not
     require(bytes(refereeMail).length > 0, "Referee Mail should not be empty"); // check if referee mail is empty or not
@@ -170,73 +138,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
     FrontDoorStructs.Job memory job = jobList[jobId];
 
     candidate.email = refereeMail;
-    FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(
-      referralCounter,
-      false,
-      referrer,
-      candidate,
-      job,
-      block.timestamp,
-      0,
-      false,
-      block.timestamp + 1 days
-    );
 
-    referralIndex[msg.sender].push(referralCounter);
-    referralList[referralCounter] = referral;
-    referralCounter++;
-  }
-
-  // function submitReferralScore( uint256 score,address referrerWallet) nonReentrant public  checkIfItisACompany(msg.sender) returns  (bytes32) {
-  //   FrontDoorStructs.ReferralScore memory newReferralScore = FrontDoorStructs.ReferralScore(score, msg.sender);
-
-  //   referralScores[referrerWallet].push(newReferralScore);
-  //   emit Event.ReferralScoreSubmitted(msg.sender, referrerWallet, score);
-
-  //   companyAddressToCandidateScore[msg.sender][referrerWallet] = score;
-
-  //   return keccak256(abi.encodePacked(score, msg.sender, referrerWallet));
-  // }
-
-  // /**
-  //  * @param score score given to the company
-  //  * @param companyAddress company address
-  //  */
-  //  function submitCompanyScore(uint256 score,address companyAddress) nonReentrant  checkIfCandidateHiredByCompany(msg.sender ,companyAddress) public returns (bytes32) {
-  //   require(!hasScoredCompany[msg.sender][companyAddress], "You have already scored this company");
-  //   FrontDoorStructs.CompanyScore[] storage scores = companyScores[companyAddress];
-  //   FrontDoorStructs.CompanyScore memory newScore = FrontDoorStructs.CompanyScore(score, msg.sender);
-  //   scores.push(newScore);
-  //   hasScoredCompany[msg.sender][companyAddress] = true;
-  //   companyaddressToScore[companyAddress][msg.sender] = score; // mapping of company address to score given by candidate
-  //   emit Event.CompanyScoreSubmitted(msg.sender, companyAddress, score);
-  //   return keccak256(abi.encodePacked(score, msg.sender, companyAddress));
-  // }
-
-  /**
-   * @param _candidateAddress Address of candidate
-   * @param _jobId Job id which referr is referring too
-   * @notice Refer a candidate to a job
-   */
-  function ReferCandidate(address _candidateAddress, uint256 _jobId) external nonReentrant {
-    // --- Simple  Checks
-    require(_candidateAddress != address(0), "Candidate address should not be empty"); // check if candidate address is empty or not
-    require(_jobId > 0, "Job Id should be greater than 0"); // check if job id is greater than 0 or not
-    require(_jobId < jobIdCounter, "Job Id should be less than job id counter"); // check if job id is less than job id counter or not
-    require(jobList[_jobId].timeAtWhichJobCreated + 30 days > block.timestamp, "Job is expired"); // check if job is expired or not
-
-    // Check if the referrer has already referred the candidate for the specified job
-    for (uint256 i = 0; i < referralIndex[msg.sender].length; i++) {
-      uint256 referralId = referralIndex[msg.sender][i];
-      FrontDoorStructs.Referral memory existingReferral = referralList[referralId];
-      if (existingReferral.referrer.wallet == msg.sender && existingReferral.job.id == _jobId) {
-        revert Errors.SameCandidateCannotBeReferredTwice();
-      }
-    }
-    // ---- Code logic
-    FrontDoorStructs.Candidate memory candidate = candidateList[_candidateAddress];
-    FrontDoorStructs.Job memory job = jobList[_jobId];
-    FrontDoorStructs.Referrer memory referrer = referrerList[msg.sender];
     FrontDoorStructs.Referral memory referral = FrontDoorStructs.Referral(
       referralCounter,
       false,
@@ -250,21 +152,30 @@ contract Recruitment is Ownable, ReentrancyGuard {
     );
     referralIndex[msg.sender].push(referralCounter);
     referralList[referralCounter] = referral;
+    uint256 referralId = referralCounter;
     referralCounter++;
-    emit Event.ReferCandidateSuccess(msg.sender, _candidateAddress, _jobId); // emit event
+    emit Event.RegisterReferral(refereeMail, msg.sender, jobId, referralId);
+    return referralId;
   }
-
+  
   function confirmReferral(uint256 _referralCounter, uint256 _jobId) external nonReentrant {
     // Some Checks
     require(referralList[_referralCounter].isConfirmed == false, "Referral is already confirmed"); // check if referral is already confirmed or not
     require(referralList[_referralCounter].job.issucceed == false, "Job is already succeed"); // check if job is already succeed or not
     require(referralList[_referralCounter].job.timeAtWhichJobCreated + 30 days > block.timestamp, "Job is expired"); // check if job is expired or not
-    require(referralList[_referralCounter].candidate.wallet == msg.sender, "Candidate is already hired"); // check if candidate is calling this function or
+    require(referralList[_referralCounter].candidate.isHired == false, "Candidate is already hired"); // check if candidate is hired
     require(referralList[_referralCounter].referralEnd > block.timestamp, "Referral is expired"); // check if referral is expired or not
 
     // Code Logic
     referralList[_referralCounter].isConfirmed = true;
+    referralList[_referralCounter].candidate.wallet = msg.sender;
+    candidateList[msg.sender] =  referralList[_referralCounter].candidate;
     emit Event.ReferralConfirmed(msg.sender, _referralCounter, _jobId); // emit event
+
+    // push into a mapping jobsid => candidates
+
+    candidateListForJob[_jobId].push(referralList[_referralCounter].candidate);
+
   }
 
   /**
@@ -285,39 +196,12 @@ contract Recruitment is Ownable, ReentrancyGuard {
     candidateList[_candidateAddress].timeOfHiring = block.timestamp;
     jobList[_jobId].numberOfCandidateHired += 1;
 
-    if ((companyaccountBalances[msg.sender]) >= (jobList[_jobId].bounty * jobList[_jobId].numberOfCandidateHired)) {
-      revert Errors.NotEnoughFundDepositedByCompany();
-    }
+    // if ((companyaccountBalances[msg.sender]) >= (jobList[_jobId].bounty * jobList[_jobId].numberOfCandidateHired)) {
+    //   revert Errors.NotEnoughFundDepositedByCompany();
+    // }
 
     emit Event.CandidateHired(msg.sender, _candidateAddress, _jobId); // emit event
   }
-
-  /**
-   * @param _candidateAddress Candidate address
-   * @param _jobId job id
-   * @notice sets jobConfirmed to true for the candidate
-   * sets candidate score and company score , check everything should happen after 90 days of hiring
-   */
-  // function hireCandidateSuccefullyAfter90Days(address _candidateAddress , uint256 _jobId) nonReentrant  checkIfItisACompany(msg.sender) external {
-  //   // Some Checks
-  //   require(candidateList[_candidateAddress].isHired == true , "Candidate is already hired"); // check if candidate is already hired or not
-  //   require(jobList[_jobId].issucceed == false , "Job is already succeed"); // check if job is already succeed or not
-  //   require(candidateList[_candidateAddress].timeOfHiring + 90 days >  block.timestamp , "90 days are not passed yet"); // check if 90 days are passed or not
-
-  //   // Code Logic
-  //   candidateList[_candidateAddress].isHired = true;
-  //   candidateList[_candidateAddress].timeOfHiring = block.timestamp;
-  //   jobList[_jobId].numberOfCandidateHired += 1;
-  //   candidateList[_candidateAddress].jobConfirmed = true;
-
-  //   if((companyaccountBalances[msg.sender]) >= (jobList[_jobId].bounty * jobList[_jobId].numberOfCandidateHired)) {
-  //       revert Errors.NotEnoughFundDepositedByCompany();
-  //   }
-
-  //   emit Event.CandidateHiredSuccesfullyAfter90Days(msg.sender,_candidateAddress,_jobId); // emit event
-  // }
-
-  /**  View/Pure/Returns Functions*/
 
   function getCandidate(address wallet) external view returns (FrontDoorStructs.Candidate memory) {
     return candidateList[wallet];
@@ -360,4 +244,34 @@ contract Recruitment is Ownable, ReentrancyGuard {
 
     return jobArray;
   }
+  /// Returns the numbers of refferals that a refferer has made 
+  function getMyRefferals() public view returns ( uint256[] memory){
+    return referralIndex[msg.sender];
+  }
+  
+  //TODO  validate if sender is the company that created the job
+  function getCandidateListForJob (uint256 _jobId) public view returns( FrontDoorStructs.Candidate[] memory){
+    return candidateListForJob[_jobId];
+  }
+
+  function candidateStatus(address _candidateAddress) public view returns(bool){
+    return candidateList[_candidateAddress].isHired;
+  }
+
+  event PercentagesCompleted(
+    address indexed sender,
+    uint8 month1RefundPct,
+    uint8 month2RefundPct,
+    uint8 month3RefundPct
+  );
+  event DepositCompleted(address indexed sender, uint256 amount, uint256 jobId);
+  event ReferralScoreSubmitted(address senderAddress, address referrerWallet, uint256 score);
+  event CompanyScoreSubmitted(address senderAddress, address companyAddress, uint256 score);
+  event ReferCandidateSuccess(address indexed sender, address indexed candidateAddress, uint256 indexed jobId);
+  event CandidateHired(address indexed companyAddress, address candidateAddress, uint256 jobId);
+  event ReferralConfirmed(address indexed candidateAddress, uint256 indexed referralId, uint256 indexed jobId);
+  event ReferralRejected(address indexed candidateAddress, uint256 indexed referralId, uint256 indexed jobId);
+  event CandidateHiredSuccesfullyAfter90Days(address indexed companyAddress, address candidateAddress, uint256 jobId);
+  event RegisterReferral(string indexed email, address indexed refferer, uint256 indexed jobId, uint256 referralId);
+
 }

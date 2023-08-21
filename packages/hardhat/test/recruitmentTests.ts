@@ -104,7 +104,7 @@ describe("Recruitment", () => {
       const referrerData = await recruitment.getReferrer(referrer.address);
       expect(referrerData.email).to.equal(email);
     });
-    it("Register referrer with same email", async () => {
+    it("Register referree with same email", async () => {
       const { recruitment, referrer,referree } = await loadFixture(fixture);
       const email: string = "john.doe@mail.com";
       await recruitment.connect(referrer).registerReferrer(email);
@@ -112,7 +112,6 @@ describe("Recruitment", () => {
       expect(referrerData.email).to.equal(email);
       await recruitment.connect(referree).registerReferrer(email);
       const referreeData = await recruitment.getReferrer(referree.address);
-      console.log(referreeData);
     });
   });
   describe("Register Referral", () => {
@@ -132,9 +131,30 @@ describe("Recruitment", () => {
       const emailReferral: string = "referralemail@mail.com";
       await recruitment.connect(referrer).registerReferral(1, emailReferral);
       const jobs = await recruitment.getAllJobsOfCompany(company.address);
-      console.log(jobs);
-
     });
-
+    it("Refer a candidate and apply for a job", async () => {
+      const { dummyToken, recruitment, company, referrer, referree } = await loadFixture(fixture);
+      await recruitment.connect(company).registerCompany();
+      const companyStruct = await recruitment.companyList(company.address);
+      expect(company.address).to.equal(companyStruct.wallet);
+      const bounty = ethers.utils.parseEther("750");
+      await dummyToken.connect(company).approve(recruitment.address, bounty);
+      const jobId = await recruitment.connect(company).registerJob(bounty);
+      await jobId.wait();
+      const email: string = "john.doe@mail.com";
+      await recruitment.connect(referrer).registerReferrer(email);
+      const referrerData = await recruitment.getReferrer(referrer.address);
+      expect(referrerData.email).to.equal(email);
+      const emailReferral: string = "referralemail@mail.com";
+      const tx = await recruitment.connect(referrer).registerReferral(1, emailReferral);
+      await tx.wait();
+      const jobsReffers = await recruitment.connect(referree).confirmReferral(1, 1);
+      const data2 = await jobsReffers.wait();
+      const candadidatesForJob = await recruitment.getCandidateListForJob(1);
+      console.log(candadidatesForJob);
+      const hire = await recruitment.connect(company).hireCandidate(referree.address, 1);
+      await hire.wait();
+      console.log(await recruitment.candidateStatus(referree.address));
+    });
   });
 });
