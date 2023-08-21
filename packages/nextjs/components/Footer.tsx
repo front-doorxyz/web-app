@@ -1,4 +1,4 @@
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import { SwitchTheme } from "~~/components/SwitchTheme";
 import { useGlobalState } from "~~/services/store/store";
 
@@ -7,7 +7,7 @@ import { useGlobalState } from "~~/services/store/store";
  */
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
-  const { data: signer } = useSigner();
+
   const { address } = useAccount();
   return (
     <div className="min-h-0 p-5 mb-11 lg:mb-0">

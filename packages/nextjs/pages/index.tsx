@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { db, readAllJobListings } from "../services/APIs/database";
 import detectEthereumProvider from "@metamask/detect-provider";
 import type { NextPage } from "next";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import Banner from "~~/components/Banner";
 import ErrorHandler from "~~/components/ErrorHandler";
 import Jobs from "~~/components/Jobs";

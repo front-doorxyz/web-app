@@ -78,6 +78,7 @@ export const registerJob = async (bounty: BigNumber) => {
   }
 };
 
+
 export const deleteJob = async (jobId: number) => {
   try {
     const tx = await deployedContract.deleteJob(jobId);
