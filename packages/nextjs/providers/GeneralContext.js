@@ -66,11 +66,6 @@ export const GeneralProvider = ({ children }) => {
     const { name, value } = e.target;
     let parsedValue = value; // Initialize parsedValue with the original value
 
-    if (name === "minSalary" || name === "maxSalary" || name === "bounty") {
-      parsedValue = parseInt(value); // Convert value to an integer
-      // If you want to allow decimal values, use parseFloat instead:
-      // parsedValue = parseFloat(value);
-    }
     setJobInfo({
       ...jobInfo,
       [name]: parsedValue,
@@ -82,57 +77,6 @@ export const GeneralProvider = ({ children }) => {
       ...jobInfo,
       [key]: value,
     });
-  };
-
-  const registerJob = async bounty => {
-    setLoading(true);
-    try {
-      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      console.log(typeof bounty);
-
-      const tx = await deployedContract.registerJob(bounty);
-
-      console.log(tx);
-      const receipt = await tx.wait();
-      console.log("Success! Transaction hash:", receipt.transactionHash);
-      notification.success("Job registered successfully");
-      return tx?.data ? tx?.data : null;
-    } catch (error) {
-      console.error("Error:", error);
-      notification.error("Failed to register job");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getAllJobs = async () => {
-    setLoading(true);
-    try {
-      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const tx = await deployedContract.getAllJobs(1);
-      console.log(tx);
-    } catch (error) {
-      console.error("Error:", error);
-      notification.error("Failed to get jobs");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const deleteJob = async jobId => {
-    setLoading(true);
-    try {
-      const deployedContract = new ethers.Contract(contractAddress, Recruitment.abi, signer);
-      const del = await deployedContract.deleteJob(jobId);
-      await del.wait();
-      console.log("Success! Transaction hash:", del.transactionHash);
-      notification.success("Job deleted successfully");
-    } catch (error) {
-      console.error("Error:", error);
-      notification.error("Failed to delete job");
-    } finally {
-      setLoading(false);
-    }
   };
 
   const registerReferral = async (jobId, email) => {
@@ -243,9 +187,7 @@ export const GeneralProvider = ({ children }) => {
     jobInfo,
     setJobInfo,
     handleChange,
-    registerJob,
-    getAllJobs,
-    deleteJob,
+
     allJobs,
     setAllJobs,
     registerReferral,

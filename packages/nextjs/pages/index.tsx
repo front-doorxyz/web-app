@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { db, readAllJobListings } from "../services/APIs/database";
 import detectEthereumProvider from "@metamask/detect-provider";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -8,8 +7,6 @@ import Banner from "~~/components/Banner";
 import ErrorHandler from "~~/components/ErrorHandler";
 import Jobs from "~~/components/Jobs";
 import { MetaMaskContext, MetamaskActions } from "~~/hooks/MetamaskContext";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
-import { GeneralContext } from "~~/providers/GeneralContext";
 import { getAllJobsOfCompany } from "~~/services/APIs/smartContract";
 import { connectSnap, getSnap } from "~~/utils/snap";
 

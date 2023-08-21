@@ -14,7 +14,6 @@ type Props = {
 };
 
 const ReferModal = ({ setReferModal, jobId, address }: Props) => {
-  const { referrer } = useContext(GeneralContext);
   const [refereeMail, setRefereeMail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -33,6 +32,7 @@ const ReferModal = ({ setReferModal, jobId, address }: Props) => {
     }
     setLoading(true);
     const refId = await registerReferral(Number(jobId), refereeMail);
+
     setLoading(false);
   };
 

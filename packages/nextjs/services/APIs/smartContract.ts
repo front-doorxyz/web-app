@@ -57,21 +57,18 @@ export const registerJob = async (bounty: BigNumber) => {
   try {
     const txAllow = await deployedFrontDoorToken.approve(RecruitmentContractAddress, bounty);
     const receiptAllow = await txAllow.wait();
-    console.log(receiptAllow);
-    
     const tx = await deployedContract.registerJob(bounty);
     const receipt = await tx.wait();
-    // console.log(receipt);
-    // const [jobEvent] = receipt.events.filter((el: any) => {
-    //   return el.event == "JobCreated";
-    // });
-    // console.log(jobEvent);
-    // const [address, newjobid] = jobEvent.args;
-    // console.log("jobevent: ", newjobid.toNumber());
-    // console.log("Success! Transaction hash:", receipt.transactionHash);
+    console.log(receipt);
+    const [jobEvent] = receipt.events.filter((el: any) => {
+      return el.event == "JobCreated";
+    });
+    console.log(jobEvent);
+    const [address, newjobid] = jobEvent?.args;
+    console.log("Success! Transaction hash:", receipt.transactionHash);
     notification.success("Job registered successfully");
-    // return newjobid ? Number(newjobid) : null;
-    return receipt?.data ? receipt?.data : null;
+    return newjobid ? Number(newjobid) : null;
+    // return receipt?.data ? receipt?.data : null;
   } catch (error) {
     console.error("Error:", error);
     notification.error("Failed to register job");
@@ -96,6 +93,11 @@ export const deleteJob = async (jobId: number) => {
     try{
         const tx = await deployedContract.registerReferral(jobId,refereeMail);
         const receipt = await tx.wait();
+        const [registerEvent] = receipt.events.filter((el: any) => {
+          return el.event == "RegisterReferral";
+        });
+        console.log(registerEvent);
+        const [refereeMail] = registerEvent?.args;
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Referral Registered successfully");
         return receipt?.data ? receipt?.data : null;

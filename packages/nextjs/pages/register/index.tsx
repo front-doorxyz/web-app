@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import register2 from "~~/assets/register2.jpg";
 import register from "~~/assets/register.jpg";
 import CompanyRegister from "~~/components/CompanyRegister";
-import CandidateRegister from "~~/components/ReferrerRegister";
+import ReferrerRegister from "~~/components/ReferrerRegister";
 
 const index: NextPage = () => {
   const [active, setActive] = useState<boolean>(true);
@@ -27,7 +27,7 @@ const index: NextPage = () => {
             Referrer Register
           </a>
         </div>
-        <div className="flex justify-center">{active ? <CompanyRegister /> : <CandidateRegister />}</div>
+        <div className="flex justify-center">{active ? <CompanyRegister /> : <ReferrerRegister />}</div>
       </div>
       <div className="absolute right-0 hidden mt-[0.2%]   md:block lg:w-[47vw]">
         <div
