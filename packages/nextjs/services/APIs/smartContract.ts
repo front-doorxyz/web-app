@@ -57,12 +57,14 @@ export const registerReferrer = async(email:string) =>{
     try {
       
       const tx = await deployedContract.registerJob(bounty);
+      console.log(tx)
       const receipt = await tx.wait();
-      const [jobEvent] = receipt.events.filter((el: any) => {
-        return el.event == "JobCreated";
-      });
-      const [address,newjobid] = jobEvent.args
-      console.log("jobevent: ", newjobid.toNumber());
+      let newjobid = receipt.data;
+      // const [jobEvent] = receipt.events.filter((el: any) => {
+      //   return el.event == "JobCreated";
+      // });
+      // const [address,newjobid] = jobEvent.args
+      // console.log("jobevent: ", newjobid.toNumber());
       console.log("Success! Transaction hash:", receipt.transactionHash);
       notification.success("Job registered successfully");
       return newjobid ? Number(newjobid) : null;

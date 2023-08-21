@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Recruitment from "../generated/recruitment.json";
 import { notification } from "../utils/scaffold-eth/notification";
 import { ethers } from "ethers";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import { checkCompanyRegistration, checkReferrerRegistration } from "~~/services/APIs/database";
 
 export const GeneralContext = React.createContext();
 export const GeneralProvider = ({ children }) => {
-  const { data: signer } = useSigner();
   const [walletAddress, setWalletAddress] = useState("");
   const [id, setId] = useState("");
   const [allJobs, setAllJobs] = useState([]);

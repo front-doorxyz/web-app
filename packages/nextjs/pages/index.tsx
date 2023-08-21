@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { db, readAllJobListings } from "../services/APIs/database";
 import type { NextPage } from "next";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount } from "wagmi";
 import Banner from "~~/components/Banner";
 import Jobs from "~~/components/Jobs";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
