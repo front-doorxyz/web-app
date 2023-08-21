@@ -22,7 +22,7 @@ const ReferModal = ({ setReferModal, jobId }: Props) => {
       return;
     }
     setLoading(true);
-    const tx = await registerReferral(Number(jobId), refereeMail);
+    const refId = await registerReferral(Number(jobId), refereeMail);
     setLoading(false);
   };
 

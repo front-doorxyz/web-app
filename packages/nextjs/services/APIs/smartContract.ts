@@ -91,9 +91,14 @@ export const registerReferrer = async(email:string) =>{
     try{
         const tx = await deployedContract.registerReferral(jobId,refereeMail);
         const receipt = await tx.wait();
+        const [registerEvent] = receipt.events.filter((el: any) => {
+          return el.event == "RegisterReferral";
+        });
+        const [email,reffererAddress,newJobId,referralId] = registerEvent.args
+        console.log("registerEvent: ", referralId.toNumber());
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Referral Registered successfully");
-        return receipt?.data ? receipt?.data : null;
+        return referralId ? referralId.toNumber() : null;
     }
     catch(error){
         console.log('Error'+error)
