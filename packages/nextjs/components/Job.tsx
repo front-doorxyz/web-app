@@ -56,9 +56,6 @@ const Job = (props: Props) => {
           <button className="px-8 py-2 bg-blue-500 text-sm md:text-lg  text-white rounded" onClick={handleJobClick}>
             Refer
           </button>
-          <button className="px-8 py-2 bg-green-500 text-sm md:text-lg text-white rounded" onClick={handleJobClick}>
-            Apply
-          </button>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ library FrontDoorStructs {
         uint256 timeOfHiring; // time at which candidate is hired
         bool isHired;
         bool jobConfirmed; // bool if candidate confirms the job
+        address referrer; // address of the referrer
     }
 
      struct Referrer{
@@ -28,6 +29,7 @@ library FrontDoorStructs {
         bool issucceed; // is comapny has succesfully hired the candidate
         uint256 numberOfCandidateHired; // number of candidates hired by the company
         uint256 timeAtWhichJobCreated; // indicates time at which job is created job will only be listed for 30 days
+        bool isDibursed;
     }
     
 

@@ -1,4 +1,6 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-toolbox";
+import "@nomiclabs/hardhat-ethers";
 import * as dotenv from "dotenv";
 import "hardhat-deploy";
 import { HardhatUserConfig } from "hardhat/config";
@@ -14,8 +16,16 @@ const deployerPrivateKey =
 // If not set, it uses ours Etherscan default API key.
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
-const config:HardhatUserConfig = {
-  solidity: "0.8.17",
+const config: HardhatUserConfig = {
+  solidity:{
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
   defaultNetwork: "linea",
   namedAccounts: {
     deployer: {
@@ -70,7 +80,7 @@ const config:HardhatUserConfig = {
     },
     linea: {
       url: "https://linea-goerli.infura.io/v3/0f71ce104c5243a0883f996c1020402f",
-      accounts: ["edd0a374fb70992c742af5ff48618adf91eb6f97656be5ed122a6fc0ff3aed3e"],
+      accounts: [deployerPrivateKey],
       gas: "auto",
       allowUnlimitedContractSize: true,
     },
@@ -80,7 +90,6 @@ const config:HardhatUserConfig = {
       apiKey: `${etherscanApiKey}`,
     },
   },
-  
 };
 
 export default config;

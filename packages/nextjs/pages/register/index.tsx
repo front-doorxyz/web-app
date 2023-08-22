@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
-import { useAccount } from "wagmi";
 import register2 from "~~/assets/register2.jpg";
 import register from "~~/assets/register.jpg";
-import CandidateRegister from "~~/components/CandidateRegister";
 import CompanyRegister from "~~/components/CompanyRegister";
+import ReferrerRegister from "~~/components/ReferrerRegister";
 
 const index: NextPage = () => {
   const [active, setActive] = useState<boolean>(true);
@@ -25,10 +24,10 @@ const index: NextPage = () => {
             Company Register
           </a>
           <a id="2" className={`tab tab-lg tab-lifted ${!active ? "tab-active" : ""}`} onClick={activeTab}>
-            Candidate Register
+            Referrer Register
           </a>
         </div>
-        <div className="flex justify-center">{active ? <CompanyRegister /> : <CandidateRegister />}</div>
+        <div className="flex justify-center">{active ? <CompanyRegister /> : <ReferrerRegister />}</div>
       </div>
       <div className="absolute right-0 hidden mt-[0.2%]   md:block lg:w-[47vw]">
         <div

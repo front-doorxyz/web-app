@@ -5,7 +5,7 @@ const contracts = {
       chainId: "59140",
       contracts: {
         FrontDoorToken: {
-          address: "0xC542e24CC12C6ee3F73BFD319895CD348aA486e4",
+          address: "0x0A3170807ccC30aDbbA5C6487E755Ff0Ab12f3b0",
           abi: [
             {
               inputs: [],
@@ -365,13 +365,18 @@ const contracts = {
           ],
         },
         Recruitment: {
-          address: "0x2b8913aCCf8AC4008DE75C440fA499281C4102f1",
+          address: "0xCA9DeC4a4aEfA15B36D3a09bAD66bf0564C24005",
           abi: [
             {
               inputs: [
                 {
                   internalType: "address",
                   name: "_acceptedTokenAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "_frontDoorAddress",
                   type: "address",
                 },
               ],
@@ -384,24 +389,123 @@ const contracts = {
               type: "error",
             },
             {
-              inputs: [],
-              name: "JobAlreadyDeleted",
-              type: "error",
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "companyAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "candidateAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "CandidateHired",
+              type: "event",
             },
             {
-              inputs: [],
-              name: "NotEnoughFundDepositedByCompany",
-              type: "error",
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "companyAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "candidateAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "CandidateHiredSuccesfullyAfter90Days",
+              type: "event",
             },
             {
-              inputs: [],
-              name: "OnlyJobCreatorAllowedToDelete",
-              type: "error",
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "senderAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "companyAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "score",
+                  type: "uint256",
+                },
+              ],
+              name: "CompanyScoreSubmitted",
+              type: "event",
             },
             {
-              inputs: [],
-              name: "SameCandidateCannotBeReferredTwice",
-              type: "error",
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "DepositCompleted",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "companyAddress",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "JobCreated",
+              type: "event",
             },
             {
               anonymous: false,
@@ -423,22 +527,166 @@ const contracts = {
               type: "event",
             },
             {
+              anonymous: false,
               inputs: [
                 {
+                  indexed: true,
                   internalType: "address",
-                  name: "_candidateAddress",
+                  name: "sender",
                   type: "address",
                 },
                 {
+                  indexed: false,
+                  internalType: "uint8",
+                  name: "month1RefundPct",
+                  type: "uint8",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint8",
+                  name: "month2RefundPct",
+                  type: "uint8",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint8",
+                  name: "month3RefundPct",
+                  type: "uint8",
+                },
+              ],
+              name: "PercentagesCompleted",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "candidateAddress",
+                  type: "address",
+                },
+                {
+                  indexed: true,
                   internalType: "uint256",
-                  name: "_jobId",
+                  name: "jobId",
                   type: "uint256",
                 },
               ],
-              name: "ReferCandidate",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
+              name: "ReferCandidateSuccess",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "candidateAddress",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "referralId",
+                  type: "uint256",
+                },
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "ReferralConfirmed",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "candidateAddress",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "referralId",
+                  type: "uint256",
+                },
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "ReferralRejected",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "senderAddress",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "referrerWallet",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "score",
+                  type: "uint256",
+                },
+              ],
+              name: "ReferralScoreSubmitted",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "string",
+                  name: "email",
+                  type: "string",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "refferer",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "uint256",
+                  name: "jobId",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "referralId",
+                  type: "uint256",
+                },
+              ],
+              name: "RegisterReferral",
+              type: "event",
             },
             {
               inputs: [
@@ -483,6 +731,89 @@ const contracts = {
                 {
                   internalType: "bool",
                   name: "jobConfirmed",
+                  type: "bool",
+                },
+                {
+                  internalType: "address",
+                  name: "referrer",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "candidateListForJob",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "wallet",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "email",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "score",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isScoreGivenByCompany",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeOfHiring",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isHired",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "jobConfirmed",
+                  type: "bool",
+                },
+                {
+                  internalType: "address",
+                  name: "referrer",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_candidateAddress",
+                  type: "address",
+                },
+              ],
+              name: "candidateStatus",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
                   type: "bool",
                 },
               ],
@@ -679,22 +1010,17 @@ const contracts = {
               inputs: [
                 {
                   internalType: "uint256",
-                  name: "jobId",
+                  name: "_jobId",
                   type: "uint256",
                 },
               ],
-              name: "deleteJob",
+              name: "diburseBounty",
               outputs: [],
-              stateMutability: "payable",
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
               inputs: [
-                {
-                  internalType: "uint256",
-                  name: "startId",
-                  type: "uint256",
-                },
                 {
                   internalType: "address",
                   name: "companyWallet",
@@ -740,9 +1066,14 @@ const contracts = {
                       name: "timeAtWhichJobCreated",
                       type: "uint256",
                     },
+                    {
+                      internalType: "bool",
+                      name: "isDibursed",
+                      type: "bool",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Job[]",
-                  name: "jobArray",
+                  name: "",
                   type: "tuple[]",
                 },
               ],
@@ -796,10 +1127,137 @@ const contracts = {
                       name: "jobConfirmed",
                       type: "bool",
                     },
+                    {
+                      internalType: "address",
+                      name: "referrer",
+                      type: "address",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Candidate",
                   name: "",
                   type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "getCandidateHiredJobId",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "wallet",
+                      type: "address",
+                    },
+                    {
+                      internalType: "string",
+                      name: "email",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "score",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isScoreGivenByCompany",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeOfHiring",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isHired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "jobConfirmed",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "address",
+                      name: "referrer",
+                      type: "address",
+                    },
+                  ],
+                  internalType: "struct FrontDoorStructs.Candidate",
+                  name: "",
+                  type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "getCandidateListForJob",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "wallet",
+                      type: "address",
+                    },
+                    {
+                      internalType: "string",
+                      name: "email",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "score",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isScoreGivenByCompany",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeOfHiring",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isHired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "jobConfirmed",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "address",
+                      name: "referrer",
+                      type: "address",
+                    },
+                  ],
+                  internalType: "struct FrontDoorStructs.Candidate[]",
+                  name: "",
+                  type: "tuple[]",
                 },
               ],
               stateMutability: "view",
@@ -831,6 +1289,19 @@ const contracts = {
                   internalType: "struct FrontDoorStructs.CompanyScore[]",
                   name: "",
                   type: "tuple[]",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "getMyRefferals",
+              outputs: [
+                {
+                  internalType: "uint256[]",
+                  name: "",
+                  type: "uint256[]",
                 },
               ],
               stateMutability: "view",
@@ -972,6 +1443,79 @@ const contracts = {
             {
               inputs: [
                 {
+                  internalType: "address",
+                  name: "_company",
+                  type: "address",
+                },
+              ],
+              name: "isCompanyRegistered",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "jobCandidatehire",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "wallet",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "email",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "score",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isScoreGivenByCompany",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timeOfHiring",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isHired",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "jobConfirmed",
+                  type: "bool",
+                },
+                {
+                  internalType: "address",
+                  name: "referrer",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
                   internalType: "uint256",
                   name: "",
                   type: "uint256",
@@ -1013,6 +1557,11 @@ const contracts = {
                   internalType: "uint256",
                   name: "timeAtWhichJobCreated",
                   type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isDibursed",
+                  type: "bool",
                 },
               ],
               stateMutability: "view",
@@ -1139,6 +1688,11 @@ const contracts = {
                       name: "jobConfirmed",
                       type: "bool",
                     },
+                    {
+                      internalType: "address",
+                      name: "referrer",
+                      type: "address",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Candidate",
                   name: "candidate",
@@ -1180,6 +1734,11 @@ const contracts = {
                       internalType: "uint256",
                       name: "timeAtWhichJobCreated",
                       type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isDibursed",
+                      type: "bool",
                     },
                   ],
                   internalType: "struct FrontDoorStructs.Job",
@@ -1274,19 +1833,6 @@ const contracts = {
               type: "function",
             },
             {
-              inputs: [
-                {
-                  internalType: "string",
-                  name: "email",
-                  type: "string",
-                },
-              ],
-              name: "registerCandidate",
-              outputs: [],
-              stateMutability: "nonpayable",
-              type: "function",
-            },
-            {
               inputs: [],
               name: "registerCompany",
               outputs: [],
@@ -1326,7 +1872,13 @@ const contracts = {
                 },
               ],
               name: "registerReferral",
-              outputs: [],
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
               stateMutability: "nonpayable",
               type: "function",
             },

@@ -3,9 +3,17 @@ import { useRouter } from "next/router";
 import JobModal from "./JobModal";
 import TextEditor from "./TextEditor";
 import * as eth from "@polybase/eth";
+import { ethers } from "ethers";
 import { Address, useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { createJobListing, db, readCompanyById, readJobListingById, updateJobListing } from "~~/services/APIs/database";
+import {
+  checkCompanyRegistration,
+  createJobListing,
+  db,
+  readCompanyById,
+  readJobListingById,
+  updateJobListing,
+} from "~~/services/APIs/database";
 import { registerJob } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -33,11 +41,6 @@ const JobFill = ({ type }: Props) => {
     const { name, value } = e.target;
     let parsedValue = value; // Initialize parsedValue with the original value
 
-    if (name === "minSalary" || name === "maxSalary" || name === "bounty") {
-      parsedValue = parseInt(value); // Convert value to an integer
-      // If you want to allow decimal values, use parseFloat instead:
-      // parsedValue = parseFloat(value);
-    }
     setJobInfo({
       ...jobInfo,
       [name]: parsedValue,
@@ -90,37 +93,53 @@ const JobFill = ({ type }: Props) => {
 
   const confirmJob = async () => {
     try {
-      let jobId = await registerJob(jobInfo.bounty);
+      const bountyEthers = ethers.utils.parseEther(jobInfo.bounty);
+      let jobId = await registerJob(bountyEthers);
       console.log(jobId);
 
       if (!jobId) {
         notification.error("Error in smart contract transaction: registerJob");
         return;
       }
-      console.log("jobId", jobId);
-      jobInfo.id = jobId;
+
       const date = getDate();
       const jobData = [
-        jobInfo.id,
+        String(jobId),
         jobInfo.roleTitle,
         jobInfo.description,
         jobInfo.location,
-        jobInfo.maxSalary,
-        jobInfo.minSalary,
-        jobInfo.bounty,
+        Number(jobInfo.maxSalary),
+        Number(jobInfo.minSalary),
+        bountyEthers.toHexString(),
         jobInfo.companyName,
         address,
         jobInfo.type,
         date,
       ];
       console.log([jobData]);
-      await createJobListing(jobData);
+      const data = await createJobListing(jobData);
+      if (data.id) {
+        notification.success("Job Registered sucessfully");
+        router.push("/");
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleJob = async () => {
+    let companyExists;
+    try {
+      companyExists = await checkCompanyRegistration(address);
+    } catch (e) {
+      companyExists = false;
+    }
+    if (!companyExists) {
+      notification.error("Register as a company to post jobs");
+      router.push("/register");
+      return;
+    }
+
     const requiredFields = ["companyName", "description", "roleTitle", "bounty", "maxSalary", "minSalary"];
     const isMissingFields = requiredFields.some(field => !jobInfo[field]);
 
@@ -186,17 +205,22 @@ const JobFill = ({ type }: Props) => {
           value={jobInfo.roleTitle}
         />
       </label>
-      <label className="join flex flex-col gap-2">
-        <span className="indicator-item badge badge-primary"> Bounty</span>
-        <input
-          type="number"
-          placeholder="Type here"
-          className="input input-bordered w-[50vw]"
-          onChange={handleChange}
-          name="bounty"
-          value={jobInfo.bounty}
-        />
-      </label>
+      {type !== "edit" && (
+        <label className="join flex flex-col gap-2">
+          <span className="indicator-item badge badge-primary"> Bounty</span>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            placeholder="Type here"
+            className="input input-bordered w-[50vw]"
+            onChange={handleChange}
+            name="bounty"
+            value={jobInfo.bounty}
+          />
+        </label>
+      )}
+
       <label className="join flex flex-col gap-2">
         <span className="indicator-item badge badge-primary"> Max Salary</span>
         <input
@@ -231,11 +255,11 @@ const JobFill = ({ type }: Props) => {
         />
       </label>
 
-      <button className={`btn btn-primary`} onClick={handleJob} disabled={loading}>
+      <button className={`btn btn-primary`} onClick={handleJob}>
         {type === "edit" ? "Edit Job" : "Add Job"}
       </button>
       {modalOpen && (
-        <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} jobInfo={jobInfo} />
+        <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={false} jobInfo={jobInfo} />
       )}
     </div>
   );

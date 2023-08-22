@@ -1,3 +1,31 @@
+import { Contract, ContractFactory } from "ethers";
+import hre from "hardhat";
+
+const ethers = hre.ethers;
+
+// async function deployContract() {
+//   await hre.run("compile"); // We are compiling the contracts using subtask
+//   const [owner, company, referrer, referree, frontDoorWallet] = await ethers.getSigners();
+
+//   console.log("Deploying contracts with the account:", owner.address); // We are printing the address of the deployer
+
+//   const DummyToken: ContractFactory = await ethers.getContractFactory("FrontDoorToken");
+//   const dummyToken: Contract = await DummyToken.deploy();
+//   await dummyToken.deployed();
+//   const tkns = ethers.utils.parseEther("1000");
+//   await dummyToken.transfer(company.getAddress(), tkns);
+//   await dummyToken.transfer(referrer.getAddress(), tkns);
+//   await dummyToken.transfer(referree.getAddress(), tkns);
+//   const Recruitment: ContractFactory = await ethers.getContractFactory("Recruitment");
+//   const recruitment: Contract = await Recruitment.deploy(dummyToken.address, frontDoorWallet.address);
+//   await recruitment.deployed();
+//   console.log("DummyToken deployed to:", dummyToken.address);
+//   console.log("Recruitment deployed to:", recruitment.address);
+// }
+
+// module.exports = deployContract;
+
+
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
@@ -50,7 +78,7 @@ const deployRecruitmentContract: DeployFunction =async function (hre: HardhatRun
  
   await deploy("Recruitment", {
     from: deployer,
-    args: [FrontDoorToken.address],
+    args: [FrontDoorToken.address,"0xf35239d2c73c1f0e1E5ee8D174E0479a4040c26C"],
     log: true,
     autoMine: true,
   });

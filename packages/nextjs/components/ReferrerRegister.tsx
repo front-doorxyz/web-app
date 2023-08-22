@@ -3,16 +3,17 @@ import { useRouter } from "next/router";
 import * as eth from "@polybase/eth";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
-import { db, registerCandidate } from "~~/services/APIs/database";
+import { db, registerReferrer } from "~~/services/APIs/database";
+import { registerReferrer as registerReffererSC } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
-const CandidateRegister = () => {
-  const { setCandidate, setRegistered } = useContext(GeneralContext);
+const ReferrerRegister = () => {
+  const { setRefferer, setRegistered } = useContext(GeneralContext);
   const { address } = useAccount();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [portfolio, setPortfolio] = useState("");
+
   db.signer(async (data: string) => {
     const sig = await eth.sign(data, address);
     return { h: "eth-personal-sign", sig };
@@ -26,32 +27,15 @@ const CandidateRegister = () => {
     setEmail(event.target.value);
   };
 
-  const handlePortfolioChange = event => {
-    setPortfolio(event.target.value);
-  };
-
   const handleRegister = async () => {
-    if (!isValidURL(portfolio)) {
-      notification.error("Pls enter a proper url ");
-      return;
-    }
-    const candidateData = [address, name, email, portfolio];
-
-    const candidate = await registerCandidate(candidateData);
-    if (candidate.id) {
-      setCandidate(true);
+    const tx = await registerReffererSC(email);
+    console.log(tx);
+    const referrerData = [address, name, email];
+    const referrer = await registerReferrer(referrerData);
+    if (referrer.id) {
       setRegistered(true);
       notification.success("registration successfull");
       router.push("/");
-    }
-  };
-
-  const isValidURL = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      return false;
     }
   };
 
@@ -71,7 +55,7 @@ const CandidateRegister = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <span className="indicator-item badge badge-primary">Description</span>
+          <span className="indicator-item badge badge-primary">Email</span>
           <input
             type="text"
             value={email}
@@ -79,15 +63,7 @@ const CandidateRegister = () => {
             className="input input-bordered w-[200px] md:w-[20vw]"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <span className="indicator-item badge badge-primary">Portfolio / Socials</span>
-          <input
-            type="text"
-            value={portfolio}
-            onChange={handlePortfolioChange}
-            className="input input-bordered w-[200px] md:w-[20vw]"
-          />
-        </div>
+
         <button className="btn btn-primary w-[200px] md:w-[20vw]" onClick={handleRegister}>
           Register
         </button>
@@ -96,4 +72,4 @@ const CandidateRegister = () => {
   );
 };
 
-export default CandidateRegister;
+export default ReferrerRegister;

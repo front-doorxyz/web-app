@@ -1,0 +1,40 @@
+{
+  "version": "0.1.0",
+  "description": "Front Door Snaps to execute cron jobs.",
+  "proposedName": "Front Door Snaps",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+  },
+  "source": {
+    "shasum": "cvZx0BTdYh2nhX8j9doSKTOAU1oMtqLSIC57vrP13g0=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_notify": {},
+    "endowment:ethereum-provider": {},
+    "snap_dialog": {},
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": false
+    },
+    "endowment:cronjob": {
+      "jobs": [
+        {
+          "expression": "* * * * *",
+          "request": {
+            "method": "checkStatus"
+          }
+        }
+      ]
+    }
+  },
+  "manifestVersion": "0.1"
+}

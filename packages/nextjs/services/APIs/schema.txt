@@ -93,15 +93,17 @@ collection Jobs {
     this.status = status;
   }
 
-  applyCandidate(candidateId:string){
-    this.candidates.push(candidateId)
+  applyCandidate(
+    candidateId:string
+  )
+  {
+    this.candidates.push(candidateId);
   }
 }
 
 @public
 collection Companies {
   id: string;
-  publicKey:PublicKey;
   companyName: string;
   description: string;
   companySite:string;
@@ -112,7 +114,7 @@ collection Companies {
     description: string,
     companySite:string
   ) {
-    this.id = ctx.publicKey;
+    this.id = id;
     this.companyName = companyName;
     this.description = description;
     this.companySite = companySite;
@@ -121,22 +123,42 @@ collection Companies {
 
 
 @public
-collection Candidates {
+collection Referrers {
   id: string;
-  publicKey:PublicKey;
-  candidateName: string;
-  description: string;
-  candidateSite:string;
-
+  referrerName: string;
+  email: string;
+ 
    constructor(
     id: string,
-    candidateName: string,
-    description: string,
-    candidateSite:string
+    referrerName: string,
+    email: string
+    
   ) {
-    this.id = ctx.publicKey;
-    this.candidateName = candidateName;
-    this.description = description;
-    this.candidateSite = candidateSite;
+    this.id = id;
+    this.referrerName = referrerName;
+    this.email = email;
+    
+  }
+}
+
+
+@public
+collection Candidates {
+  id: string;
+  name: string;
+  email: string;
+  site:string;
+ 
+   constructor(
+    id: string,
+    name: string,
+    email: string,
+    site:string
+    
+  ) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.site = site;
   }
 }
