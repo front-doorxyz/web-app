@@ -77,8 +77,9 @@ Contract address for both --
 - FrontDoor token -- https://explorer.goerli.linea.build/address/0x0A3170807ccC30aDbbA5C6487E755Ff0Ab12f3b0
 - Recruitment -- https://explorer.goerli.linea.build/address/0xCA9DeC4a4aEfA15B36D3a09bAD66bf0564C24005
 
-# Testing using URL
+# Testing using URL -- for flask/snaps run the local version
 
+url -- https://front-door-bhavyagor12.vercel.app/ (if this shows a client error its because you dont have flask wallet)
 Currently Jobs are only created by the contract owner as FrontDoor Tokens distribution is a Future Use case.
 (if you want you can use the contact us page and send us your information, we will forward you some Front Door tokens to be registered as a company).
 So for testing other flows, like refer candidates ... register as a referrer first
@@ -94,6 +95,7 @@ Note: [As this is a development build, there might be some places where loading 
 
 yarn in root directory
 yarn start
+will run it on localhost:3000
 
 ## Smartcontract
 
@@ -101,4 +103,11 @@ yarn compile
 yarn deploy
 view -- cd packages/hardhat/contracts
 
-## Snaps
+## Snaps will only work locally
+
+cd packages/front-door-snaps
+yarn
+cd snap/
+yarn build:clean
+yarn serve
+will run snap on localhost:8080
