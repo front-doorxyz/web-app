@@ -20,8 +20,14 @@
     "aws": "yarn aws:profile && yarn build:yolo && yarn aws:release && yarn aws:purge"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@ceramicnetwork/cli": "^2.31.0",
+    "@polybase/eth": "^0.6.5",
     "@composedb/client": "^0.4.4",
+    "emailjs-com": "^3.2.0",
     "@ethersproject/networks": "^5.7.1",
     "@ethersproject/web": "^5.7.1",
     "@heroicons/react": "^2.0.11",
