@@ -360,7 +360,7 @@ const abi =  [
   }
 ];
 
-const getJobsFromCompany = async (): Promise<string> => {
+const getJobsFromCompany = async () => {
   const now = Date.now();
   const jobsToDiburse = [];
   console.log('from Snap');
@@ -405,9 +405,9 @@ export const onCronjob: OnCronjobHandler = async ({ request }) => {
       return snap.request({
         method: 'snap_dialog',
         params: {
-          type: 'Prompt',
+          type: 'prompt',
           heading: 'You have jobs to diburse',
-          text: `You have ${jobsToDiburse.length} jobs to diburse`,
+          text: `You have ${jobsToDiburse?.length} jobs to diburse`,
         },
       });
 
