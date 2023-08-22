@@ -1,7 +1,6 @@
 import { OnCronjobHandler, OnRpcRequestHandler } from '@metamask/snaps-types';
 import { panel, text } from '@metamask/snaps-ui';
 import { ethers } from 'ethers';
-import { getAllJobsOfCompany } from '../../../../nextjs/services/APIs/smartContract';
 
 const abi = [
   {
@@ -1460,6 +1459,8 @@ const abi = [
 ];
 
 const getJobsFromCompany = async (): Promise<string> => {
+  const now = Date.now();
+  const jobsToDiburse = [];
   console.log('from Snap');
   if (ethereum === null) {
     return 'Not Conected';
@@ -1473,32 +1474,38 @@ const getJobsFromCompany = async (): Promise<string> => {
   );
   const from = await (await provider.getSigner()).getAddress();
   console.log(from);
-  let jobs;
-  try {
-    jobs = await contract.getAllJobsOfCompany(from);
-  } catch (err) {
-    console.log(err);
-    return 'Error fetching jobs';
-  }
 
-  if (jobs?.length === 0) {
-    return 'No jobs found';
-  }
+  if (await contract.isCompanyRegistered(from) === true) {
+    try {
+      const jobs = await contract.getAllJobsOfCompany(from);
+      for(let i = 0; i < jobs.length; i++) {
+        if(jobs[i][4] === true) {
+          if(jobs[i][7]=== false){
+            const candidate =  await contract.getCandidateListForJob(jobs[i][0]);
+            const timeFromHired = now - candidate[4];
+            if(timeFromHired > 60000) {
+              jobsToDiburse.push(jobs[i][0]);
+          }
+        }
+      }
 
-  for (let i = 0; i < jobs.length; i++) {
-    console.log(jobs[i]);
+    }}
+    catch(err) {
+      console.log(err);
+    }
   }
-  return 'jobs found';
 };
 
 export const onCronjob: OnCronjobHandler = async ({ request }) => {
   switch (request.method) {
     case 'checkStatus':
+      const jobsToDiburse = await getJobsFromCompany();
       return snap.request({
-        method: 'snap_notify',
+        method: 'snap_dialog',
         params: {
-          type: 'inApp',
-          message: await getJobsFromCompany(),
+          type: 'Prompt',
+          heading: 'You have jobs to diburse',
+          text: `You have ${jobsToDiburse.length} jobs to diburse`,
         },
       });
 

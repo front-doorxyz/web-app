@@ -29,6 +29,7 @@ library FrontDoorStructs {
         bool issucceed; // is comapny has succesfully hired the candidate
         uint256 numberOfCandidateHired; // number of candidates hired by the company
         uint256 timeAtWhichJobCreated; // indicates time at which job is created job will only be listed for 30 days
+        bool isDibursed;
     }
     
 

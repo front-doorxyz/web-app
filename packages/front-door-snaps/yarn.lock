@@ -3045,9 +3045,9 @@ __metadata:
   linkType: hard
 
 "@eslint-community/regexpp@npm:^4.4.0, @eslint-community/regexpp@npm:^4.6.1":
-  version: 4.6.2
-  resolution: "@eslint-community/regexpp@npm:4.6.2"
-  checksum: a3c341377b46b54fa228f455771b901d1a2717f95d47dcdf40199df30abc000ba020f747f114f08560d119e979d882a94cf46cfc51744544d54b00319c0f2724
+  version: 4.7.0
+  resolution: "@eslint-community/regexpp@npm:4.7.0"
+  checksum: 09b8d11a9957b58be870d76e36b718030ba2215e1fb9d009f7a0833733c86b47d8528c47808eeef389145ca198abc3ea4d169452840e36142ecfb9491e3a1d16
   languageName: node
   linkType: hard
 
@@ -10979,9 +10979,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.497
-  resolution: "electron-to-chromium@npm:1.4.497"
-  checksum: 36822e0b487e2ecbb8c94e85cecd1040b51639634c89e532d85944be3b34816f648c1c83f5aab3d1d1f9ef58df4f21563741470f1fbb77da4670ee58113ef40a
+  version: 1.4.498
+  resolution: "electron-to-chromium@npm:1.4.498"
+  checksum: 01962ae42e9097c321cb6ff63ca97dfd36457050727893d1768e6eb1b7d5a48ece568b94b1128fd0211f7ce3a31aca0c17eb72b1292d9b5ef7b0664d90dfe3aa
   languageName: node
   linkType: hard
 

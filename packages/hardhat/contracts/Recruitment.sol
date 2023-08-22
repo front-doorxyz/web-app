@@ -101,7 +101,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
   function registerJob(uint256 bounty) external payable nonReentrant checkIfItisACompany(msg.sender) returns (uint256) {
     uint256 jobId = jobIdCounter;
     require(bounty > 0, "Bounty should be greater than 0"); // check if company is giving bounty or not
-    FrontDoorStructs.Job memory job = FrontDoorStructs.Job(jobId, bounty, false, msg.sender, false, 0, block.timestamp);
+    FrontDoorStructs.Job memory job = FrontDoorStructs.Job(jobId, bounty, false, msg.sender, false, 0, block.timestamp,false);
     jobList[jobId] = job;
     jobIdCounter++;
     companyList[msg.sender].jobsCreated++;
@@ -270,13 +270,20 @@ contract Recruitment is Ownable, ReentrancyGuard {
     return candidateList[_candidateAddress].isHired;
   }
 
+  function getCandidateHiredJobId(uint256 _jobId) public view returns(FrontDoorStructs.Candidate memory){
+    return jobCandidatehire[_jobId];
+  }
 
-  function diburseBounty(uint256 _jobId) external checkIfItisACompany(msg.sender){
+
+  function diburseBounty(uint256 _jobId) external nonReentrant checkIfItisACompany(msg.sender){
     require(jobList[_jobId].issucceed == true, "Job is not succeed yet");
     require(jobList[_jobId].numberOfCandidateHired > 0, "No candidate is hired yet");
+    require(jobList[_jobId].isDibursed == false, "Bounty is already dibursed");
     // commented for test purposes 
     //require(jobList[_jobId].timeAtWhichJobCreated + 90 days < block.timestamp, "90 days are not completed yet");
     require(jobList[_jobId].creator == msg.sender, "Only job creator can diburse");
+
+    jobList[_jobId].isDibursed = true;
     uint256 bounty = jobList[_jobId].bounty;
     ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
     ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
