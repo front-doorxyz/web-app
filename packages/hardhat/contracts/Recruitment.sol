@@ -59,7 +59,7 @@ contract Recruitment is Ownable, ReentrancyGuard {
    * @dev Checks whether the address of Company is in CompanyList or not
    */
   modifier checkIfItisACompany(address _address) {
-    require(isCompany[_address] == true, "Company is not registered yet");
+    require(isCompanyRegistered(_address), "Company is not registered yet");
     _;
   }
 
@@ -80,6 +80,11 @@ contract Recruitment is Ownable, ReentrancyGuard {
   }
 
   //   Register Functions
+
+
+  function isCompanyRegistered(address _company) view public returns (bool) {
+    return isCompany[_company];
+  }
 
   /**
    * @notice Register a Referrer with email
