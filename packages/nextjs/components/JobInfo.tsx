@@ -24,8 +24,6 @@ type Props = {
 const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
   const { id } = useContext(GeneralContext);
-
-  const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
   const [jobInfo, setJobInfo] = useState<any>({
@@ -95,8 +93,15 @@ const JobFill = ({ type }: Props) => {
 
   const confirmJob = async () => {
     try {
-      setLoading(true);
       const bountyEthers = ethers.utils.parseEther(jobInfo.bounty);
+      let jobId = await registerJob(bountyEthers);
+      console.log(jobId);
+
+      if (!jobId) {
+        notification.error("Error in smart contract transaction: registerJob");
+        return;
+      }
+
       const date = getDate();
       const jobData = [
         String(1),
@@ -114,7 +119,6 @@ const JobFill = ({ type }: Props) => {
       console.log([jobData]);
       const data = await createJobListing(jobData);
       if (data.id) {
-        setLoading(false);
         notification.success("Job Registered sucessfully");
         router.push("/");
       }
@@ -124,7 +128,6 @@ const JobFill = ({ type }: Props) => {
   };
 
   const handleJob = async () => {
-    setLoading(true);
     let companyExists;
     try {
       companyExists = await checkCompanyRegistration(address);
@@ -134,7 +137,6 @@ const JobFill = ({ type }: Props) => {
     if (!companyExists) {
       notification.error("Register as a company to post jobs");
       router.push("/register");
-      setLoading(false);
       return;
     }
 
@@ -143,7 +145,6 @@ const JobFill = ({ type }: Props) => {
 
     if (isMissingFields) {
       notification.warning("Please fill in all the required fields.");
-      setLoading(false);
       return;
     }
 
