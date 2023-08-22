@@ -69,7 +69,7 @@ Both are hosted on Linea testnets
 Contract address for both --
 
 - FrontDoor token -- https://explorer.goerli.linea.build/address/0x0A3170807ccC30aDbbA5C6487E755Ff0Ab12f3b0
-- Recruitment -- https://explorer.goerli.linea.build/address/0x4869bE332eA3214C935703120FE4FF0bd1736F5E
+- Recruitment -- https://explorer.goerli.linea.build/address/0xCA9DeC4a4aEfA15B36D3a09bAD66bf0564C24005
 
 ## Testing Locally
 

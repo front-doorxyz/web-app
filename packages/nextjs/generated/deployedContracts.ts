@@ -365,7 +365,7 @@ const contracts = {
           ],
         },
         Recruitment: {
-          address: "0x4869bE332eA3214C935703120FE4FF0bd1736F5E",
+          address: "0xCA9DeC4a4aEfA15B36D3a09bAD66bf0564C24005",
           abi: [
             {
               inputs: [
@@ -1066,6 +1066,11 @@ const contracts = {
                       name: "timeAtWhichJobCreated",
                       type: "uint256",
                     },
+                    {
+                      internalType: "bool",
+                      name: "isDibursed",
+                      type: "bool",
+                    },
                   ],
                   internalType: "struct FrontDoorStructs.Job[]",
                   name: "",
@@ -1084,6 +1089,67 @@ const contracts = {
                 },
               ],
               name: "getCandidate",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "wallet",
+                      type: "address",
+                    },
+                    {
+                      internalType: "string",
+                      name: "email",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "score",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isScoreGivenByCompany",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "timeOfHiring",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isHired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "jobConfirmed",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "address",
+                      name: "referrer",
+                      type: "address",
+                    },
+                  ],
+                  internalType: "struct FrontDoorStructs.Candidate",
+                  name: "",
+                  type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_jobId",
+                  type: "uint256",
+                },
+              ],
+              name: "getCandidateHiredJobId",
               outputs: [
                 {
                   components: [
@@ -1492,6 +1558,11 @@ const contracts = {
                   name: "timeAtWhichJobCreated",
                   type: "uint256",
                 },
+                {
+                  internalType: "bool",
+                  name: "isDibursed",
+                  type: "bool",
+                },
               ],
               stateMutability: "view",
               type: "function",
@@ -1663,6 +1734,11 @@ const contracts = {
                       internalType: "uint256",
                       name: "timeAtWhichJobCreated",
                       type: "uint256",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isDibursed",
+                      type: "bool",
                     },
                   ],
                   internalType: "struct FrontDoorStructs.Job",
