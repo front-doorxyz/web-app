@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "start": "next dev",
-    "build": "next build",
-    "build:yolo": "export NEXT_PUBLIC_IGNORE_BUILD_ERROR=true && next build",
+    "build": "next dev",
+    "build:yolo": "export NEXT_PUBLIC_IGNORE_BUILD_ERROR=true && next dev",
     "serve": "next start",
     "lint": "next lint",
     "format": "prettier --write . '!(node_module|.next|contracts)/**/*'",
