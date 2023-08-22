@@ -10,6 +10,7 @@ import { notification } from "~~/utils/scaffold-eth";
 const CompanyRegister = () => {
   const { setRegistered } = useContext(GeneralContext);
   const { address } = useAccount();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [companyName, setCompanyName] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
@@ -34,11 +35,12 @@ const CompanyRegister = () => {
     }
 
     const companyData = [address, companyName, companyDescription, companySite];
-
+    setLoading(true);
     await registerCompanySC();
     const company = await registerCompany(companyData);
     if (company.id) {
       setRegistered(true);
+      setLoading(false);
       notification.success("registration successfull");
       router.push("/client");
     }
@@ -77,7 +79,7 @@ const CompanyRegister = () => {
           />
         </div>
 
-        <button className="btn btn-primary w-[200px] md:w-[20vw]" onClick={handleCompanyRegister}>
+        <button className="btn btn-primary w-[200px] md:w-[20vw]" onClick={handleCompanyRegister} disabled={loading}>
           Register
         </button>
       </div>

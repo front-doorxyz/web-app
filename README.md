@@ -29,6 +29,12 @@ Our solution involves 3 user personas:
 - Referrers -- Introducing trusted candidates to jobs, this activity forms the basis of an on-chain reputation system
 - Referee/Candidate -- People looking for jobs
 
+#### Data Model
+
+Core logic and data is stored in Smart contracts, namely like information about jobId, bounty, registration of referrals and so on.
+Polybase for Off chain data as jobs, candidates and referrers have so much data to work with we store data off chain that is not required by the on chain methods.
+Polybase collection -- https://explorer.testnet.polybase.xyz/studio/pk%2F0xbaeff2028f7c15332ab23549f09c33eee5cb9231559067afe56f975ea6a4b660b1e32eead19b6a8bd48d8347fa3753c8749d43b9a8716905c0fc8a3c70e3e9b1%2Fnavh-final
+
 #### Companies
 
 Companies require candidate applicants and post jobs to source candidates and hire through the platform. Each job posted has a bounty associated (part of the incentive mechanism). This bounty is collected to make sure the jobs being posted are important and legitimate. Bounties incentivise Referrers to refer their contacts to the Companies job.
@@ -49,8 +55,8 @@ Once a Referrer refers a Candidate, the Candidate receives an email from Front D
 ###### Bounty Distribution
 
 - Referrer Share -- 65%
-- Candidate Share -- 25%
-- Front Door Share -- 10%
+- Candidate Share -- 10%
+- Front Door Share -- 25%
 
 Bounties are fairly distributed to the key stakeholders to incentivise productive behavior and encourage broad adoption.
 [Future Scope] -- We plan to introduce scoring mechanisms to add more transparency. Each persona Referrer, Company, Candidate will have an on Chain Score. This Score can be used to verify the authenticity of stakeholders.
@@ -71,13 +77,28 @@ Contract address for both --
 - FrontDoor token -- https://explorer.goerli.linea.build/address/0x0A3170807ccC30aDbbA5C6487E755Ff0Ab12f3b0
 - Recruitment -- https://explorer.goerli.linea.build/address/0xCA9DeC4a4aEfA15B36D3a09bAD66bf0564C24005
 
-## Testing Locally
+# Testing using URL
 
-yarn in the web-app directory
-yarn start from same web-app
+Currently Jobs are only created by the contract owner as FrontDoor Tokens distribution is a Future Use case.
+(if you want you can use the contact us page and send us your information, we will forward you some Front Door tokens to be registered as a company).
+So for testing other flows, like refer candidates ... register as a referrer first
+You will need a wallet address with Linea Goerli TestEth. (referrer wallet)
+And have another wallet address with Linea Goerli TestEth. (candidate wallet)
+
+Refer the candidate using refer options and use Candidate email, as a parameter. The candidate will receive an email for the confirmReferral. Once that is done the jobOwner can see the list of candidates applied for the job. Currently this will only be available to us as contract owners. Make sure to add Candidate Social profiles like github, that can be viewed by the company to contact the candidate.
+Only the unique candidates, get pushed to candidate array in the Jobs
+
+Note: [As this is a development build, there might be some places where loading states are not defined due to the rush of the hackathon, Be patient with the transactions!]
+
+## Testing frontend
+
+yarn in root directory
+yarn start
 
 ## Smartcontract
 
 yarn compile
 yarn deploy
 view -- cd packages/hardhat/contracts
+
+## Snaps

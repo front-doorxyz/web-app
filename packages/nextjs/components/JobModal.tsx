@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { GeneralContext } from "~~/providers/GeneralContext";
 
 type Props = {
   setModal: (value: boolean) => void;
   addJob: () => void;
-  loading: boolean;
   jobInfo: any;
 };
 
@@ -78,7 +76,7 @@ const JobModal = (props: Props) => {
             <button
               className={`btn btn-primary`}
               onClick={props.addJob}
-              disabled={props.loading}
+
               // onClick={() => createJobListing(jobInfo)}
             >
               Confirm Job

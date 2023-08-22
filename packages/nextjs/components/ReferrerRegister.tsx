@@ -9,6 +9,7 @@ import { notification } from "~~/utils/scaffold-eth";
 
 const ReferrerRegister = () => {
   const { setRefferer, setRegistered } = useContext(GeneralContext);
+  const [loading, setLoading] = useState(false);
   const { address } = useAccount();
   const router = useRouter();
   const [name, setName] = useState("");
@@ -29,10 +30,12 @@ const ReferrerRegister = () => {
 
   const handleRegister = async () => {
     const tx = await registerReffererSC(email);
+    setLoading(true);
     console.log(tx);
     const referrerData = [address, name, email];
     const referrer = await registerReferrer(referrerData);
     if (referrer.id) {
+      setLoading(false);
       setRegistered(true);
       notification.success("registration successfull");
       router.push("/");
@@ -64,7 +67,7 @@ const ReferrerRegister = () => {
           />
         </div>
 
-        <button className="btn btn-primary w-[200px] md:w-[20vw]" onClick={handleRegister}>
+        <button className="btn btn-primary w-[200px] md:w-[20vw]" onClick={handleRegister} disabled={loading}>
           Register
         </button>
       </div>

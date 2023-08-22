@@ -23,8 +23,9 @@ type Props = {
 
 const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
-  const { id, loading } = useContext(GeneralContext);
+  const { id } = useContext(GeneralContext);
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [jobInfo, setJobInfo] = useState<any>({
     companyName: "",
@@ -95,6 +96,7 @@ const JobFill = ({ type }: Props) => {
     try {
       const bountyEthers = ethers.utils.parseEther(jobInfo.bounty);
       let jobId = await registerJob(bountyEthers);
+      setLoading(true);
       console.log(jobId);
 
       if (!jobId) {
@@ -119,6 +121,7 @@ const JobFill = ({ type }: Props) => {
       console.log([jobData]);
       const data = await createJobListing(jobData);
       if (data.id) {
+        setLoading(false);
         notification.success("Job Registered sucessfully");
         router.push("/");
       }
@@ -163,8 +166,10 @@ const JobFill = ({ type }: Props) => {
         jobInfo.type,
         date,
       ];
+      setLoading(true);
       const jobUpdated = await updateJobListing(jobInfo.id, jobData);
       if (jobUpdated.id !== "") {
+        setLoading(false);
         notification.success("Job Updated");
         router.push("/");
       } else {
@@ -258,9 +263,7 @@ const JobFill = ({ type }: Props) => {
       <button className={`btn btn-primary`} onClick={handleJob}>
         {type === "edit" ? "Edit Job" : "Add Job"}
       </button>
-      {modalOpen && (
-        <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={false} jobInfo={jobInfo} />
-      )}
+      {modalOpen && <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} jobInfo={jobInfo} />}
     </div>
   );
 };
