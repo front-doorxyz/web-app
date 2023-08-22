@@ -97,10 +97,10 @@ export const deleteJob = async (jobId: number) => {
           return el.event == "RegisterReferral";
         });
         console.log(registerEvent);
-        const [refereeMail] = registerEvent?.args;
+        const [mail,address,jobid,referralId] = registerEvent?.args;
         console.log("Success! Transaction hash:", receipt.transactionHash);
         notification.success("Referral Registered successfully");
-        return receipt?.data ? receipt?.data : null;
+        return referralId ? Number(referralId) : null;
     }
     catch(error){
         console.log('Error'+error)
