@@ -23,7 +23,7 @@ type Props = {
 
 const JobFill = ({ type }: Props) => {
   const { address } = useAccount();
-  const { id } = useContext(GeneralContext);
+  const { id, loading } = useContext(GeneralContext);
   const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
   const [jobInfo, setJobInfo] = useState<any>({

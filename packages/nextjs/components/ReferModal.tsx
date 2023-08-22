@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 import emailjs from "emailjs-com";
 import { ethers } from "ethers";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -7,8 +8,6 @@ import { GeneralContext } from "~~/providers/GeneralContext";
 import { checkReferrerRegistration } from "~~/services/APIs/database";
 import { registerReferral } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
-
-
 
 type Props = {
   jobId: string;
@@ -49,8 +48,8 @@ const ReferModal = ({ setReferModal, jobId, address }: Props) => {
     } catch (e) {
       console.log(e);
     }
-
     setLoading(false);
+    setReferModal(false);
   };
 
   return (
