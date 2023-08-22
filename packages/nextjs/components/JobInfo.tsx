@@ -104,7 +104,7 @@ const JobFill = ({ type }: Props) => {
 
       const date = getDate();
       const jobData = [
-        String(1),
+        String(jobId),
         jobInfo.roleTitle,
         jobInfo.description,
         jobInfo.location,
@@ -255,11 +255,11 @@ const JobFill = ({ type }: Props) => {
         />
       </label>
 
-      <button className={`btn btn-primary`} onClick={handleJob} disabled={loading}>
+      <button className={`btn btn-primary`} onClick={handleJob}>
         {type === "edit" ? "Edit Job" : "Add Job"}
       </button>
       {modalOpen && (
-        <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={loading} jobInfo={jobInfo} />
+        <JobModal setModal={() => setModalOpen(false)} addJob={confirmJob} loading={false} jobInfo={jobInfo} />
       )}
     </div>
   );

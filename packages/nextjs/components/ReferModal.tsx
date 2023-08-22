@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
+import emailjs from "emailjs-com";
 import { ethers } from "ethers";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { GeneralContext } from "~~/providers/GeneralContext";
 import { checkReferrerRegistration } from "~~/services/APIs/database";
 import { registerReferral } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
+
+
 
 type Props = {
   jobId: string;
@@ -17,7 +20,8 @@ const ReferModal = ({ setReferModal, jobId, address }: Props) => {
   const [refereeMail, setRefereeMail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
+  const emailjsKey = process.env.NEXT_PUBLIC_EMAILJS_KEY;
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICEID;
   const registerReferralSC = async () => {
     let referrerExists;
     try {
@@ -32,6 +36,19 @@ const ReferModal = ({ setReferModal, jobId, address }: Props) => {
     }
     setLoading(true);
     const refId = await registerReferral(Number(jobId), refereeMail);
+    const emailArgs = { to: refereeMail, refId: refId, jobId: Number(jobId) };
+    try {
+      emailjs.send("service_gb5wvzu", "template_mc7f9wm", emailArgs, "vmYs4tBmmwGXZk563").then(
+        (result: { text: any }) => {
+          notification.success("Referral sent successfully");
+        },
+        (error: { text: any }) => {
+          notification.error("Referral failed");
+        },
+      );
+    } catch (e) {
+      console.log(e);
+    }
 
     setLoading(false);
   };
