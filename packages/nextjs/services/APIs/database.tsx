@@ -2,7 +2,7 @@ import { Polybase } from "@polybase/client";
 
 export const db = new Polybase({
   defaultNamespace:
-    "pk/0xbaeff2028f7c15332ab23549f09c33eee5cb9231559067afe56f975ea6a4b660b1e32eead19b6a8bd48d8347fa3753c8749d43b9a8716905c0fc8a3c70e3e9b1/navh-2",
+    "pk/0xbaeff2028f7c15332ab23549f09c33eee5cb9231559067afe56f975ea6a4b660b1e32eead19b6a8bd48d8347fa3753c8749d43b9a8716905c0fc8a3c70e3e9b1/navh-3",
 });
 
 const jobsReference = db.collection("Jobs");

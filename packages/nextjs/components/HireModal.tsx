@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { BigNumber, ethers } from "ethers";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { hireCandidate } from "~~/services/APIs/smartContract";
@@ -12,12 +13,14 @@ type Props = {
 
 const HireModal = ({ setHireModal, candidate, jobInfo, jobId }: Props) => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const confirmHire = async () => {
     const candidateAddress = candidate.id;
     setLoading(true);
     const data = await hireCandidate(candidateAddress, Number(jobId));
     setLoading(false);
+    router.push("/");
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">

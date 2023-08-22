@@ -27,16 +27,19 @@ const JobCandidates: NextPage = () => {
   }, [router]);
 
   useEffect(() => {
-    if (jobInfo?.candidates && jobInfo?.candidates > 0) {
+    if (jobInfo?.candidates && jobInfo?.candidates.length > 0) {
+      console.log("HERE");
       getCandidatesInfo();
     }
   }, [jobInfo]);
   const [candidates, setCandidates] = useState([]);
 
   const getCandidatesInfo = async () => {
+    console.log("HERE");
     setLoading(true);
     const candidateDataPromises = jobInfo.candidates.map(async (id: string) => {
       const data = await readCandidateById(id);
+      console.log(data);
       return {
         id, // Assuming candidate is the ID
         name: data?.name,

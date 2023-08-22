@@ -4,6 +4,7 @@ import * as eth from "@polybase/eth";
 import { useAccount } from "wagmi";
 import { GeneralContext } from "~~/providers/GeneralContext";
 import { db, registerReferrer } from "~~/services/APIs/database";
+import { registerReferrer as registerReffererSC } from "~~/services/APIs/smartContract";
 import { notification } from "~~/utils/scaffold-eth";
 
 const ReferrerRegister = () => {
@@ -27,13 +28,11 @@ const ReferrerRegister = () => {
   };
 
   const handleRegister = async () => {
-    const referrerData = [address, name, email];
-    const tx = registerReferrer(email);
+    const tx = await registerReffererSC(email);
     console.log(tx);
-
+    const referrerData = [address, name, email];
     const referrer = await registerReferrer(referrerData);
     if (referrer.id) {
-      setRefferer(true);
       setRegistered(true);
       notification.success("registration successfull");
       router.push("/");
