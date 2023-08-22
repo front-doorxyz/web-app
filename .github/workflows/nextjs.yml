@@ -76,7 +76,7 @@ jobs:
       - name: Build with Next.js
         run: |
           cd packages/nextjs
-          ${{ steps.detect-package-manager.outputs.runner }} next build
+          ${{ steps.detect-package-manager.outputs.runner }} next dev
       - name: Static HTML export with Next.js
         run: |
           cd packages/nextjs
