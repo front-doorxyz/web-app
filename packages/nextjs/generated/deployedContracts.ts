@@ -365,7 +365,7 @@ const contracts = {
           ],
         },
         Recruitment: {
-          address: "0x091EeFd772AF26a47fc34128a2576FCa67ECa3Ac",
+          address: "0x4869bE332eA3214C935703120FE4FF0bd1736F5E",
           abi: [
             {
               inputs: [
@@ -1364,6 +1364,25 @@ const contracts = {
                 },
               ],
               name: "isCompany",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_company",
+                  type: "address",
+                },
+              ],
+              name: "isCompanyRegistered",
               outputs: [
                 {
                   internalType: "bool",
