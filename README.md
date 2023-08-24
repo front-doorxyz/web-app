@@ -10,6 +10,8 @@ Improved collaboration would:
 - Enable individuals and community leads to refer-to-earn from their professional networks
   Front Door uses Web3 tools and technology to solve a Web2 human coordination problem with a huge size of prize.
 
+We are looking for Development Partners to Beta Test the Application and give us feedback for improvement. If your interested in doing so please reach out to Thomas@Front-Door.xyz
+
 ## Problem
 
 A few key factors block scalable cooperation within the Recruitment ecosystem, revolving around Trust, Reputation, Incentive Design, and Transparency.
@@ -111,3 +113,7 @@ cd snap/
 yarn build:clean
 yarn serve
 will run snap on localhost:8080
+
+## Support
+
+Reach out at Thomas@Front-Door.xyz if your having any problems using the platform. 
