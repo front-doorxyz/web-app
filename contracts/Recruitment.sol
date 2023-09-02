@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";  
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "hardhat/console.sol";
 
 import { FrontDoorStructs } from "./DataModel.sol";
 import { Errors } from "./Errors.sol";
@@ -31,6 +32,7 @@ contract Recruitment  is Ownable , ReentrancyGuard {
 
 
     address acceptedTokenAddress;
+    address frontDoorAddress;
    
     // Company address  to  candiate address  gives score to company 
     mapping(address => mapping(address => uint256)) public companyaddressToScore; 
@@ -49,11 +51,9 @@ contract Recruitment  is Ownable , ReentrancyGuard {
     uint256 month3;
 
    // Constructor
-    constructor(address _acceptedTokenAddress) {
+    constructor(address _acceptedTokenAddress ,  address _frontDoorAddress) {
       acceptedTokenAddress = _acceptedTokenAddress;
-      // month1 = _month1;
-      // month2 = _month2;
-      // month3 = _month3;
+      frontDoorAddress = _frontDoorAddress;
     }
 
   /**
@@ -344,7 +344,5 @@ function getAllJobsOfCompany(address companyWallet) external view returns (Front
 
     return jobArray;
 }
-
-
 
  }  
