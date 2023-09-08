@@ -6,7 +6,7 @@
 
   contract FrontDoorToken is ERC20, Ownable {
     
-      // the max total supply is 1000000 for FrontDoor Tokens
+      // the max total supply is 1M for FrontDoor Tokens
       uint256 public constant maxTotalSupply = 1000000 * 10**18;
 
       constructor() ERC20("FroontDoor Token", "FNDR") {
