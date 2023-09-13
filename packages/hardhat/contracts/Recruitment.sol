@@ -2,7 +2,7 @@
 //Enable the optimizer
 pragma solidity 0.8.17;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
@@ -107,9 +107,9 @@ contract Recruitment is Ownable, ReentrancyGuard {
     companyList[msg.sender].jobsCreated++;
 
     // implement  company to pay the bounty upfront
-    ERC20(acceptedTokenAddress).approve(address(this), bounty); // asking user for approval to transfer bounty
+    IERC20(acceptedTokenAddress).approve(address(this), bounty); // asking user for approval to transfer bounty
 
-    bool success = ERC20(acceptedTokenAddress).transferFrom(msg.sender, address(this), bounty);
+    bool success = IERC20(acceptedTokenAddress).transferFrom(msg.sender, address(this), bounty);
 
     if (!success) {
       revert Errors.BountyNotPaid();
@@ -285,12 +285,12 @@ contract Recruitment is Ownable, ReentrancyGuard {
 
     jobList[_jobId].isDibursed = true;
     uint256 bounty = jobList[_jobId].bounty;
-    ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
-    ERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
-    ERC20(acceptedTokenAddress).approve(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
-    ERC20(acceptedTokenAddress).transfer(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
-    ERC20(acceptedTokenAddress).transfer(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
-    ERC20(acceptedTokenAddress).transfer(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
+    IERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
+    IERC20(acceptedTokenAddress).approve(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
+    IERC20(acceptedTokenAddress).approve(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
+    IERC20(acceptedTokenAddress).transfer(jobCandidatehire[_jobId].referrer, bounty * 6500 / 10_000); // asking user for approval to transfer bounty  to referrer
+    IERC20(acceptedTokenAddress).transfer(jobCandidatehire[_jobId].wallet, bounty * 1000 / 10_000); // asking user for approval to transfer bounty  to candidate
+    IERC20(acceptedTokenAddress).transfer(frontDoorAddress, bounty * 2500 / 10_000); // asking user for approval to transfer bounty  to Front Door
     
     
     
